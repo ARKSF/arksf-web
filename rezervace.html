@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervace | ARK – Síla & Fyzio</title>
+    <meta name="description" content="Rezervujte si termín konzultace nebo tréninku v ARK – Síla & Fyzio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--primary:#7C3AED;--primary-dark:#6D28D9;--accent:#FF6B6B;--dark:#0F0F1A;--soft:#EDE9FE;--bg:#FAFAFA;--white:#FFFFFF;--gray-200:#E5E7EB;--gray-600:#4B5563}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Manrope',sans-serif;font-size:16px;line-height:1.6;color:var(--dark);background:var(--bg);-webkit-font-smoothing:antialiased}
+        h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.2}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:1140px;margin:0 auto;padding:0 24px}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,250,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(229,231,235,0.5)}
+        .navbar-inner{display:flex;justify-content:space-between;align-items:center;height:72px}
+        .logo-svg{height:28px;width:auto}
+        .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-weight:500;font-size:15px;transition:gap .3s ease}
+        .back-link:hover{gap:12px}
+        .back-link svg{width:18px;height:18px}
+        .page-content{padding:120px 0 80px}
+        .page-header{text-align:center;margin-bottom:56px}
+        .section-label{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:12px;display:block}
+        .page-header h1{font-size:clamp(32px,5vw,48px);margin-bottom:16px}
+        .page-header p{color:var(--gray-600);font-size:17px;max-width:500px;margin:0 auto}
+        .cards-grid{display:grid;gap:24px;max-width:900px;margin:0 auto 64px}
+        .card{background:var(--white);border:1px solid var(--gray-200);border-radius:20px;padding:32px;display:flex;align-items:center;gap:24px;transition:all .3s ease}
+        .card:hover{border-color:var(--primary);box-shadow:0 8px 30px rgba(124,58,237,0.1);transform:translateY(-4px)}
+        .card-icon{width:64px;height:64px;background:var(--soft);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s ease}
+        .card:hover .card-icon{background:var(--primary)}
+        .card-icon svg{width:28px;height:28px;color:var(--primary);transition:color .3s ease}
+        .card:hover .card-icon svg{color:var(--white)}
+        .card-content{flex:1}
+        .card-content h3{font-size:20px;margin-bottom:8px}
+        .card-content p{color:var(--gray-600);font-size:15px;margin:0}
+        .card-action{flex-shrink:0}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;border:none;cursor:pointer;transition:all .3s ease}
+        .btn-secondary{background:var(--soft);color:var(--primary)}
+        .btn-secondary:hover{background:var(--primary);color:var(--white)}
+        .btn svg{width:18px;height:18px}
+        .new-client{max-width:900px;margin:0 auto;background:var(--dark);border-radius:24px;padding:48px;display:flex;align-items:center;justify-content:space-between;gap:32px;position:relative;overflow:hidden}
+        .new-client::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,0.3) 0%,transparent 70%);pointer-events:none}
+        .new-client-content{position:relative;z-index:1}
+        .new-client-label{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin-bottom:12px;display:block}
+        .new-client h3{color:var(--white);font-size:24px;margin-bottom:8px}
+        .new-client p{color:rgba(255,255,255,0.6);font-size:15px;margin:0}
+        .new-client .btn{position:relative;z-index:1;flex-shrink:0;background:var(--accent);color:var(--white)}
+        .new-client .btn:hover{background:#ff5252;box-shadow:0 4px 16px rgba(255,107,107,0.4)}
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:1000;padding:24px}
+        .modal-overlay.active{display:flex}
+        .modal-content{width:100%;max-width:1200px;height:85vh;background:var(--white);border-radius:16px;overflow:hidden;position:relative}
+        .modal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;background:var(--white);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);z-index:10;transition:all .3s ease}
+        .modal-close:hover{background:var(--soft);transform:scale(1.1)}
+        .modal-close svg{width:20px;height:20px;color:var(--dark)}
+        .modal-content iframe{width:100%;height:100%;border:none}
+        .footer{background:var(--dark);color:var(--white);padding:64px 0 24px}
+        .footer-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;margin-bottom:48px}
+        .footer-nav-columns{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+        .footer-brand .logo-extended{height:56px;width:auto;margin-bottom:20px}
+        .footer-brand>p{color:rgba(255,255,255,0.6);font-size:15px;max-width:300px;line-height:1.6}
+        .footer-social{display:flex;gap:12px;margin-top:24px}
+        .footer-social a{width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:all .3s ease}
+        .footer-social a:hover{background:var(--primary);transform:translateY(-4px)}
+        .footer-social svg{width:18px;height:18px;color:var(--white)}
+        .footer h4{font-size:14px;margin-bottom:16px}
+        .footer-links{list-style:none}
+        .footer-links li{margin-bottom:10px}
+        .footer-links a{color:rgba(255,255,255,0.6);font-size:14px;transition:all .3s ease;display:inline-block}
+        .footer-links a:hover{color:var(--accent);transform:translateX(4px)}
+        .footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px}
+        .footer-bottom p{color:rgba(255,255,255,0.4);font-size:13px}
+        @media(max-width:900px){.footer-grid{grid-template-columns:1fr;gap:40px}}
+        @media(max-width:768px){.card{flex-direction:column;text-align:center}.card-action{width:100%}.btn{width:100%}.modal-content{height:90vh;border-radius:12px}.new-client{flex-direction:column;text-align:center;padding:40px 24px}.footer-nav-columns{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html">
+                <svg class="logo-svg" viewBox="0 0 1843 523" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 522.369L129.521 111.679C129.521 111.679 158.612 0.000325739 371.248 0C605.356 -0.000536947 582.499 111.679 582.499 111.679L545.097 522.369H291.596L353.932 208.227C353.932 208.227 356.569 191.643 338.741 191.643C320.912 191.643 317.223 208.227 317.223 208.227L251.424 522.369H0Z" fill="#10101A"/>
+                    <path d="M841.754 523H579.316L698.749 16.1973H1087.69C1087.69 16.1973 1255.05 19.7315 1255.05 148.376C1255.05 277.02 1170.98 322.258 1170.98 322.258L1186.69 523H1087.69H884.184L958.829 206.337C958.829 206.337 963.354 188.442 940.882 188.442C918.409 188.442 915.613 206.337 915.613 206.337L841.754 523Z" fill="#10101A"/>
+                    <path d="M1442.54 523L1475.93 362.583C1475.93 362.583 1478.44 348.733 1496.24 348.246C1518.51 348.246 1514.46 362.418 1514.46 362.418L1483.15 523L1743.27 523L1724.22 267.469L1842.46 16.1973H1583.3L1548.88 177.324C1548.88 177.324 1544.77 192.417 1526.58 192.417C1508.39 192.417 1510.41 177.324 1510.41 177.324L1540.78 16.1973H1322.88L1223.04 523L1442.54 523Z" fill="#10101A"/>
+                </svg>
+            </a>
+            <a href="index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Zpět
+            </a>
+        </div>
+    </nav>
+    <main class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <span class="section-label">// Rezervace</span>
+                <h1>Pro klienty</h1>
+                <p>Vítejte zpět! Zde najdete vše potřebné pro správu vašich rezervací a tréninků.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+                    </div>
+                    <div class="card-content">
+                        <h3>Nová rezervace</h3>
+                        <p>Objednejte se na konzultaci nebo individuální trénink.</p>
+                    </div>
+                    <div class="card-action">
+                        <button class="btn btn-secondary" onclick="openModal()">Rezervovat <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="card-content">
+                        <h3>Skupinové tréninky</h3>
+                        <p>Přihlaste se na skupinový trénink v malé skupině (max. 5 osob).</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="https://arksf.fyzion.cz/reservations/group-visits" target="_blank" rel="noopener" class="btn btn-secondary">Vybrat termín <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="card-content">
+                        <h3>Klientská zóna</h3>
+                        <p>Přihlaste se pro správu rezervací, přehled permanentek a historii návštěv.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="https://arksf.fyzion.cz/login" target="_blank" rel="noopener" class="btn btn-secondary">Přihlásit se <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="new-client">
+                <div class="new-client-content">
+                    <span class="new-client-label">// Nový klient?</span>
+                    <h3>Ještě nejste náš klient?</h3>
+                    <p>Každá spolupráce začíná úvodní konzultací. Napište nám a domluvíme se.</p>
+                </div>
+                <a href="index.html#kontakt" class="btn">Začít spolupráci <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <svg class="logo-extended" viewBox="0 0 455 219" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 129L31.9855 27.5793C31.9855 27.5793 39.1694 8.0442e-05 91.6805 0C149.494 -0.0001326 143.849 27.5793 143.849 27.5793L134.613 129H72.0102L87.4043 51.4221C87.4043 51.4221 88.0555 47.3267 83.6527 47.3267C79.2499 47.3267 78.3389 51.4221 78.3389 51.4221L62.0896 129H0Z" fill="#FFFFFF"/>
+                        <path d="M207.872 129.156H143.062L172.557 4H268.606C268.606 4 309.937 4.87278 309.937 36.6418C309.937 68.4108 289.175 79.5823 289.175 79.5823L293.056 129.156H268.606H218.35L236.784 50.9553C236.784 50.9553 237.901 46.5363 232.352 46.5363C226.802 46.5363 226.112 50.9553 226.112 50.9553L207.872 129.156Z" fill="#FFFFFF"/>
+                        <path d="M356.239 129.156L364.484 89.5407C364.484 89.5407 365.105 86.1205 369.5 86C375 86 374 89.5 374 89.5L366.267 129.156L430.505 129.156L425.801 66.0521L455 4H391L382.5 43.7905C382.5 43.7905 381.484 47.5179 376.992 47.5179C372.5 47.5179 373 43.7905 373 43.7905L380.5 4H326.688L302.031 129.156L356.239 129.156Z" fill="#FFFFFF"/>
+                        <path d="M73.2164 205.701C70.8323 205.701 68.6819 205.296 66.7652 204.486C64.8642 203.675 63.2903 202.522 62.0437 201.026C60.8127 199.515 60.0102 197.731 59.6362 195.674L63.937 194.996C64.4824 197.115 65.6121 198.775 67.3262 199.975C69.0559 201.159 71.0894 201.751 73.4268 201.751C74.9383 201.751 76.3018 201.517 77.5172 201.05C78.7483 200.567 79.7222 199.881 80.439 198.993C81.1558 198.105 81.5142 197.053 81.5142 195.837C81.5142 195.089 81.3817 194.451 81.1168 193.921C80.8675 193.375 80.5169 192.916 80.065 192.542C79.6287 192.152 79.1301 191.825 78.5691 191.56C78.0081 191.295 77.4238 191.077 76.816 190.906L68.2378 188.358C67.3028 188.077 66.399 187.727 65.5264 187.306C64.6538 186.87 63.8747 186.332 63.189 185.693C62.5034 185.039 61.958 184.26 61.5528 183.356C61.1477 182.436 60.9451 181.353 60.9451 180.107C60.9451 178.112 61.4593 176.414 62.4878 175.011C63.5318 173.593 64.9421 172.51 66.7185 171.762C68.4949 171.014 70.4973 170.648 72.7256 170.664C74.9851 170.679 77.003 171.084 78.7794 171.879C80.5714 172.658 82.0518 173.78 83.2205 175.245C84.4048 176.71 85.1995 178.463 85.6046 180.504L81.187 181.275C80.9532 179.904 80.4312 178.728 79.6209 177.746C78.8262 176.749 77.8289 175.985 76.629 175.455C75.4292 174.91 74.1124 174.629 72.6788 174.614C71.3076 174.598 70.0687 174.816 68.9624 175.268C67.856 175.72 66.9756 176.351 66.3211 177.162C65.6667 177.956 65.3394 178.876 65.3394 179.92C65.3394 180.948 65.6355 181.782 66.2276 182.421C66.8198 183.044 67.5444 183.543 68.4014 183.917C69.274 184.275 70.1233 184.571 70.9492 184.805L77.3536 186.651C78.086 186.854 78.9275 187.135 79.878 187.493C80.8441 187.851 81.7791 188.358 82.6829 189.012C83.5867 189.651 84.3347 190.508 84.9268 191.583C85.5189 192.643 85.815 193.983 85.815 195.604C85.815 197.224 85.4878 198.666 84.8333 199.928C84.1944 201.19 83.2984 202.25 82.1453 203.107C80.9922 203.948 79.6521 204.587 78.125 205.023C76.5979 205.475 74.9617 205.701 73.2164 205.701ZM101.119 167.485H97.7302L100.792 159.771H104.181L101.119 167.485ZM97.2628 205V171.342H101.423V205H97.2628ZM114.981 205V171.342H119.142V201.05H134.756V205H114.981ZM142.449 205L153.716 171.342H159.512L170.779 205H166.454L155.913 173.772H157.222L146.774 205H142.449ZM147.872 197.123V193.22H165.356V197.123H147.872ZM207.415 205.701C205.545 205.701 203.8 205.429 202.179 204.883C200.559 204.338 199.203 203.481 198.112 202.312C197.271 201.377 196.64 200.349 196.219 199.227C195.814 198.089 195.588 196.889 195.541 195.627C195.541 194.396 195.72 193.196 196.079 192.027C196.437 190.843 197.006 189.791 197.785 188.872C198.19 188.373 198.642 187.953 199.141 187.61C199.655 187.251 200.169 186.948 200.683 186.698C199.608 185.545 198.782 184.462 198.206 183.449C197.645 182.436 197.364 181.213 197.364 179.78C197.364 177.956 197.832 176.312 198.767 174.848C199.717 173.367 201.011 172.284 202.647 171.599C203.441 171.256 204.252 171.022 205.078 170.897C205.919 170.757 206.737 170.687 207.532 170.687C208.872 170.687 210.173 170.874 211.435 171.248C212.698 171.622 213.773 172.23 214.661 173.071C215.253 173.57 215.76 174.146 216.18 174.801C216.601 175.44 216.928 176.11 217.162 176.811L213.095 177.863C212.799 177.068 212.308 176.398 211.622 175.853C211.077 175.385 210.438 175.066 209.706 174.894C208.989 174.723 208.264 174.637 207.532 174.637C206.316 174.637 205.218 174.871 204.236 175.338C203.364 175.759 202.709 176.351 202.273 177.115C201.836 177.863 201.618 178.751 201.618 179.78C201.618 180.668 201.766 181.4 202.062 181.977C202.374 182.538 202.803 183.138 203.348 183.776C203.675 184.119 204.041 184.485 204.447 184.875C204.867 185.249 205.296 185.639 205.732 186.044L215.643 195.253C215.689 194.863 215.721 194.466 215.736 194.061C215.752 193.656 215.76 193.266 215.76 192.892L215.736 188.241H219.546V193.71C219.546 194.817 219.507 195.759 219.429 196.539C219.367 197.318 219.258 197.964 219.102 198.479L223.379 202.429L220.668 205.327L217.115 201.961C216.508 202.647 215.783 203.247 214.941 203.761C214.1 204.275 213.259 204.665 212.417 204.93C211.622 205.226 210.804 205.429 209.963 205.538C209.121 205.647 208.272 205.701 207.415 205.701ZM207.509 201.704C208.272 201.704 208.966 201.658 209.589 201.564C210.212 201.471 210.804 201.291 211.365 201.026C212.113 200.668 212.69 200.325 213.095 199.998C213.5 199.671 213.835 199.367 214.1 199.086L203.839 189.69C203.278 189.877 202.748 190.126 202.249 190.438C201.766 190.75 201.346 191.116 200.987 191.537C200.582 192.035 200.278 192.62 200.076 193.29C199.889 193.96 199.795 194.669 199.795 195.417C199.811 196.211 199.943 196.944 200.193 197.614C200.442 198.284 200.792 198.884 201.244 199.414C201.93 200.208 202.857 200.793 204.026 201.167C205.195 201.525 206.355 201.704 207.509 201.704ZM248.713 205V171.342H268.347V175.502H252.874V186.09H265.542V190.251H252.874V205H248.713ZM286.685 205V190.999L275.349 171.342H280.187L288.789 186.231L297.367 171.342H302.205L290.892 190.999V205H286.685ZM310.607 205V204.252L328.394 175.292H311.308V171.342H335.406V172.136L317.712 201.05H335.173V205H310.607ZM347.578 205V171.342H351.738V205H347.578ZM378.666 205.701C375.316 205.701 372.472 204.961 370.135 203.481C367.797 202 366.013 199.943 364.782 197.31C363.567 194.677 362.959 191.63 362.959 188.171C362.959 184.711 363.567 181.665 364.782 179.032C366.013 176.398 367.797 174.341 370.135 172.861C372.472 171.38 375.316 170.64 378.666 170.64C382.032 170.64 384.884 171.38 387.221 172.861C389.558 174.341 391.335 176.398 392.55 179.032C393.766 181.665 394.373 184.711 394.373 188.171C394.373 191.63 393.766 194.677 392.55 197.31C391.335 199.943 389.558 202 387.221 203.481C384.884 204.961 382.032 205.701 378.666 205.701ZM378.666 201.728C381.175 201.743 383.263 201.182 384.93 200.045C386.613 198.892 387.868 197.294 388.694 195.253C389.535 193.212 389.956 190.851 389.956 188.171C389.956 185.475 389.535 183.114 388.694 181.088C387.868 179.063 386.613 177.481 384.93 176.344C383.263 175.206 381.175 174.629 378.666 174.614C376.157 174.598 374.069 175.159 372.402 176.297C370.75 177.434 369.504 179.024 368.662 181.065C367.821 183.106 367.392 185.475 367.377 188.171C367.361 190.851 367.774 193.204 368.615 195.23C369.457 197.255 370.711 198.845 372.379 199.998C374.061 201.136 376.157 201.712 378.666 201.728Z" fill="#FFFFFF"/>
+                    </svg>
+                    <p>ARK je místo, kde se znovu buduje důvěra v tělo.</p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/ark_sila_fyzio" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-nav-columns">
+                    <div>
+                        <h4>Navigace</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#sluzby">Služby</a></li>
+                            <li><a href="index.html#o-nas">O nás</a></li>
+                            <li><a href="index.html#pristup">Náš přístup</a></li>
+                            <li><a href="index.html#cenik">Ceník</a></li>
+                            <li><a href="index.html#spoluprace">Spolupráce</a></li>
+                            <li><a href="index.html#kontakt">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Pro klienty</h4>
+                        <ul class="footer-links">
+                            <li><a href="rezervace.html">Rezervace</a></li>
+                            <li><a href="vop.html">Obchodní podmínky</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ARK – Síla & Fyzio</p>
+                <p>Nademlejnská 651/7, 198 00 Praha 9</p>
+                <p>jednatel Ing. Bc. Tomáš Neubert</p>
+                <p>vibecoded by: <a href="https://www.linkedin.com/in/anna-kutikova/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-underline-offset: 2px;">Anna Kutíková ✳</a></p>
+            </div>
+        </div>
+    </footer>
+    <div class="modal-overlay" id="reservationModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <iframe src="https://arksf.fyzion.cz/reservations"></iframe>
+        </div>
+    </div>
+    <script>
+        function openModal(){document.getElementById('reservationModal').classList.add('active');document.body.style.overflow='hidden'}
+        function closeModal(){document.getElementById('reservationModal').classList.remove('active');document.body.style.overflow=''}
+        document.getElementById('reservationModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+    </script>
+</body>
+</html>

@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARK | Síla & Fyzio – Bez strachu z pohybu</title>
+    <meta name="description" content="Fyzioterapeuti, kteří vám vrátí vaši sílu zpět. Evidence-based fyzioterapie a osobní tréninky v Praze.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #7C3AED;
+            --primary-dark: #6D28D9;
+            --accent: #FF6B6B;
+            --dark: #0F0F1A;
+            --soft: #EDE9FE;
+            --bg: #FAFAFA;
+            --white: #FFFFFF;
+            --gray-200: #E5E7EB;
+            --gray-600: #4B5563;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* SCROLL ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* ANIMATIONS */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        @keyframes floatStripes {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            height: 48px;
+            padding: 0 24px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn:hover::before { left: 100%; }
+        .btn svg { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35);
+        }
+        .btn-primary:hover svg { transform: translateX(4px); }
+        .btn-secondary {
+            background: transparent;
+            color: var(--dark);
+            border-color: var(--gray-200);
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        .btn-sm { height: 40px; padding: 0 16px; font-size: 14px; }
+        .btn-lg { height: 56px; padding: 0 32px; font-size: 16px; }
+        .btn-block { width: 100%; }
+
+        /* BADGE / PILL */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            color: var(--dark);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        .badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        .badge:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.15);
+        }
+        .badge-dark {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            color: var(--white);
+        }
+
+        /* LAYOUT */
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 100px 0; }
+
+        /* NAVBAR WITH PROGRESS */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(250, 250, 250, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+        }
+        .navbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+        .logo-wrap { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 2px;
+            transition: transform 0.3s ease;
+        }
+        .logo-wrap:hover { transform: scale(1.02); }
+        .logo-svg { height: 28px; width: auto; }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-link {
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--dark);
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .nav-toggle span { width: 24px; height: 2px; background: var(--dark); transition: all 0.3s ease; }
+
+        /* HERO - DIAGONAL LAYOUT */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 0 80px;
+            background: var(--bg);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 55%;
+            height: 140%;
+            background: linear-gradient(135deg, var(--soft) 0%, rgba(124, 58, 237, 0.08) 100%);
+            transform: skewX(-12deg);
+            z-index: 0;
+        }
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-content { max-width: 580px; }
+        .hero-badge {
+            display: inline-block;
+            background: var(--white);
+            color: var(--dark);
+            border: 1px solid var(--gray-200);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(40px, 5.5vw, 56px);
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-text {
+            font-size: 17px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            line-height: 1.7;
+            max-width: 480px;
+        }
+        .hero-graphic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .hero-illustration {
+            width: 380px;
+            height: auto;
+            position: relative;
+            z-index: 1;
+            animation: illustrationFloat 5s ease-in-out infinite;
+            filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+        .hero-illustration:hover {
+            transform: scale(1.02) translateY(-8px);
+            filter: drop-shadow(0 30px 50px rgba(124, 58, 237, 0.25));
+        }
+        @keyframes illustrationFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            50% { 
+                transform: translateY(-15px) rotate(1deg); 
+            }
+        }
+
+        /* SECTION HEADER */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px);
+            margin-bottom: 16px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .section-header .section-subtitle {
+            color: var(--gray-600);
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 17px;
+        }
+        .section-title-with-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .section-title-with-icon .section-title {
+            margin-bottom: 0;
+        }
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--soft);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .section-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
+        }
+
+        /* SERVICES */
+        .services { background: var(--white); }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .service-card {
+            background: var(--bg);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(15, 15, 26, 0.12);
+            border-color: var(--primary);
+        }
+        .service-icon {
+            width: 48px; height: 48px;
+            background: var(--soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        .service-card:hover .service-icon {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        .service-icon svg { 
+            width: 24px; height: 24px; 
+            color: var(--primary); 
+            transition: color 0.3s ease;
+        }
+        .service-card:hover .service-icon svg { color: var(--white); }
+        .service-card h3 { 
+            font-size: 18px; 
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+        .service-card:hover h3 { color: var(--primary); }
+        .service-card p { color: var(--gray-600); font-size: 15px; }
+
+        /* ABOUT */
+        .about { background: var(--dark); color: var(--white); }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .about .section-label { color: var(--accent); }
+        .about .section-title { color: var(--white); }
+        .about-lead {
+            font-size: 20px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 24px;
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .value-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        .value-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-4px);
+        }
+        .value-card h4 { 
+            font-size: 16px; 
+            margin-bottom: 6px;
+            transition: color 0.3s ease;
+        }
+        .value-card:hover h4 { color: var(--accent); }
+        .value-card p { font-size: 14px; color: rgba(255,255,255,0.5); margin: 0; }
+
+        /* APPROACH */
+        .approach { background: var(--bg); }
+        .approach-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+        .approach-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+        .approach-list {
+            list-style: none;
+        }
+        .approach-list li {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        .approach-list li:first-child {
+            border-top: 1px solid var(--gray-200);
+        }
+        .approach-list li:hover {
+            padding-left: 8px;
+        }
+        .approach-list-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .approach-list h4 {
+            font-size: 17px;
+            margin-bottom: 6px;
+            transition: color 0.3s ease;
+        }
+        .approach-list li:hover h4 {
+            color: var(--primary);
+        }
+        .approach-list p {
+            color: var(--gray-600);
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* QUOTE */
+        .quote-section {
+            background: var(--dark);
+            padding: 56px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .quote-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .quote-marks {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 0.5;
+            display: block;
+        }
+        .quote-marks-end {
+            line-height: 1;
+            margin-top: 8px;
+        }
+        .quote-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(20px, 3vw, 24px);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.5;
+            margin: 12px 0;
+        }
+        .quote-signature {
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.5);
+            margin-top: 16px;
+        }
+
+        /* MARQUEE */
+        .marquee-section {
+            background: var(--bg);
+            padding: 40px 0;
+            overflow: hidden;
+        }
+        .marquee-track {
+            display: flex;
+            animation: marquee 40s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-right: 16px;
+        }
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            color: var(--gray-600);
+            font-size: 14px;
+            font-weight: 400;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .marquee-item:hover {
+            border-color: var(--accent);
+            color: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .marquee-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent);
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        /* PRICING */
+        .pricing { background: var(--white); }
+        .pricing-paths {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .pricing-card {
+            background: var(--bg);
+            border: 1px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(15, 15, 26, 0.1);
+        }
+        .pricing-card.featured {
+            background: var(--dark);
+            border-color: var(--dark);
+        }
+        .pricing-card.featured .pricing-label,
+        .pricing-card.featured h3,
+        .pricing-card.featured .pricing-item h4 {
+            color: var(--white);
+        }
+        .pricing-card.featured .pricing-desc,
+        .pricing-card.featured .pricing-item span,
+        .pricing-card.featured .pricing-card-footer p {
+            color: rgba(255,255,255,0.6);
+        }
+        .pricing-card.featured .pricing-item-price {
+            color: var(--accent);
+        }
+        .pricing-card.featured .pricing-item-price span {
+            color: rgba(255,255,255,0.5);
+        }
+        .pricing-card.featured .pricing-item {
+            border-color: rgba(255,255,255,0.1);
+        }
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 32px;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+        .pricing-card-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--soft);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover .pricing-card-icon {
+            transform: scale(1.05);
+        }
+        .pricing-card-icon svg {
+            width: 26px;
+            height: 26px;
+            color: var(--primary);
+        }
+        .pricing-card.featured .pricing-card-icon {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .pricing-card.featured .pricing-card-icon svg {
+            color: var(--accent);
+        }
+        .pricing-card-header {
+            margin-bottom: 24px;
+        }
+        .pricing-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: block;
+        }
+        .pricing-card-header h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .pricing-desc {
+            color: var(--gray-600);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .pricing-card-body {
+            margin-bottom: 20px;
+        }
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .pricing-item:last-child {
+            border-bottom: none;
+        }
+        .pricing-item h4 {
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        .pricing-item span {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        .pricing-item-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+        .pricing-item-price span {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+        .pricing-card-footer p {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        .pricing-group {
+            background: var(--soft);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        .pricing-group-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .pricing-group-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .pricing-group-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .pricing-group-icon svg {
+            width: 22px;
+            height: 22px;
+            color: var(--primary);
+        }
+        .pricing-group h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .pricing-group p {
+            color: var(--gray-600);
+            font-size: 15px;
+            margin: 0;
+        }
+        .pricing-group-price {
+            text-align: right;
+            white-space: nowrap;
+        }
+        .pricing-group-price .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+        .pricing-group-price .per {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+        .pricing-note {
+            text-align: center;
+            font-size: 14px;
+            color: var(--gray-600);
+            margin: 24px 0;
+        }
+        .pricing-note a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        .pricing-note a:hover {
+            color: var(--primary-dark);
+        }
+        .pricing-item.has-desc {
+            flex-direction: column;
+            align-items: stretch;
+            cursor: pointer;
+        }
+        .pricing-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .pricing-item-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pricing-item-arrow {
+            width: 20px;
+            height: 20px;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .pricing-item.has-desc.active .pricing-item-arrow {
+            transform: rotate(180deg);
+        }
+        .pricing-item-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease;
+        }
+        .pricing-item.has-desc.active .pricing-item-desc {
+            max-height: 200px;
+            margin-top: 12px;
+        }
+
+        /* PROCESS SECTION - STEPPER */
+        .process { background: var(--soft); }
+        .stepper-wrapper {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+        }
+        .stepper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 80px;
+            right: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 0;
+        }
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: var(--soft);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        .step:hover .step-number {
+            background: var(--primary);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        .step h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .step p {
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.5;
+            max-width: 200px;
+            margin: 0;
+        }
+        .process-info {
+            background: var(--soft);
+            border-radius: 16px;
+            padding: 24px 32px;
+        }
+        .process-info-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .process-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 32px;
+        }
+        .process-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+        .process-list li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .process-list a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .contact-info h2 { font-size: 28px; margin-bottom: 12px; }
+        .contact-info > p { color: var(--gray-600); margin-bottom: 32px; }
+        .contact-list { list-style: none; }
+        .contact-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 12px;
+            border-radius: 12px;
+            transition: background 0.3s ease;
+            margin-left: -12px;
+        }
+        .contact-list li:hover { background: rgba(124, 58, 237, 0.05); }
+        .contact-list-icon {
+            width: 40px; height: 40px;
+            background: var(--soft);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: all 0.3s ease;
+        }
+        .contact-list li:hover .contact-list-icon {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        .contact-list-icon svg { 
+            width: 18px; height: 18px; 
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        .contact-list li:hover .contact-list-icon svg { color: var(--white); }
+        .contact-list h4 { font-size: 14px; margin-bottom: 2px; }
+        .contact-list p { color: var(--gray-600); font-size: 14px; margin: 0; }
+        .contact-list a.address-link {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        .contact-list a.address-link:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .hours-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 4px 16px;
+            margin-top: 4px;
+        }
+        .hours-day {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark);
+        }
+        .hours-time {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        
+        .contact-form {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 24px rgba(15,15,26,0.08);
+            transition: box-shadow 0.3s ease;
+        }
+        .contact-form:hover { box-shadow: 0 8px 40px rgba(15,15,26,0.12); }
+        .contact-form h3 { font-size: 20px; margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+        .form-group:focus-within label { color: var(--primary); }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: var(--bg);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        /* FOOTER */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 64px 0 24px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .footer-nav-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        .footer-brand .logo-extended { 
+            height: 56px; 
+            width: auto; 
+            margin-bottom: 20px; 
+        }
+        .footer-brand > p {
+            color: rgba(255,255,255,0.6);
+            font-size: 15px;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        .footer-social { display: flex; gap: 12px; margin-top: 24px; }
+        .footer-social a {
+            width: 40px; height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .footer-social a:hover { 
+            background: var(--primary); 
+            transform: translateY(-4px);
+        }
+        .footer-social svg { 
+            width: 18px; height: 18px; 
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+        .footer-social a:hover svg { transform: scale(1.1); }
+        .footer h4 { font-size: 14px; margin-bottom: 16px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { 
+            color: rgba(255,255,255,0.6); 
+            font-size: 14px; 
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .footer-links a:hover { 
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+        .footer-bottom {
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 0;
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+            text-align: center;
+        }
+        .footer-bottom p {
+            padding: 0 16px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+        .footer-bottom p:last-child { border-right: none; }
+
+        /* COOKIE BANNER */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--white);
+            padding: 16px 24px;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        .cookie-banner.active { 
+            display: block;
+            transform: translateY(0);
+        }
+        .cookie-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+        .cookie-inner p { color: var(--gray-600); font-size: 14px; margin: 0; }
+        .cookie-actions { display: flex; gap: 8px; }
+
+        /* MOBILE NAV */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 1001;
+            padding: 24px;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.4s ease;
+        }
+        .mobile-nav.active { 
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .mobile-nav-menu { list-style: none; flex: 1; }
+        .mobile-nav-menu li { margin-bottom: 24px; }
+        .mobile-nav-menu a {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero::before { width: 60%; }
+            .hero-inner { gap: 40px; }
+            .about-grid { grid-template-columns: 1fr; gap: 48px; }
+            .values-grid { grid-template-columns: repeat(4, 1fr); }
+            .contact-grid { grid-template-columns: 1fr 1.1fr; }
+            .footer-grid { grid-template-columns: 1.5fr 1fr; }
+        }
+        @media (max-width: 900px) {
+            .hero::before { display: none; }
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-graphic { display: none; }
+            .hero h1 { font-size: clamp(36px, 8vw, 56px); }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .approach-grid { grid-template-columns: 1fr; gap: 48px; }
+            .pricing-paths { grid-template-columns: 1fr; }
+            .pricing-group-content { flex-direction: column; text-align: center; }
+            .pricing-group-title { flex-direction: column; }
+            .pricing-group-icon { margin: 0 auto; }
+            .pricing-group-price { text-align: center; }
+            .stepper-wrapper { padding: 24px; }
+            .stepper { flex-direction: column; gap: 32px; }
+            .stepper::before { display: none; }
+            .step { flex-direction: row; text-align: left; gap: 20px; }
+            .step-number { flex-shrink: 0; margin-bottom: 0; }
+            .step p { max-width: none; }
+            .process-list { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .section { padding: 60px 0; }
+            .nav-menu { display: none; }
+            .nav-toggle { display: flex; }
+            .hero { padding: 100px 0 60px; }
+            .hero-title { font-size: 32px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .values-grid { grid-template-columns: 1fr; gap: 12px; }
+            .value-card { padding: 20px; }
+            .value-card h4 { font-size: 16px; }
+            .value-card p { font-size: 13px; }
+            .section-title { font-size: 28px; }
+            .principles-grid { gap: 16px; }
+            .principle-card { padding: 24px; }
+            .pricing-paths { grid-template-columns: 1fr; }
+            .pricing-card { padding: 24px; }
+            .pricing-group { padding: 24px; }
+            .pricing-group-title { flex-direction: column; text-align: center; }
+            .pricing-group-icon { margin: 0 auto 12px; }
+            .pricing-group-content { flex-direction: column; text-align: center; gap: 16px; }
+            .pricing-group-price { text-align: center; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-nav-columns { grid-template-columns: 1fr 1fr; }
+            .footer-bottom p {
+                border-right: none;
+                padding: 4px 0;
+            }
+            .cookie-inner { flex-direction: column; text-align: center; }
+            .stepper-wrapper { padding: 24px 16px; }
+            .stepper { flex-direction: column; gap: 24px; }
+            .stepper::before { display: none; }
+            .step { flex-direction: row; text-align: left; gap: 16px; }
+            .step-number { flex-shrink: 0; margin-bottom: 0; width: 48px; height: 48px; font-size: 18px; }
+            .step p { max-width: none; }
+            .process-info { padding: 20px; }
+            .process-list { grid-template-columns: 1fr; }
+            .quote-section { padding: 40px 0; }
+            .quote-text { font-size: 18px; }
+            .quote-marks { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar with Progress Bar -->
+    <nav class="navbar">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="container navbar-inner">
+            <a href="#" class="logo-wrap">
+                <svg class="logo-svg" viewBox="0 0 1843 523" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 522.369L129.521 111.679C129.521 111.679 158.612 0.000325739 371.248 0C605.356 -0.000536947 582.499 111.679 582.499 111.679L545.097 522.369H291.596L353.932 208.227C353.932 208.227 356.569 191.643 338.741 191.643C320.912 191.643 317.223 208.227 317.223 208.227L251.424 522.369H0Z" fill="#10101A"/>
+                    <path d="M841.754 523H579.316L698.749 16.1973H1087.69C1087.69 16.1973 1255.05 19.7315 1255.05 148.376C1255.05 277.02 1170.98 322.258 1170.98 322.258L1186.69 523H1087.69H884.184L958.829 206.337C958.829 206.337 963.354 188.442 940.882 188.442C918.409 188.442 915.613 206.337 915.613 206.337L841.754 523Z" fill="#10101A"/>
+                    <path d="M1442.54 523L1475.93 362.583C1475.93 362.583 1478.44 348.733 1496.24 348.246C1518.51 348.246 1514.46 362.418 1514.46 362.418L1483.15 523L1743.27 523L1724.22 267.469L1842.46 16.1973H1583.3L1548.88 177.324C1548.88 177.324 1544.77 192.417 1526.58 192.417C1508.39 192.417 1510.41 177.324 1510.41 177.324L1540.78 16.1973H1322.88L1223.04 523L1442.54 523Z" fill="#10101A"/>
+                </svg>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#sluzby" class="nav-link">Služby</a></li>
+                <li><a href="#o-nas" class="nav-link">O nás</a></li>
+                <li><a href="#pristup" class="nav-link">Náš přístup</a></li>
+                <li><a href="#cenik" class="nav-link">Ceník</a></li>
+                <li><a href="#spoluprace" class="nav-link">Spolupráce</a></li>
+                <li><a href="rezervace.html" class="btn btn-outline btn-sm">Rezervace</a></li>
+            </ul>
+            <button class="nav-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <svg class="logo-svg" viewBox="0 0 1843 523" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 522.369L129.521 111.679C129.521 111.679 158.612 0.000325739 371.248 0C605.356 -0.000536947 582.499 111.679 582.499 111.679L545.097 522.369H291.596L353.932 208.227C353.932 208.227 356.569 191.643 338.741 191.643C320.912 191.643 317.223 208.227 317.223 208.227L251.424 522.369H0Z" fill="#10101A"/>
+                <path d="M841.754 523H579.316L698.749 16.1973H1087.69C1087.69 16.1973 1255.05 19.7315 1255.05 148.376C1255.05 277.02 1170.98 322.258 1170.98 322.258L1186.69 523H1087.69H884.184L958.829 206.337C958.829 206.337 963.354 188.442 940.882 188.442C918.409 188.442 915.613 206.337 915.613 206.337L841.754 523Z" fill="#10101A"/>
+                <path d="M1442.54 523L1475.93 362.583C1475.93 362.583 1478.44 348.733 1496.24 348.246C1518.51 348.246 1514.46 362.418 1514.46 362.418L1483.15 523L1743.27 523L1724.22 267.469L1842.46 16.1973H1583.3L1548.88 177.324C1548.88 177.324 1544.77 192.417 1526.58 192.417C1508.39 192.417 1510.41 177.324 1510.41 177.324L1540.78 16.1973H1322.88L1223.04 523L1442.54 523Z" fill="#10101A"/>
+            </svg>
+            <button class="mobile-nav-close" onclick="toggleMobileMenu()">×</button>
+        </div>
+        <ul class="mobile-nav-menu">
+            <li><a href="#sluzby" onclick="toggleMobileMenu()">Služby</a></li>
+            <li><a href="#o-nas" onclick="toggleMobileMenu()">O nás</a></li>
+            <li><a href="#pristup" onclick="toggleMobileMenu()">Náš přístup</a></li>
+            <li><a href="#cenik" onclick="toggleMobileMenu()">Ceník</a></li>
+            <li><a href="#spoluprace" onclick="toggleMobileMenu()">Spolupráce</a></li>
+        </ul>
+        <a href="rezervace.html" class="btn btn-outline btn-block" onclick="toggleMobileMenu()">Rezervace</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="badge hero-badge reveal">Praha 9 – Hloubětín</div>
+                    <h1 class="reveal delay-1">
+                        Fyzioterapeuti, kteří vám vrátí vaši <span class="highlight">sílu</span> zpět.
+                    </h1>
+                    <p class="hero-text reveal delay-2">
+                        Věříme, že tělo má neuvěřitelnou schopnost regenerace a adaptace. 
+                        Namísto omezení se zaměřujeme na to, jak vám pomoci dělat to, co vás baví.
+                    </p>
+                    <a href="#kontakt" class="btn btn-primary reveal delay-3">
+                        Začít spolupráci
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="hero-graphic reveal-right delay-2">
+                    <svg class="hero-illustration" width="380" height="342" viewBox="0 0 195 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="25" y="7" width="162" height="160" rx="12" fill="#FAFAFA" stroke="#E5E7EB" stroke-width="0.86"/>
+                        <path d="M78.4 72.5s-17.5 29.5-25.7 30.4c-8.1.9-6.4-30.8-12.4-28l-35.1 21.2s21.4 47.5 46.2 45.4c24.8-2.1 52.3-49.7 53.9-52.2 1.6-2.5 2.7-4.8 6.1-3.9 3.4.9.7 6.8.7 6.8l-25.8 63.4H132s15.5-63.1 16.5-67.6c1-4.5 9.2-25.4-33.9-31.7-26.8-3.9-36.2 16.2-36.2 16.2z" fill="url(#heroGrad)"/>
+                        <path d="M72.6 38.4c1.5-5.3 8.2-7.5 12.9-4.5 9 5.8 23.4 13.9 40.6 19.1 16.3 5 31.4 5.8 41.6 5.5 5.8-.2 10.7 5.4 9.1 10.9-.6 2.2-2.3 4-4.5 4.5-6.6 1.4-22.2 3.1-48.2-4.1-26.4-7.3-42.7-18.7-49.4-24.2-2.1-1.7-2.9-4.6-2.1-7.2z" stroke="#FC6F6F" stroke-width="0.86" fill="none"/>
+                        <circle cx="135.6" cy="37.6" r="11.6" fill="#FC6F6F"/>
+                        <defs>
+                            <linearGradient id="heroGrad" x1="80.8" y1="52.5" x2="70.5" y2="154" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#7D45E8"/>
+                                <stop offset="1" stop-color="#FC6F6F"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services section" id="sluzby">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">// Naše služby</span>
+                <h2 class="section-title">Jak vám můžeme pomoci</h2>
+                <p class="section-subtitle">Každý přichází s jiným příběhem. Naším cílem je najít cestu, která dává smysl právě vám.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card reveal delay-1">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3>Návrat po zranění</h3>
+                    <p>Pomáháme s návratem do pohybu po operacích nebo úrazech. Navazujeme tam, kde běžná péče často končí.</p>
+                </div>
+
+                <div class="service-card reveal delay-2">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+                    <h3>Řešení bolesti</h3>
+                    <p>Pro lidi s dlouhodobou bolestí zad, kloubů nebo svalů. Nezakazujeme pohyb – učíme tělo ho znovu zvládat.</p>
+                </div>
+
+                <div class="service-card reveal delay-3">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <h3>Pravidelné tréninky</h3>
+                    <p>Pro všechny, kteří chtějí cvičit dlouhodobě, bezpečně a s jasným vedením fyzioterapeuta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animated Stats Section -->
+    <!-- About -->
+    <section class="about section" id="o-nas">
+        <div class="container">
+            <div class="about-grid">
+                <div class="reveal-left">
+                    <span class="section-label">// O nás</span>
+                    <h2 class="section-title">Proč ARK?</h2>
+                    <p class="about-lead">
+                        Mezi „klasickým fyziem" a posilovnou existuje prostor, který u nás dlouho chyběl. ARK je místo, kde pohyb není zakazován, ale znovu hledán.
+                    </p>
+                    <div class="badge badge-dark">Bez strachu z pohybu</div>
+                </div>
+
+                <div class="values-grid reveal-right">
+                    <div class="value-card">
+                        <h4>Evidence-based</h4>
+                        <p>Řídíme se dokázanými fakty</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Individuální přístup</h4>
+                        <p>Každý člověk je jiný</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Dlouhodobost</h4>
+                        <p>Žádné rychlé opravy</p>
+                    </div>
+                    <div class="value-card">
+                        <h4>Bezpečný prostor</h4>
+                        <p>Bez strachu a extrémů</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach -->
+    <section class="approach section" id="pristup">
+        <div class="container">
+            <div class="approach-grid">
+                <div class="reveal-left">
+                    <span class="section-label">// Náš přístup</span>
+                    <h2 class="section-title">Pro koho jsme</h2>
+                    <p class="approach-text">
+                        ARK je bezpečný prostor pro lidi, kteří se chtějí hýbat, ale necítí se jistě. 
+                        Pro ty, kteří mají za sebou zranění, bolesti nebo fyzioterapii a nevědí, jak pokračovat dál.
+                    </p>
+                    <p class="approach-text">
+                        Naše myšlení vychází z fyzioterapeutických principů, ale náš přístup je aktivní. 
+                        Věříme, že samotná pasivní práce nestačí k dlouhodobé změně.
+                    </p>
+                </div>
+                <div class="reveal-right">
+                    <ul class="approach-list">
+                        <li>
+                            <div class="approach-list-label">//</div>
+                            <h4>Bez tlaku a extrémů</h4>
+                            <p>Pro všechny, kdo chtějí rozvíjet sílu bez tlaku. Respektujeme vaše tempo a limity.</p>
+                        </li>
+                        <li>
+                            <div class="approach-list-label">//</div>
+                            <h4>Srozumitelná komunikace</h4>
+                            <p>Individuální vedení a jasné vysvětlení každého kroku. Žádné odborné fráze bez kontextu.</p>
+                        </li>
+                        <li>
+                            <div class="approach-list-label">//</div>
+                            <h4>Realistická očekávání</h4>
+                            <p>Žádné zázraky, žádná univerzální řešení. Hledáme cestu, která dává smysl právě vám.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote-content reveal-scale">
+                <span class="quote-marks">"</span>
+                <p class="quote-text">
+                    ARK není ordinace ani běžná posilovna. Je to místo, kde se znovu buduje důvěra v tělo.
+                </p>
+                <span class="quote-marks quote-marks-end">"</span>
+                <div class="quote-signature">– Filozofie ARK</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing section" id="cenik">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">// Ceník</span>
+                <h2 class="section-title">Jak začít spolupráci</h2>
+                <p class="section-subtitle">Každá spolupráce začíná úvodní konzultací. Poté si vyberete cestu, která vám dává největší smysl.</p>
+            </div>
+
+            <!-- Two main paths -->
+            <div class="pricing-paths">
+                <div class="pricing-card reveal delay-1">
+                    <div class="pricing-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <div class="pricing-card-header">
+                        <span class="pricing-label">Samostatné cvičení</span>
+                        <h3>Konzultace</h3>
+                        <p class="pricing-desc">Pro ty, kteří chtějí cvičit samostatně s odborným vedením a plánem na míru.</p>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="pricing-item has-desc" onclick="this.classList.toggle('active')">
+                            <div class="pricing-item-header">
+                                <div class="pricing-item-info">
+                                    <h4>Úvodní konzultace</h4>
+                                    <span>60 minut</span>
+                                </div>
+                                <div class="pricing-item-toggle">
+                                    <div class="pricing-item-price">1 600 Kč</div>
+                                    <svg class="pricing-item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="pricing-item-desc">Slouží k pochopení vaší situace, cílů a možností. Projdeme pohyb, zatížení i to, co už máte za sebou, a navrhneme další postup.</p>
+                        </div>
+                        <div class="pricing-item has-desc" onclick="this.classList.toggle('active')">
+                            <div class="pricing-item-header">
+                                <div class="pricing-item-info">
+                                    <h4>Navazující konzultace</h4>
+                                    <span>60 minut</span>
+                                </div>
+                                <div class="pricing-item-toggle">
+                                    <div class="pricing-item-price">1 400 Kč</div>
+                                    <svg class="pricing-item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="pricing-item-desc">Vhodná pro ty, kteří chtějí cvičit samostatně. Dostanete konkrétní plán a doporučení, jak pokračovat doma nebo v jiné posilovně. Konzultace lze využívat jednorázově, například po několika týdnech.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pricing-card featured reveal delay-2">
+                    <div class="pricing-badge">Nejčastější volba</div>
+                    <div class="pricing-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <div class="pricing-card-header">
+                        <span class="pricing-label">Pravidelná spolupráce</span>
+                        <h3>Individuální tréninky</h3>
+                        <p class="pricing-desc">Pravidelný dohled, jistota v provedení cviků a dlouhodobá spolupráce.</p>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="pricing-item">
+                            <div class="pricing-item-info">
+                                <h4>1× týdně</h4>
+                                <span>měsíční paušál</span>
+                            </div>
+                            <div class="pricing-item-price">1 300 Kč <span>/ trénink</span></div>
+                        </div>
+                        <div class="pricing-item">
+                            <div class="pricing-item-info">
+                                <h4>2× týdně</h4>
+                                <span>měsíční paušál</span>
+                            </div>
+                            <div class="pricing-item-price">1 200 Kč <span>/ trénink</span></div>
+                        </div>
+                        <div class="pricing-item">
+                            <div class="pricing-item-info">
+                                <h4>3× týdně</h4>
+                                <span>měsíční paušál</span>
+                            </div>
+                            <div class="pricing-item-price">1 100 Kč <span>/ trénink</span></div>
+                        </div>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <p>Cena paušálu se odvíjí od frekvence (průměr 4,3 týdne/měsíc). Nevyužité lekce lze nahradit.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Group training -->
+            <div class="pricing-group reveal delay-3">
+                <div class="pricing-group-content">
+                    <div class="pricing-group-title">
+                        <div class="pricing-group-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3>Skupinové tréninky</h3>
+                            <p>Malá skupina (max. 5 osob), klidné prostředí a dostatek prostoru pro individuální přístup.</p>
+                        </div>
+                    </div>
+                    <div class="pricing-group-price">
+                        <span class="price">400 Kč</span>
+                        <span class="per">/ osoba</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="pricing-note">Jste již náš klient? <a href="rezervace.html">Přejít na rezervaci →</a></p>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="process section" id="spoluprace">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">// Průběh spolupráce</span>
+                <h2 class="section-title">Jak to funguje</h2>
+            </div>
+            
+            <div class="stepper-wrapper reveal">
+                <div class="stepper">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Úvodní konzultace</h4>
+                        <p>Poznáme se, pochopíme vaši situaci a cíle. Navrhneme další postup.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>Volba cesty</h4>
+                        <p>Společně se rozhodneme – samostatné cvičení s konzultacemi, nebo pravidelné tréninky.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Spolupráce</h4>
+                        <p>Pracujeme na vašich cílech. Tempo a model přizpůsobíme vašim možnostem.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="process-info reveal">
+                <span class="process-info-label">Základní informace</span>
+                <ul class="process-list">
+                    <li>Pravidelné tréninky jsou hrazeny formou měsíčního paušálu.</li>
+                    <li>Cena paušálu se odvíjí od frekvence (průměr 4,3 týdne/měsíc).</li>
+                    <li>Nevyužité lekce lze nahradit do 3 měsíců (max. 5 náhrad).</li>
+                    <li>Konzultace se hradí předem.</li>
+                    <li>Zrušení méně než 24h předem je účtováno v plné výši.</li>
+                    <li>Služby nejsou zdravotní péčí.</li>
+                    <li>Podrobné podmínky v <a href="vop.html">obchodních podmínkách</a>.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <section class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Rehabilitace
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    Řešení bolesti
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Osobní tréninky
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    Silový trénink
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Návrat po zranění
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>
+                    Evidence-based přístup
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    Individuální péče
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Bez strachu z pohybu
+                </div>
+            </div>
+            <div class="marquee-content">
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Rehabilitace
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    Řešení bolesti
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Osobní tréninky
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    Silový trénink
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    Návrat po zranění
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>
+                    Evidence-based přístup
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    Individuální péče
+                </div>
+                <div class="marquee-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Bez strachu z pohybu
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="kontakt">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info reveal-left">
+                    <span class="section-label">// Kontakt</span>
+                    <h2>Začněme spolupráci</h2>
+                    <p>Máte otázky? Napište nám a ozveme se vám do 24 hodin.<br><span style="font-size: 14px; color: var(--gray-600);">Stávající klienti: <a href="rezervace.html" style="color: var(--primary); text-decoration: underline;">přejít na rezervaci</a></span></p>
+                    
+                    <ul class="contact-list">
+                        <li>
+                            <div class="contact-list-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Adresa</h4>
+                                <p><a href="https://www.google.com/maps/search/?api=1&query=Nademlejnská+651/7,+Praha+9" target="_blank" rel="noopener" class="address-link">Nademlejnská 651/7, 198 00 Praha 9</a></p>
+                                <p style="font-size: 13px; margin-top: 4px;">zastávka: Nademlejnská, Starý Hloubětín<br>parkování v areálu zdarma</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-list-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="/cdn-cgi/l/email-protection#98f1f6fef7d8f9eaf3ebfeb6fbe2"><span class="__cf_email__" data-cfemail="98f1f6fef7d8f9eaf3ebfeb6fbe2">[email&#160;protected]</span></a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-list-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4>Otevírací doba</h4>
+                                <p style="font-size: 14px; color: var(--gray-600);">Po–Pá dle domluvy</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="contact-form reveal-right">
+                    <h3>Napište nám</h3>
+                    <form id="contactForm" action="https://formspree.io/f/xykdjrzk" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Jméno *</label>
+                                <input type="text" id="name" name="name" required placeholder="Vaše jméno">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="vas@email.cz">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+420 xxx xxx xxx">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Zpráva *</label>
+                            <textarea id="message" name="message" required placeholder="Popište vaši situaci..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Odeslat zprávu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <svg class="logo-extended" viewBox="0 0 455 219" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 129L31.9855 27.5793C31.9855 27.5793 39.1694 8.0442e-05 91.6805 0C149.494 -0.0001326 143.849 27.5793 143.849 27.5793L134.613 129H72.0102L87.4043 51.4221C87.4043 51.4221 88.0555 47.3267 83.6527 47.3267C79.2499 47.3267 78.3389 51.4221 78.3389 51.4221L62.0896 129H0Z" fill="#FFFFFF"/>
+                        <path d="M207.872 129.156H143.062L172.557 4H268.606C268.606 4 309.937 4.87278 309.937 36.6418C309.937 68.4108 289.175 79.5823 289.175 79.5823L293.056 129.156H268.606H218.35L236.784 50.9553C236.784 50.9553 237.901 46.5363 232.352 46.5363C226.802 46.5363 226.112 50.9553 226.112 50.9553L207.872 129.156Z" fill="#FFFFFF"/>
+                        <path d="M356.239 129.156L364.484 89.5407C364.484 89.5407 365.105 86.1205 369.5 86C375 86 374 89.5 374 89.5L366.267 129.156L430.505 129.156L425.801 66.0521L455 4H391L382.5 43.7905C382.5 43.7905 381.484 47.5179 376.992 47.5179C372.5 47.5179 373 43.7905 373 43.7905L380.5 4H326.688L302.031 129.156L356.239 129.156Z" fill="#FFFFFF"/>
+                        <path d="M73.2164 205.701C70.8323 205.701 68.6819 205.296 66.7652 204.486C64.8642 203.675 63.2903 202.522 62.0437 201.026C60.8127 199.515 60.0102 197.731 59.6362 195.674L63.937 194.996C64.4824 197.115 65.6121 198.775 67.3262 199.975C69.0559 201.159 71.0894 201.751 73.4268 201.751C74.9383 201.751 76.3018 201.517 77.5172 201.05C78.7483 200.567 79.7222 199.881 80.439 198.993C81.1558 198.105 81.5142 197.053 81.5142 195.837C81.5142 195.089 81.3817 194.451 81.1168 193.921C80.8675 193.375 80.5169 192.916 80.065 192.542C79.6287 192.152 79.1301 191.825 78.5691 191.56C78.0081 191.295 77.4238 191.077 76.816 190.906L68.2378 188.358C67.3028 188.077 66.399 187.727 65.5264 187.306C64.6538 186.87 63.8747 186.332 63.189 185.693C62.5034 185.039 61.958 184.26 61.5528 183.356C61.1477 182.436 60.9451 181.353 60.9451 180.107C60.9451 178.112 61.4593 176.414 62.4878 175.011C63.5318 173.593 64.9421 172.51 66.7185 171.762C68.4949 171.014 70.4973 170.648 72.7256 170.664C74.9851 170.679 77.003 171.084 78.7794 171.879C80.5714 172.658 82.0518 173.78 83.2205 175.245C84.4048 176.71 85.1995 178.463 85.6046 180.504L81.187 181.275C80.9532 179.904 80.4312 178.728 79.6209 177.746C78.8262 176.749 77.8289 175.985 76.629 175.455C75.4292 174.91 74.1124 174.629 72.6788 174.614C71.3076 174.598 70.0687 174.816 68.9624 175.268C67.856 175.72 66.9756 176.351 66.3211 177.162C65.6667 177.956 65.3394 178.876 65.3394 179.92C65.3394 180.948 65.6355 181.782 66.2276 182.421C66.8198 183.044 67.5444 183.543 68.4014 183.917C69.274 184.275 70.1233 184.571 70.9492 184.805L77.3536 186.651C78.086 186.854 78.9275 187.135 79.878 187.493C80.8441 187.851 81.7791 188.358 82.6829 189.012C83.5867 189.651 84.3347 190.508 84.9268 191.583C85.5189 192.643 85.815 193.983 85.815 195.604C85.815 197.224 85.4878 198.666 84.8333 199.928C84.1944 201.19 83.2984 202.25 82.1453 203.107C80.9922 203.948 79.6521 204.587 78.125 205.023C76.5979 205.475 74.9617 205.701 73.2164 205.701ZM101.119 167.485H97.7302L100.792 159.771H104.181L101.119 167.485ZM97.2628 205V171.342H101.423V205H97.2628ZM114.981 205V171.342H119.142V201.05H134.756V205H114.981ZM142.449 205L153.716 171.342H159.512L170.779 205H166.454L155.913 173.772H157.222L146.774 205H142.449ZM147.872 197.123V193.22H165.356V197.123H147.872ZM207.415 205.701C205.545 205.701 203.8 205.429 202.179 204.883C200.559 204.338 199.203 203.481 198.112 202.312C197.271 201.377 196.64 200.349 196.219 199.227C195.814 198.089 195.588 196.889 195.541 195.627C195.541 194.396 195.72 193.196 196.079 192.027C196.437 190.843 197.006 189.791 197.785 188.872C198.19 188.373 198.642 187.953 199.141 187.61C199.655 187.251 200.169 186.948 200.683 186.698C199.608 185.545 198.782 184.462 198.206 183.449C197.645 182.436 197.364 181.213 197.364 179.78C197.364 177.956 197.832 176.312 198.767 174.848C199.717 173.367 201.011 172.284 202.647 171.599C203.441 171.256 204.252 171.022 205.078 170.897C205.919 170.757 206.737 170.687 207.532 170.687C208.872 170.687 210.173 170.874 211.435 171.248C212.698 171.622 213.773 172.23 214.661 173.071C215.253 173.57 215.76 174.146 216.18 174.801C216.601 175.44 216.928 176.11 217.162 176.811L213.095 177.863C212.799 177.068 212.308 176.398 211.622 175.853C211.077 175.385 210.438 175.066 209.706 174.894C208.989 174.723 208.264 174.637 207.532 174.637C206.316 174.637 205.218 174.871 204.236 175.338C203.364 175.759 202.709 176.351 202.273 177.115C201.836 177.863 201.618 178.751 201.618 179.78C201.618 180.668 201.766 181.4 202.062 181.977C202.374 182.538 202.803 183.138 203.348 183.776C203.675 184.119 204.041 184.485 204.447 184.875C204.867 185.249 205.296 185.639 205.732 186.044L215.643 195.253C215.689 194.863 215.721 194.466 215.736 194.061C215.752 193.656 215.76 193.266 215.76 192.892L215.736 188.241H219.546V193.71C219.546 194.817 219.507 195.759 219.429 196.539C219.367 197.318 219.258 197.964 219.102 198.479L223.379 202.429L220.668 205.327L217.115 201.961C216.508 202.647 215.783 203.247 214.941 203.761C214.1 204.275 213.259 204.665 212.417 204.93C211.622 205.226 210.804 205.429 209.963 205.538C209.121 205.647 208.272 205.701 207.415 205.701ZM207.509 201.704C208.272 201.704 208.966 201.658 209.589 201.564C210.212 201.471 210.804 201.291 211.365 201.026C212.113 200.668 212.69 200.325 213.095 199.998C213.5 199.671 213.835 199.367 214.1 199.086L203.839 189.69C203.278 189.877 202.748 190.126 202.249 190.438C201.766 190.75 201.346 191.116 200.987 191.537C200.582 192.035 200.278 192.62 200.076 193.29C199.889 193.96 199.795 194.669 199.795 195.417C199.811 196.211 199.943 196.944 200.193 197.614C200.442 198.284 200.792 198.884 201.244 199.414C201.93 200.208 202.857 200.793 204.026 201.167C205.195 201.525 206.355 201.704 207.509 201.704ZM248.713 205V171.342H268.347V175.502H252.874V186.09H265.542V190.251H252.874V205H248.713ZM286.685 205V190.999L275.349 171.342H280.187L288.789 186.231L297.367 171.342H302.205L290.892 190.999V205H286.685ZM310.607 205V204.252L328.394 175.292H311.308V171.342H335.406V172.136L317.712 201.05H335.173V205H310.607ZM347.578 205V171.342H351.738V205H347.578ZM378.666 205.701C375.316 205.701 372.472 204.961 370.135 203.481C367.797 202 366.013 199.943 364.782 197.31C363.567 194.677 362.959 191.63 362.959 188.171C362.959 184.711 363.567 181.665 364.782 179.032C366.013 176.398 367.797 174.341 370.135 172.861C372.472 171.38 375.316 170.64 378.666 170.64C382.032 170.64 384.884 171.38 387.221 172.861C389.558 174.341 391.335 176.398 392.55 179.032C393.766 181.665 394.373 184.711 394.373 188.171C394.373 191.63 393.766 194.677 392.55 197.31C391.335 199.943 389.558 202 387.221 203.481C384.884 204.961 382.032 205.701 378.666 205.701ZM378.666 201.728C381.175 201.743 383.263 201.182 384.93 200.045C386.613 198.892 387.868 197.294 388.694 195.253C389.535 193.212 389.956 190.851 389.956 188.171C389.956 185.475 389.535 183.114 388.694 181.088C387.868 179.063 386.613 177.481 384.93 176.344C383.263 175.206 381.175 174.629 378.666 174.614C376.157 174.598 374.069 175.159 372.402 176.297C370.75 177.434 369.504 179.024 368.662 181.065C367.821 183.106 367.392 185.475 367.377 188.171C367.361 190.851 367.774 193.204 368.615 195.23C369.457 197.255 370.711 198.845 372.379 199.998C374.061 201.136 376.157 201.712 378.666 201.728Z" fill="#FFFFFF"/>
+                    </svg>
+                    <p>ARK je místo, kde se znovu buduje důvěra v tělo.</p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/ark_sila_fyzio" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-nav-columns">
+                    <div>
+                        <h4>Navigace</h4>
+                        <ul class="footer-links">
+                            <li><a href="#sluzby">Služby</a></li>
+                            <li><a href="#o-nas">O nás</a></li>
+                            <li><a href="#pristup">Náš přístup</a></li>
+                            <li><a href="#cenik">Ceník</a></li>
+                            <li><a href="#spoluprace">Spolupráce</a></li>
+                            <li><a href="#kontakt">Kontakt</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Pro klienty</h4>
+                        <ul class="footer-links">
+                            <li><a href="rezervace.html">Rezervace</a></li>
+                            <li><a href="vop.html">Obchodní podmínky</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ARK – Síla & Fyzio</p>
+                <p>Nademlejnská 651/7, 198 00 Praha 9</p>
+                <p>jednatel Ing. Bc. Tomáš Neubert</p>
+                <p>vibecoded by: <a href="https://www.linkedin.com/in/anna-kutikova/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline; text-underline-offset: 2px;">Anna Kutíková ✳</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-inner">
+            <p>Tento web používá cookies pro zlepšení vašeho zážitku.</p>
+            <div class="cookie-actions">
+                <button class="btn btn-secondary btn-sm" onclick="closeCookie()">Odmítnout</button>
+                <button class="btn btn-primary btn-sm" onclick="closeCookie()">Přijmout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mobileNav');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Cookie Banner
+        function closeCookie() {
+            document.getElementById('cookieBanner').classList.remove('active');
+            localStorage.setItem('cookies', 'set');
+        }
+        if (!localStorage.getItem('cookies')) {
+            setTimeout(() => {
+                document.getElementById('cookieBanner').classList.add('active');
+            }, 1000);
+        }
+
+        // Form Submit
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Děkujeme! Ozveme se vám co nejdříve.');
+            this.reset();
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                e.preventDefault();
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const shapes = document.querySelectorAll('.parallax-shape');
+            shapes.forEach((shape, i) => {
+                const speed = (i + 1) * 0.05;
+                shape.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
