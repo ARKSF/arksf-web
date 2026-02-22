@@ -195,7 +195,10 @@
             <iframe src="https://arksf.fyzion.cz/reservations"></iframe>
         </div>
     </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         function openModal(){document.getElementById('reservationModal').classList.add('active');document.body.style.overflow='hidden'}
         function closeModal(){document.getElementById('reservationModal').classList.remove('active');document.body.style.overflow=''}
-        document.getElementById('reservationModal').addEventListener('click',function(e){if(e.target==
+        document.getElementById('reservationModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+    </script>
+</body>
+</html>
