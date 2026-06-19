@@ -1944,13 +1944,33 @@
         }
 
         // Form Submit
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('Děkujeme! Ozveme se vám co nejdříve.');
-            this.reset();
+            var btn = this.querySelector('button[type="submit"]');
+            var originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.textContent = 'Odesílám...';
+
+            try {
+                var response = await fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    this.innerHTML = '<p style="text-align:center;padding:32px 0;font-size:17px;color:#7C3AED;font-weight:600;">&#10003; Zpráva odeslána!<br><span style="font-size:14px;color:#4B5563;font-weight:400;display:block;margin-top:8px;">Ozveme se vám co nejdříve.</span></p>';
+                } else {
+                    throw new Error('err');
+                }
+            } catch (err) {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+                alert('Nepodařilo se odeslat zprávu. Zkuste to prosím znovu nebo nás kontaktujte na info@arksf.cz');
+            }
         });
 
-        // Smooth Scroll
+                // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', function(e) {
                 e.preventDefault();
