@@ -502,6 +502,162 @@
         .value-card:hover h4 { color: var(--accent); }
         .value-card p { font-size: 14px; color: rgba(255,255,255,0.5); margin: 0; }
 
+        /* TEAM */
+        .team { background: var(--white); }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .team-card {
+            position: relative;
+            aspect-ratio: 3 / 4;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--soft);
+        }
+        .team-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .team-card:hover img { transform: scale(1.06); }
+        .team-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15,15,26,0.9) 0%, rgba(15,15,26,0.45) 40%, rgba(15,15,26,0) 68%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+        .team-card-name {
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+        .team-card-role {
+            color: rgba(255,255,255,0.75);
+            font-size: 12.5px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        .team-card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.3s ease;
+        }
+        .team-card-cta svg { width: 14px; height: 14px; }
+        .team-card:hover .team-card-cta { opacity: 1; transform: translateY(0); }
+
+        /* TEAM MODAL */
+        .team-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 15, 26, 0.72);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .team-modal-backdrop.active {
+            display: flex;
+            opacity: 1;
+        }
+        .team-modal {
+            display: none;
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            max-width: 940px;
+            width: 100%;
+            height: 520px;
+            max-height: 85vh;
+            grid-template-columns: 420px 1fr;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        .team-modal.active { display: grid; }
+        .team-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            transition: all 0.2s ease;
+        }
+        .team-modal-close:hover { background: var(--white); transform: scale(1.08); }
+        .team-modal-photo {
+            position: relative;
+            height: 100%;
+        }
+        .team-modal-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .team-modal-content {
+            height: 100%;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        .team-modal-content .team-name { font-size: 22px; margin-bottom: 4px; }
+        .team-modal-content .team-role {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .team-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .team-tag {
+            font-size: 12px;
+            background: var(--soft);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+        .team-bio p {
+            color: var(--gray-600);
+            font-size: 14.5px;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
         /* APPROACH */
         .approach { background: var(--bg); }
         .approach-grid {
@@ -1263,6 +1419,7 @@
             .hero-graphic { display: none; }
             .hero h1 { font-size: clamp(36px, 8vw, 56px); }
             .services-grid { grid-template-columns: 1fr 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
             .approach-grid { grid-template-columns: 1fr; gap: 48px; }
             .pricing-paths { grid-template-columns: 1fr; }
             .pricing-group-content { flex-direction: column; text-align: center; }
@@ -1286,6 +1443,10 @@
             .hero { padding: 100px 0 60px; }
             .hero-title { font-size: 32px; }
             .services-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .team-modal { grid-template-columns: 1fr; height: auto; max-height: 90vh; }
+            .team-modal-photo { height: auto; min-height: 200px; max-height: 34vh; }
+            .team-modal-content { height: auto; padding: 28px 24px; }
             .values-grid { grid-template-columns: 1fr; gap: 12px; }
             .value-card { padding: 20px; }
             .value-card h4 { font-size: 16px; }
@@ -1338,6 +1499,7 @@
             <ul class="nav-menu">
                 <li><a href="#sluzby" class="nav-link">Služby</a></li>
                 <li><a href="#o-nas" class="nav-link">O nás</a></li>
+                <li><a href="#tym" class="nav-link">Náš tým</a></li>
                 <li><a href="#pristup" class="nav-link">Náš přístup</a></li>
                 <li><a href="#cenik" class="nav-link">Ceník</a></li>
                 <li><a href="#spoluprace" class="nav-link">Spolupráce</a></li>
@@ -1362,6 +1524,7 @@
         <ul class="mobile-nav-menu">
             <li><a href="#sluzby" onclick="toggleMobileMenu()">Služby</a></li>
             <li><a href="#o-nas" onclick="toggleMobileMenu()">O nás</a></li>
+            <li><a href="#tym" onclick="toggleMobileMenu()">Náš tým</a></li>
             <li><a href="#pristup" onclick="toggleMobileMenu()">Náš přístup</a></li>
             <li><a href="#cenik" onclick="toggleMobileMenu()">Ceník</a></li>
             <li><a href="#spoluprace" onclick="toggleMobileMenu()">Spolupráce</a></li>
@@ -1486,6 +1649,154 @@
             </div>
         </div>
     </section>
+
+    <!-- Team -->
+    <section class="team section" id="tym">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">// Náš tým</span>
+                <h2 class="section-title">Kdo se o vás postará</h2>
+                <p class="section-subtitle">Fyzioterapeuti a osobní trenéři, kteří kombinují vědecký přístup s lidským přístupem. Klikněte na kohokoliv a přečtěte si jeho příběh.</p>
+            </div>
+
+            <div class="team-grid">
+
+                <div class="team-card reveal delay-1" onclick="openTeamModal('tomas')">
+                    <img src="tym/tomas-neubert.jpg" alt="Ing. Bc. Tomáš Neubert">
+                    <div class="team-card-overlay">
+                        <h3 class="team-card-name">Tomáš Neubert</h3>
+                        <p class="team-card-role">zakladatel ARK, fyzioterapeut</p>
+                        <span class="team-card-cta">Číst medailonek
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="team-card reveal delay-2" onclick="openTeamModal('david')">
+                    <img src="tym/david-jisl.jpg" alt="Bc. David Jisl">
+                    <div class="team-card-overlay">
+                        <h3 class="team-card-name">David Jisl</h3>
+                        <p class="team-card-role">fyzioterapeut a osobní trenér</p>
+                        <span class="team-card-cta">Číst medailonek
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="team-card reveal delay-3" onclick="openTeamModal('kristyna')">
+                    <img src="tym/kristyna-ranawat.jpg" alt="Bc. Kristýna Ranawat">
+                    <div class="team-card-overlay">
+                        <h3 class="team-card-name">Kristýna Ranawat</h3>
+                        <p class="team-card-role">fyzioterapeutka a trenérka</p>
+                        <span class="team-card-cta">Číst medailonek
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="team-card reveal delay-4" onclick="openTeamModal('michal')">
+                    <img src="tym/michal-marek.jpg" alt="Mgr. Michal Marek">
+                    <div class="team-card-overlay">
+                        <h3 class="team-card-name">Michal Marek</h3>
+                        <p class="team-card-role">fyzioterapeut a osobní trenér</p>
+                        <span class="team-card-cta">Číst medailonek
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Modals -->
+    <div class="team-modal-backdrop" id="teamModalBackdrop" onclick="if(event.target===this) closeTeamModal()">
+
+        <div class="team-modal" data-member="tomas">
+            <button class="team-modal-close" onclick="closeTeamModal()" aria-label="Zavřít">×</button>
+            <div class="team-modal-photo"><img src="tym/tomas-neubert.jpg" alt="Ing. Bc. Tomáš Neubert"></div>
+            <div class="team-modal-content">
+                <h3 class="team-name">Ing. Bc. Tomáš Neubert</h3>
+                <p class="team-role">zakladatel ARK, fyzioterapeut a osobní trenér</p>
+                <div class="team-tags">
+                    <span class="team-tag">návrat do kondice po porodu</span>
+                    <span class="team-tag">sportovní zranění kloubů a svalů</span>
+                    <span class="team-tag">dlouhodobá bolest</span>
+                    <span class="team-tag">návrat k běžnému fungování</span>
+                </div>
+                <div class="team-bio">
+                    <p>Pomáhám nejčastěji ženám, které se chtějí po porodu vrátit zpátky do kondice, rekreačním i poloprofesionálním sportovcům, které trápí zranění kloubů nebo svalů, a lidem jakéhokoliv věku, kterým dlouhodobá bolest bere chuť do běžných věcí a nejvíc ze všeho chtějí zase normálně fungovat.</p>
+                    <p>Vystudoval jsem fyzioterapii a svoje postupy opírám hlavně o vědecké studie a mezinárodní doporučené postupy. Nejradši se přitom dál vzdělávám na kurzech u předních světových odborníků, kteří sami stojí za nejnovějším výzkumem. Pracuji klientsky, takže první, co potřebuju vědět, je, co je důležité pro vás, co od spolupráce čekáte a kam se chcete dostat.</p>
+                    <p>Pohyb beru jako jednu z nejlepších prevencí a věřím, že tělo je často potřeba naopak dostatečně zatížit. Většina mojí práce proto stojí na tom, naučit člověka nebát se pohybu a získat zpátky důvěru ve vlastní tělo. Přesně proto mi spojení silového tréninku a fyzioterapie dává takový smysl, že jsem kolem něj postavil ARK. Nejvíc mě potěší, když mi klient napíše, že zvládl něco, čeho se ještě nedávno bál.</p>
+                    <p>Od mládí jsem sportoval, od vesnické úrovně až po tu světovou, a cestou nasbíral spoustu zranění. Vždycky mě přitom hnalo hlavně jedno, vrátit se zpátky k pohybu, a právě to mě nakonec přivedlo ke spojení rehabilitace a tréninku. Volný čas trávím s rodinou a přáteli, nejradši u dobrého kafe nebo někde v horách s krosnou na zádech a pohorkami zamazanými od hlíny.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-modal" data-member="david">
+            <button class="team-modal-close" onclick="closeTeamModal()" aria-label="Zavřít">×</button>
+            <div class="team-modal-photo"><img src="tym/david-jisl.jpg" alt="Bc. David Jisl"></div>
+            <div class="team-modal-content">
+                <h3 class="team-name">Bc. David Jisl</h3>
+                <p class="team-role">fyzioterapeut a osobní trenér</p>
+                <div class="team-tags">
+                    <span class="team-tag">síla a soběstačnost ve vyšším věku</span>
+                    <span class="team-tag">pohybová příprava dětí a mládeže</span>
+                    <span class="team-tag">návrat ke sportu a výkonu</span>
+                    <span class="team-tag">stavy po operacích a úrazech</span>
+                </div>
+                <div class="team-bio">
+                    <p>Baví mě pomáhat lidem, kteří si chtějí udržet sílu a soběstačnost i v pozdějším věku. Vedle toho pracuji se sportovci, kteří se vracejí zpátky k pohybu a výkonu, od atletiky po bojové sporty, a s lidmi po operacích a úrazech, včetně těch větších, jako je náhrada kyčle.</p>
+                    <p>Vystudoval jsem bakaláře na 2. lékařské fakultě, kde teď dělám magistra. Vedle fyzioterapie trénuji i atletické žactvo a záleží mi na tom, aby se děti co nejvíc hýbaly a bavil je pohyb. Fungování lidského těla je složité a právě to mě na téhle práci baví. Nechci nic uspěchat ani slibovat zázraky přes noc. Jde mi hlavně o to, aby člověk porozuměl tomu, proč ho něco bolí a jak s tím může pracovat.</p>
+                    <p>Věřím, že opravdová změna, ať už jde o bolest nebo o lepší formu, přichází přes aktivní účast, ne přes zkratky a pasivní metody. Vážím si každého, kdo se rozhodne na sobě zapracovat, a nejvíc mě baví sledovat, jak se klient krok za krokem zlepšuje a jak mu pohyb mění život.</p>
+                    <p>Sám jsem se zranil mockrát, od vymknutých kotníků a natržených hamstringů ze závodní atletiky, po bolavé šlachy z běhání a posilování, a právě to mě nakonec do oboru přivedlo. Ve volnu sám trénuju na závody ve čtyřboji, lezu bouldery a rád zajdu do kina.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-modal" data-member="kristyna">
+            <button class="team-modal-close" onclick="closeTeamModal()" aria-label="Zavřít">×</button>
+            <div class="team-modal-photo"><img src="tym/kristyna-ranawat.jpg" alt="Bc. Kristýna Ranawat"></div>
+            <div class="team-modal-content">
+                <h3 class="team-name">Bc. Kristýna Ranawat</h3>
+                <p class="team-role">fyzioterapeutka a osobní trenérka</p>
+                <div class="team-tags">
+                    <span class="team-tag">silový trénink pro začátečníky</span>
+                    <span class="team-tag">sportovci z tance a gymnastiky</span>
+                    <span class="team-tag">návrat k pohybu po operacích a úrazech</span>
+                </div>
+                <div class="team-bio">
+                    <p>Pracuji hlavně s lidmi, kteří se silovým tréninkem teprve začínají, a se sportovci, zejména z tance a gymnastiky. Často za mnou chodí i lidé po operacích a úrazech nohou nebo ramen.</p>
+                    <p>Vystudovala jsem bakalářskou fyzioterapii na 2. lékařské fakultě a teď dodělávám magistra v aplikované fyzioterapii. K tomu se dál vzdělávám v silovém tréninku a plyometrii. Vycházím z toho, co má oporu v datech, ale stejně důležitý je pro mě zdravý rozum. Neběžím slepě za trendy a nedělám věci složitější, než musí být.</p>
+                    <p>Nejdřív potřebuju pochopit, co vás omezuje a k čemu se chcete vrátit. Pak společně nastavíme reálné cíle, ať je změna vidět krok za krokem. Ráda lidem ukazuju, že zvládnou víc, než si sami myslí, a záleží mi na tom, abyste se časem obešli beze mě.</p>
+                    <p>Přes deset let jsem se věnovala sportovnímu tanci, poslední sezónu i v české reprezentaci. Právě kvůli němu jsem si natrhla hamstring, začala chodit na fyzioterapii a nakonec ji šla i studovat. Ve volnu hraju na kytaru, chodím na golf a nejradši vypnu někde v přírodě.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-modal" data-member="michal">
+            <button class="team-modal-close" onclick="closeTeamModal()" aria-label="Zavřít">×</button>
+            <div class="team-modal-photo"><img src="tym/michal-marek.jpg" alt="Mgr. Michal Marek"></div>
+            <div class="team-modal-content">
+                <h3 class="team-name">Mgr. Michal Marek</h3>
+                <p class="team-role">fyzioterapeut a osobní trenér</p>
+                <div class="team-tags">
+                    <span class="team-tag">bolesti zad</span>
+                    <span class="team-tag">návrat k pohybu po úrazech a operacích</span>
+                    <span class="team-tag">silový trénink pro začátečníky i sportovce</span>
+                    <span class="team-tag">běžci</span>
+                </div>
+                <div class="team-bio">
+                    <p>Nejčastěji ke mně chodí lidé po úrazech a operacích, ale i s akutními nebo dlouhodobými bolestmi. Stejně tak sportovci a úplní začátečníci, kteří chtějí se silovým tréninkem teprve začít nebo si zlepšit kondici. S každým hledám cestu, jak se bezbolestně a beze strachu vrátit k pohybu.</p>
+                    <p>Vystudoval jsem fyzioterapii na brněnské lékařské fakultě a od té doby prošel kurzy hlavně kolem bolestí zad a fyzioterapie ve sportu. Vycházím převážně z moderního chápání bolesti a schopnosti našeho těla se adaptovat na zátěž, které ho vystavíme.</p>
+                    <p>Nejdřív spolu vyloučíme, že za potížemi nestojí něco vážného, pak si řekneme, co je pro vás důležité a čeho chcete dosáhnout, a nakonec najdeme formu pohybu, která vám sedne a bude vás bavit. Věřím, že žádný pohyb není špatný, když je správně dávkovaný.</p>
+                    <p>Se zády se peru sám už od mládí a na pár blízkých jsem viděl, jak umí zhoršené zdraví na čas sebrat to, na čem člověku opravdu záleží. Být v té situaci pro někoho oporou mě motivuje. Ve volnu běhám dlouhé tratě, čtu a dlouhodobě se utápím ve světě výběrové kávy.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
     <!-- Approach -->
     <section class="approach section" id="pristup">
@@ -1894,6 +2205,7 @@
                         <ul class="footer-links">
                             <li><a href="#sluzby">Služby</a></li>
                             <li><a href="#o-nas">O nás</a></li>
+                            <li><a href="#tym">Náš tým</a></li>
                             <li><a href="#pristup">Náš přístup</a></li>
                             <li><a href="#cenik">Ceník</a></li>
                             <li><a href="#spoluprace">Spolupráce</a></li>
@@ -1936,6 +2248,24 @@
             nav.classList.toggle('active');
             document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
         }
+
+        // Team Modals
+        function openTeamModal(id) {
+            const backdrop = document.getElementById('teamModalBackdrop');
+            document.querySelectorAll('.team-modal').forEach(m => {
+                m.classList.toggle('active', m.dataset.member === id);
+            });
+            backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeTeamModal() {
+            document.getElementById('teamModalBackdrop').classList.remove('active');
+            document.querySelectorAll('.team-modal').forEach(m => m.classList.remove('active'));
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeTeamModal();
+        });
 
         // Cookie Banner
         function closeCookie() {
