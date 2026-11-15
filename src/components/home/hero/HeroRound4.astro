@@ -28,7 +28,7 @@ const dark = (_v: number) => false;
 // The slashes are tall and narrow, so a photo is drawn much wider than its slot (object-fit: cover).
 // `sizes` states that drawn width, so the browser picks a file sharp enough for retina screens.
 const SLASH_SIZES = ['(max-width: 900px) 60vw, 480px', '(max-width: 900px) 120vw, 960px'];
-const SLASH_ALT = ['Trénink s fyzioterapeutem', 'Skupinová lekce'];
+const SLASH_ALT = ['Trénink s fyzioterapeutem', 'Cvičení s kettlebellem na skupinové lekci'];
 ---
 {variants.map((v) => (
 <section class:list={['hero', `hero--v${v}`, dark(v) && 'hero--dark']} data-hero={offset + v} hidden={tools && offset + v !== chosen ? true : undefined}>
@@ -98,29 +98,16 @@ const SLASH_ALT = ['Trénink s fyzioterapeutem', 'Skupinová lekce'];
 
     /* ── 16 Lomítka ── */
     .h16-slashes { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0; height: min(600px, 72vh); }
-    .h16-slash { position: relative; overflow: hidden; clip-path: polygon(38% 0, 100% 0, 62% 100%, 0 100%); }
-    .h16-slash--1 { margin-right: -18%; }
-    .h16-slash--2 { margin-left: -18%; transform: translateY(var(--space-48)); }
+    .h16-slash { position: relative; overflow: hidden; clip-path: polygon(28% 0, 100% 0, 72% 100%, 0 100%); }
+    .h16-slash--1 { margin-right: -13%; }
+    .h16-slash--2 { margin-left: -13%; transform: translateY(var(--space-48)); }
     .h16-slash :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .h16-slash--1 :global(img) { object-position: 50% 35%; }
-    .h16-slash--2 :global(img) { object-position: 52% 40%; }
-    .hero--v1::before {
-        content: '';
-        position: absolute;
-        right: 6%;
-        top: 14%;
-        width: 120px;
-        height: 72%;
-        background: linear-gradient(180deg, var(--color-brand), var(--color-accent));
-        clip-path: polygon(70% 0, 100% 0, 30% 100%, 0 100%);
-        opacity: 0.9;
-    }
+    .h16-slash--1 :global(img) { object-position: 78% center; }
+    .h16-slash--2 :global(img) { object-position: 100% 40%; }
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
         .hero { min-height: auto; padding-top: calc(var(--header-height) + var(--space-40)); padding-bottom: var(--space-48); }
         .hero-inner { grid-template-columns: 1fr; gap: var(--space-40); }
         .h16-slashes { height: 360px; }
-        .hero--v1::before { display: none; }
-    }
-</style>
+    </style>

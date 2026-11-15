@@ -1,6 +1,7 @@
 ---
-// Home: the three ways to work with ARK as tall photo panels cut on the "//" slant.
-// Hovering (or focusing) a panel widens it and reveals its text; on phones the panels stack.
+// Home: the three ways to work with ARK as tall photos cut on the "//" slant, text below each photo.
+// The cut is a fixed pixel offset (--slant), so the gaps stay parallel when a hovered panel widens.
+// On phones the panels stack.
 // Each panel links to its part of the Spolupráce page. Photos from src/data/photos.json.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
@@ -24,8 +25,7 @@ const fileFor: Record<string, string> = { konzultace: photos.konzultace, trenink
         <div class="panels">
             {paths.items.map((item, i) => (
                 <a href={`spoluprace.html#${item.id}`} class={`panel panel--${i + 1} reveal delay-${i + 1}`}>
-                    <Image src={pic(fileFor[item.id])} alt="" widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 100vw, 620px" quality={85} />
-                    <span class="panel-shade" aria-hidden="true"></span>
+                    <span class="panel-photo"><Image src={pic(fileFor[item.id])} alt="" widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 100vw, 620px" quality={85} /></span>
                     <span class="panel-body">
                         <span class="panel-num">0{i + 1} //</span>
                         <span class="panel-title">{item.title}</span>
@@ -43,81 +43,62 @@ const fileFor: Record<string, string> = { konzultace: photos.konzultace, trenink
 
 <style>
     .paths { background: var(--color-surface-alt); }
-    .panels {
-        display: flex;
-        height: min(560px, 70vh);
-    }
+    .panels { display: flex; align-items: flex-start; }
     .panel {
-        position: relative;
         flex: 1 1 0;
         min-width: 0;
-        overflow: hidden;
-        color: var(--color-text-inverse);
-        clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
-        margin-left: -3.6%;
+        display: flex;
+        flex-direction: column;
+        color: var(--color-text);
+        margin-left: calc(var(--space-16) - var(--slant));
         transition: flex-grow var(--duration-slow) var(--ease-standard);
     }
-    .panel:first-child { margin-left: 0; clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%); }
-    .panel:last-child { clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
-    .panel:hover, .panel:focus-visible { flex-grow: 1.7; outline: none; }
-    .panel :global(img) {
-        position: absolute;
-        inset: 0;
+    .panel:first-child { margin-left: 0; }
+    .panel:hover, .panel:focus-visible { flex-grow: 1.5; outline: none; }
+    .panel-photo {
+        position: relative;
+        display: block;
+        height: min(440px, 56vh);
+        overflow: hidden;
+        clip-path: polygon(var(--slant) 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+    }
+    .panel:first-child .panel-photo { clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%); }
+    .panel:last-child .panel-photo { clip-path: polygon(var(--slant) 0, 100% 0, 100% 100%, 0 100%); }
+    .panel-photo :global(img) {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
         transition: transform var(--duration-reveal) var(--ease-standard);
     }
-    .panel:hover :global(img), .panel:focus-visible :global(img) { transform: scale(1.04); }
-    .panel--1 :global(img) { object-position: 35% center; }
-    .panel--2 :global(img) { object-position: center 40%; }
-    .panel--3 :global(img) { object-position: 55% center; }
-    .panel-shade {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(0deg, var(--color-scrim-90) 0%, var(--color-scrim-45) 45%, var(--color-scrim-0) 75%);
-    }
+    .panel:hover .panel-photo :global(img), .panel:focus-visible .panel-photo :global(img) { transform: scale(1.04); }
+    .panel--1 .panel-photo :global(img) { object-position: 35% center; }
+    .panel--2 .panel-photo :global(img) { object-position: center 40%; }
+    .panel--3 .panel-photo :global(img) { object-position: 55% center; }
     .panel-body {
-        position: absolute;
-        left: 18%;
-        right: 12%;
-        bottom: var(--space-32);
         display: flex;
         flex-direction: column;
         gap: var(--space-8);
+        padding: var(--space-24) var(--space-48) 0 0;
     }
-    .panel:first-child .panel-body { left: var(--space-32); }
-    .panel-num { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-sm); color: var(--color-accent); letter-spacing: var(--tracking-label); }
-    .panel-title { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-2xl); line-height: var(--leading-snug); }
-    .panel-text, .panel-more {
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: all var(--duration-slow) var(--ease-standard);
-    }
-    .panel-text { color: var(--color-text-inverse-strong); }
-    .panel-more { display: inline-flex; align-items: center; gap: var(--space-8); font-family: var(--font-heading); font-weight: var(--fw-semibold); }
-    .panel-more :global(svg) { width: 18px; height: 18px; }
-    .panel:hover .panel-text, .panel:focus-visible .panel-text,
-    .panel:hover .panel-more, .panel:focus-visible .panel-more { max-height: 120px; opacity: 1; }
+    .panel:not(:first-child) .panel-body { padding-left: var(--space-16); }
+    .panel-num { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-sm); color: var(--color-brand); letter-spacing: var(--tracking-label); }
+    .panel-title { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-xl); line-height: var(--leading-snug); transition: color var(--duration-base) var(--ease-standard); }
+    .panel-text { color: var(--color-text-muted); }
+    .panel-more { display: inline-flex; align-items: center; gap: var(--space-8); margin-top: var(--space-4); font-family: var(--font-heading); font-weight: var(--fw-semibold); color: var(--color-brand); }
+    .panel-more :global(svg) { width: 18px; height: 18px; transition: transform var(--duration-base) var(--ease-standard); }
+    .panel:hover .panel-title, .panel:focus-visible .panel-title { color: var(--color-brand); }
+    .panel:hover .panel-more :global(svg), .panel:focus-visible .panel-more :global(svg) { transform: translateX(4px); }
+    .panel:focus-visible .panel-photo { box-shadow: var(--focus-ring); }
     .paths-more { display: flex; justify-content: center; margin-top: var(--space-48); }
 
-    /* Touch screens have no hover: show the text always */
-    @media (hover: none) {
-        .panel-text, .panel-more { max-height: none; opacity: 1; }
-    }
     @media (max-width: 900px) {
-        .panels { flex-direction: column; height: auto; gap: 0; }
-        .panel, .panel:first-child, .panel:last-child {
-            flex: none;
-            height: 300px;
-            margin: calc(var(--space-24) * -1) 0 0;
-            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        .panels { flex-direction: column; gap: var(--space-40); }
+        .panel, .panel:first-child { flex: none; width: 100%; margin-left: 0; }
+        .panel-photo, .panel:first-child .panel-photo, .panel:last-child .panel-photo {
+            height: 260px;
+            clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
         }
-        .panel:first-child { margin-top: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
-        .panel:last-child { clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); }
-        .panel-body, .panel:first-child .panel-body { left: var(--space-24); right: var(--space-24); bottom: var(--space-48); }
-        .panel:last-child .panel-body { bottom: var(--space-24); }
-        .panel-text, .panel-more { max-height: none; opacity: 1; }
+        .panel-body, .panel:not(:first-child) .panel-body { padding: var(--space-16) 0 0; }
     }
 </style>

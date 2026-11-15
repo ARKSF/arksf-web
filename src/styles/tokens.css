@@ -138,6 +138,7 @@
   /* Layout and rhythm */
   --container-max: 1140px;
   --header-height: 72px;
+  --slant: 56px;                  /* horizontal offset of the // cut on tall photo panels */
   --space-section: var(--space-96);
   --space-section-mobile: var(--space-64);
   --space-section-header: var(--space-48);
