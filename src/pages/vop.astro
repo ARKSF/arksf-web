@@ -22,7 +22,7 @@ const withEmail = (text: string) => fill(text.replace('{email}', '\u0000')).spli
                             const [before, after] = withEmail(text);
                             return after === undefined
                                 ? <p>{before}</p>
-                                : <p>{before}<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d44434b426d4c5f46004b54574442034e57">[email&#160;protected]</a>{after}</p>;
+                                : <p>{before}<a href={`mailto:${site.email}`}>{site.email}</a>{after}</p>;
                         })}
                         {section.items && (
                             <ul>
