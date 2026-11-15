@@ -20,6 +20,7 @@ const { cta } = home;
                 <h2>{cta.title}</h2>
                 <p>{cta.text}</p>
                 <p class="cta-address"><Icon name="map-pin" /> <a href={site.address.mapsUrl} target="_blank" rel="noopener">{site.address.full}</a></p>
+                <p class="cta-address cta-phone"><Icon name="phone" /> <a href={site.phone.href}>{site.phone.display}</a></p>
             </div>
             <div class="cta-actions">
                 <Button href={cta.primary.href} variant="accent" size="lg" blockOnMobile>{cta.primary.label} <Icon name="arrow-right" strokeWidth="2.5" /></Button>
@@ -57,6 +58,7 @@ const { cta } = home;
     .cta-text h2 { color: var(--color-text-inverse); font-size: var(--text-h2); margin-bottom: var(--space-12); }
     .cta-text p { color: var(--color-text-inverse-muted); max-width: 520px; }
     .cta-address { display: flex; align-items: center; gap: var(--space-8); margin-top: var(--space-16); font-size: var(--text-sm); }
+    .cta-phone { margin-top: var(--space-8); }
     .cta-address :global(svg) { width: 16px; height: 16px; color: var(--color-accent); flex-shrink: 0; }
     .cta-address a:hover { color: var(--color-text-inverse); }
     .cta-actions { display: flex; flex-direction: column; gap: var(--space-12); flex-shrink: 0; }

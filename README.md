@@ -48,7 +48,7 @@ Všechno se mění v `src/data/`, ne v komponentách:
 | Ceny, položky ceníku, základní informace | `pricing.json` (cena je číslo, např. `1600`; web ji vypíše jako „1 600 Kč“) |
 | Pravidla: storno 24 h, 4,3 týdne, náhrady do 3 měsíců, max. 5 náhrad, max. osob ve skupině, platnost VOP | `rules.json` (propíše se na hlavní stránku i do obchodních podmínek) |
 | Tým: jména, role, štítky, medailonky, fotky | `team.json` (fotka = název souboru v `src/assets/team/`) |
-| Adresa, e-mail, otevírací doba, Instagram, odkazy na Fyzion, Formspree | `site.json` |
+| Adresa, telefon, e-mail, otevírací doba, Instagram, odkazy na Fyzion, Formspree | `site.json` |
 | Texty sekcí hlavní stránky | `home.json` |
 | Stránka Rezervace | `booking.json` |
 | Obchodní podmínky | `terms.json` |

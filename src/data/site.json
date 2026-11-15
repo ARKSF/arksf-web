@@ -3,6 +3,10 @@
   "title": "ARK | Síla & Fyzio",
   "url": "https://arksf.cz",
   "email": "info@arksf.cz",
+  "phone": {
+    "display": "+420 778 532 174",
+    "href": "tel:+420778532174"
+  },
   "tagline": "ARK je místo, kde se znovu buduje důvěra v tělo.",
   "address": {
     "full": "Nademlejnská 651/7, 198 00 Praha 9",

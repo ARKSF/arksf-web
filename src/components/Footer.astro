@@ -35,6 +35,8 @@ import nav from '../data/nav.json';
         <div class="footer-bottom">
             <p>{site.copyright}</p>
             <p>{site.address.full}</p>
+            <p><a href={site.phone.href}>{site.phone.display}</a></p>
+            <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
             <p>jednatel {site.director}</p>
             <p><a href={site.credit.url} target="_blank" rel="noopener" class="footer-credit">{site.credit.label}</a></p>
         </div>
