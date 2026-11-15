@@ -59,22 +59,19 @@ const image = new URL('/favicon.png', Astro.site).href;
         });
 
 
-        // Scroll Reveal Animation
+        // Scroll reveal: show each element once it comes into view. Runs right away too, so content
+        // already on screen never waits for the load event (inline module scripts can run after it).
         const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-
-        const revealOnScroll = () => {
-            revealElements.forEach(el => {
-                const elementTop = el.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add('active');
-                }
-            });
-        };
-
-        window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) { entry.target.classList.add('active'); io.unobserve(entry.target); }
+                });
+            }, { rootMargin: '0px 0px -60px 0px' });
+            revealElements.forEach((el) => io.observe(el));
+        } else {
+            revealElements.forEach((el) => el.classList.add('active'));
+        }
     </script>
 </body>
 </html>
