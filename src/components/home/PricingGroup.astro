@@ -35,8 +35,8 @@ const { icon, title, description, price, unit, class: className } = Astro.props;
 
 <style>
     .pricing-group {
-        background: var(--soft);
-        border-radius: var(--radius-16);
+        background: var(--color-brand-subtle);
+        border-radius: var(--radius-lg);
         padding: var(--space-32);
         margin-bottom: var(--space-24);
     }
@@ -54,8 +54,8 @@ const { icon, title, description, price, unit, class: className } = Astro.props;
     .pricing-group-icon {
         width: 44px;
         height: 44px;
-        background: var(--white);
-        border-radius: var(--radius-10);
+        background: var(--color-surface);
+        border-radius: var(--radius-sm);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -64,15 +64,15 @@ const { icon, title, description, price, unit, class: className } = Astro.props;
     .pricing-group-icon svg {
         width: 22px;
         height: 22px;
-        color: var(--primary);
+        color: var(--color-brand);
     }
     .pricing-group h3 {
-        font-size: var(--fs-20);
+        font-size: var(--text-xl);
         margin-bottom: var(--space-8);
     }
     .pricing-group p {
-        color: var(--gray-600);
-        font-size: var(--fs-15);
+        color: var(--color-text-muted);
+        font-size: var(--text-base);
         margin: 0;
     }
     .pricing-group-price {
@@ -81,14 +81,14 @@ const { icon, title, description, price, unit, class: className } = Astro.props;
     }
     .pricing-group-price .price {
         font-family: var(--font-heading);
-        font-size: var(--fs-32);
+        font-size: var(--text-3xl);
         font-weight: var(--fw-bold);
-        color: var(--primary);
+        color: var(--color-brand);
         display: block;
     }
     .pricing-group-price .per {
-        font-size: var(--fs-14);
-        color: var(--gray-600);
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
     }
 
     @media (max-width: 900px) {

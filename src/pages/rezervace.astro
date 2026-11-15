@@ -21,9 +21,9 @@ const links: Record<string, string> = { login: site.fyzion.login };
                 {booking.cards.map((card) => (
                     <ReservationCard icon={card.icon as any} title={card.title} text={card.text}>
                         {card.action.link ? (
-                            <Button href={links[card.action.link]} target="_blank" rel="noopener" variant="soft" size="card">{card.action.label} <Icon name={card.action.icon as any} strokeWidth="2.5" /></Button>
+                            <Button href={links[card.action.link]} target="_blank" rel="noopener" variant="soft" blockOnMobile>{card.action.label} <Icon name={card.action.icon as any} strokeWidth="2.5" /></Button>
                         ) : (
-                            <Button variant="soft" size="card" data-open-booking>{card.action.label} <Icon name={card.action.icon as any} strokeWidth="2.5" /></Button>
+                            <Button variant="soft" blockOnMobile data-open-booking>{card.action.label} <Icon name={card.action.icon as any} strokeWidth="2.5" /></Button>
                         )}
                     </ReservationCard>
                 ))}
@@ -31,7 +31,7 @@ const links: Record<string, string> = { login: site.fyzion.login };
             <NewClient />
         </div>
     </main>
-    <Footer variant="page" />
+    <Footer />
     <IframeModal src={site.fyzion.reservations} />
 </Base>
 

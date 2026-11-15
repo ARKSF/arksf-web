@@ -60,11 +60,16 @@ V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}`
 
 ### Úprava vzhledu
 
-- Barvy, velikosti písma, mezery, zaoblení, stíny a rychlosti animací jsou v `src/styles/tokens.css`. Změna tam se projeví všude, kde se token používá.
-- Komponenty používají jen tokeny (`var(--primary)`, `var(--space-24)`...). `npm run lint:tokens` (spouští se i při `npm run build`) ohlásí, když někde zůstane surová hodnota (barva, velikost písma, mezera...). Rozměry konkrétního prvku (šířka, výška) mohou zůstat v komponentě.
+- Tokeny v `src/styles/tokens.css` mají **dvě vrstvy**:
+  1. **Primitivy**: paleta a škály bez významu (`--violet-600`, `--coral-400`, `--size-16`, `--space-24`…). Pro jiný web stačí změnit tuhle vrstvu (barvy, písma).
+  2. **Sémantika**: role, které používají komponenty (`--color-text`, `--color-text-muted`, `--color-brand`, `--color-surface-inverse`, `--text-base`, `--text-h2`, `--radius-lg`, `--shadow-md`, `--space-section`…).
+- Komponenty používají **jen sémantické tokeny**, plus škálu mezer `--space-4` … `--space-120` (po 4 px). `npm run lint:tokens` (spouští se i při `npm run build`) ohlásí surovou hodnotu (barva, velikost písma, mezera…), primitivum použité v komponentě i neexistující token. Rozměry konkrétního prvku (šířka, výška) mohou zůstat v komponentě.
+- Škály: písmo `xs` 12 · `sm` 14 · `base` 16 · `lg` 18 · `xl` 20 · `2xl` 24 · `3xl` 32 + fluidní `h1` a `h2`; zaoblení `sm` 8 (tlačítka, inputy) · `md` 12 (dlaždice) · `lg` 16 (karty) · `xl` 24 (modální okna, velké panely); stíny `sm` · `md` · `lg` · `xl`.
+- Korálová: `--color-accent` (#FF6B6B) jen jako dekorace nebo text na tmavém, plochy s bílým textem mají `--color-accent-strong` (#C93C3C, kontrast 5 : 1).
 - Zlomy pro mobil a tablet jsou tři: 1024, 900 a 768 px (vypsané v hlavičce `tokens.css`).
 - Ikony jsou v `src/components/icons.ts` (čárové ikony 24 × 24, např. z [Lucide](https://lucide.dev)); používají se `<Icon name="..." />`.
-- Tlačítka vždy přes `<Button>` (varianty `primary`, `secondary`, `outline`, `soft`, `accent`; velikosti `sm`, `md`, `lg`, `card`).
+- Tlačítka vždy přes `<Button>`: varianty `primary` (plná fialová, jako jediná má světelný přejezd), `secondary` (fialový obrys), `soft` (světle fialová), `accent` (korálová, na tmavých panelech); velikosti `sm` 40 · `md` 48 · `lg` 56 px; `block` (celá šířka) a `blockOnMobile` (celá šířka pod 768 px).
+- Štítek (pilulka) přes `<Badge>`: `tone="light" | "dark"`, volitelně `dot` (pulzující tečka).
 
 ### Nová sekce na hlavní stránce
 
@@ -81,5 +86,5 @@ V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}`
 ## Dobré vědět
 
 - Formulář odesílá přes Formspree (adresa v `site.json`), rezervace a klientská zóna jsou na Fyzionu (`arksf.fyzion.cz`).
-- Patička má zatím tři varianty (`home`, `page`, `legal`), protože se původní stránky v patičce lišily. Až bude jasné, jak má vypadat, stačí sjednotit `Footer.astro`.
+- Patička je na všech stránkách stejná (`<Footer />`). Odkazy na sekce si sama přizpůsobí: na hlavní stránce `#sekce`, jinde `index.html#sekce`. Seznam je v `nav.json` (`footerSections`).
 - Doména `arksf.cz` je v `public/CNAME`.

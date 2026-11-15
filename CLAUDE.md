@@ -5,7 +5,7 @@ Statický web v Astru, hostovaný na GitHub Pages. Strukturu projektu (kde je ob
 ## Obsah, vzhled a struktura zvlášť
 
 - **Obsah jen v `src/data/*.json`.** Texty, ceny, tým, kontakty a pravidla nikdy nepiš přímo do komponent. Údaj, který je na víc místech (cena, storno, počet náhrad), existuje jednou a čte se z dat.
-- **Vzhled jen přes tokeny ze `src/styles/tokens.css`.** Komponenty používají `var(--...)`, žádné surové barvy, velikosti písma, mezery, zaoblení ani stíny. Chybí hodnota? Nejdřív přidej token, pak ho použij.
+- **Vzhled jen přes sémantické tokeny ze `src/styles/tokens.css`.** Komponenty používají role (`--color-text-muted`, `--text-base`, `--radius-lg`…) a škálu mezer `--space-*`, nikdy primitiva (`--violet-600`, `--size-16`) ani surové hodnoty. Chybí role? Přidej sémantický token, který ukazuje na primitivum ze škály. Nové hodnoty mimo škálu nepřidávej bez designového rozhodnutí.
 - **Komponenty znovu, ne kopie.** Než vytvoříš nový blok, podívej se, jestli už neexistuje (`Button`, `SectionHeader`, karty...). Tlačítko je vždy `<Button>`. Styly patří do `<style>` v komponentě, které se týkají.
 - **Nestav na rozbité struktuře.** Když úprava narazí na něco, co je postavené špatně (zkopírovaný blok, údaj natvrdo, hodnota mimo tokeny), oprav nejdřív strukturu, pak dělej úpravu.
 

@@ -1,36 +1,21 @@
 ---
-// Site footer. The three pages had three slightly different footers; `variant` reproduces each:
-//   home:  home page (in-page links incl. "Náš tým", separators between bottom items)
-//   page:  booking page (links back to home sections, no separators)
-//   legal: terms page (short logo with a text line, no director line)
-import Logo from './Logo.astro';
+// Site footer, the same on every page. On the home page the section links are in-page anchors,
+// on subpages they point back to the home page.
 import LogoExtended from './LogoExtended.astro';
 import Icon from './Icon.astro';
 import site from '../data/site.json';
 import nav from '../data/nav.json';
 
-interface Props {
-  variant?: 'home' | 'page' | 'legal';
-}
-
-const { variant = 'home' } = Astro.props;
-const home = variant === 'home';
-const ids = home ? nav.footerSections : nav.footerSectionsSubpage;
-const links = ids.map((id) => nav.sections.find((s) => s.id === id)!);
-const prefix = home ? '#' : 'index.html#';
+const path = Astro.url.pathname;
+const onHome = path === '/' || path.endsWith('/index.html');
+const prefix = onHome ? '#' : 'index.html#';
+const links = nav.footerSections.map((id) => nav.sections.find((s) => s.id === id)!);
 ---
-<footer class:list={['footer', `footer--${variant}`]}>
+<footer class="footer">
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand">
-                {variant === 'legal' ? (
-                    <div class="footer-logo">
-                        <Logo class="footer-logo-ark" tone="light" />
-                        <span class="footer-logo-text">Síla & Fyzio</span>
-                    </div>
-                ) : (
-                    <LogoExtended class="logo-extended" />
-                )}
+                <LogoExtended class="logo-extended" />
                 <p>{site.tagline}</p>
                 <div class="footer-social">
                     <a href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram">
@@ -56,7 +41,7 @@ const prefix = home ? '#' : 'index.html#';
         <div class="footer-bottom">
             <p>{site.copyright}</p>
             <p>{site.address.full}</p>
-            {variant !== 'legal' && <p>jednatel {site.director}</p>}
+            <p>jednatel {site.director}</p>
             <p><a href={site.credit.url} target="_blank" rel="noopener" class="footer-credit">{site.credit.label}</a></p>
         </div>
     </div>
@@ -64,8 +49,8 @@ const prefix = home ? '#' : 'index.html#';
 
 <style>
     .footer {
-        background: var(--dark);
-        color: var(--white);
+        background: var(--color-surface-inverse);
+        color: var(--color-text-inverse);
         padding: var(--space-64) 0 var(--space-24);
     }
     .footer-grid {
@@ -85,86 +70,55 @@ const prefix = home ? '#' : 'index.html#';
         margin-bottom: var(--space-20);
     }
     .footer-brand > p {
-        color: var(--white-a60);
-        font-size: var(--fs-15);
+        color: var(--color-text-inverse-muted);
+        font-size: var(--text-base);
         max-width: 300px;
-        line-height: var(--leading-1-6);
+        line-height: var(--leading-relaxed);
     }
     .footer-social { display: flex; gap: var(--space-12); margin-top: var(--space-24); }
     .footer-social a {
         width: 40px; height: 40px;
-        background: var(--white-a10);
-        border-radius: var(--radius-8);
+        background: var(--color-fill-inverse);
+        border-radius: var(--radius-sm);
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all var(--duration-300) ease;
+        transition: all var(--duration-base) var(--ease-standard);
     }
     .footer-social a:hover {
-        background: var(--primary);
+        background: var(--color-brand);
         transform: translateY(-4px);
     }
     .footer-social :global(svg) {
         width: 18px; height: 18px;
-        color: var(--white);
+        color: var(--color-text-inverse);
     }
-    .footer h4 { font-size: var(--fs-14); margin-bottom: var(--space-16); }
+    .footer h4 { font-size: var(--text-sm); margin-bottom: var(--space-16); }
     .footer-links { list-style: none; }
-    .footer-links li { margin-bottom: var(--space-10); }
+    .footer-links li { margin-bottom: var(--space-8); }
     .footer-links a {
-        color: var(--white-a60);
-        font-size: var(--fs-14);
-        transition: all var(--duration-300) ease;
+        color: var(--color-text-inverse-muted);
+        font-size: var(--text-sm);
+        transition: all var(--duration-base) var(--ease-standard);
         display: inline-block;
     }
     .footer-links a:hover {
-        color: var(--accent);
+        color: var(--color-accent);
         transform: translateX(4px);
     }
-    .footer-credit { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
-
-    /* home */
-    .footer--home .footer-social :global(svg) { transition: transform var(--duration-300) ease; }
-    .footer--home .footer-social a:hover :global(svg) { transform: scale(1.1); }
-    .footer--home .footer-bottom {
+    .footer-bottom {
         padding-top: var(--space-24);
-        border-top: 1px solid var(--white-a10);
+        border-top: 1px solid var(--color-border-inverse);
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: var(--space-8) 0;
-        color: var(--white-a40);
-        font-size: var(--fs-13);
+        gap: var(--space-8) var(--space-24);
         text-align: center;
     }
-    .footer--home .footer-bottom p {
-        padding: 0 var(--space-16);
-        border-right: 1px solid var(--white-a20);
-    }
-    .footer--home .footer-bottom p:last-child { border-right: none; }
-
-    /* page and legal */
-    .footer--page .footer-bottom,
-    .footer--legal .footer-bottom { padding-top: var(--space-24); border-top: 1px solid var(--white-a10); display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-8) var(--space-24); }
-    .footer--page .footer-bottom p,
-    .footer--legal .footer-bottom p { color: var(--white-a40); font-size: var(--fs-13); }
-
-    /* legal: short logo with a text line */
-    .footer--legal .footer-brand { margin-bottom: var(--space-20); }
-    .footer-logo { margin-bottom: var(--space-20); }
-    .footer-logo-ark { height: 40px; width: auto; display: block; margin-bottom: var(--space-8); }
-    .footer-logo-text { font-family: var(--font-heading); font-size: var(--fs-16); font-weight: var(--fw-semibold); color: var(--white-a80); letter-spacing: var(--tracking-slight); }
-    .footer--legal .footer-brand > p { margin-top: var(--space-16); }
+    .footer-bottom p { color: var(--color-text-inverse-muted); font-size: var(--text-sm); }
+    .footer-credit { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
     @media (max-width: 900px) {
-        .footer--page .footer-grid,
-        .footer--legal .footer-grid { grid-template-columns: 1fr; gap: var(--space-40); }
-    }
-    @media (max-width: 768px) {
-        .footer--home .footer-grid { grid-template-columns: 1fr; gap: var(--space-32); }
-        .footer--home .footer-bottom p {
-            border-right: none;
-            padding: var(--space-4) 0;
-        }
+        .footer-grid { grid-template-columns: 1fr; gap: var(--space-40); }
     }
 </style>

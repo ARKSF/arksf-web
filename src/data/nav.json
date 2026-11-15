@@ -10,7 +10,6 @@
   ],
   "headerSections": ["sluzby", "o-nas", "tym", "pristup", "cenik", "spoluprace"],
   "footerSections": ["sluzby", "o-nas", "tym", "pristup", "cenik", "spoluprace", "kontakt"],
-  "footerSectionsSubpage": ["sluzby", "o-nas", "pristup", "cenik", "spoluprace", "kontakt"],
   "clientLinks": [
     { "href": "rezervace.html", "label": "Rezervace" },
     { "href": "vop.html", "label": "Obchodní podmínky" }

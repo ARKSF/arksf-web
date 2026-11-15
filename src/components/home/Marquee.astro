@@ -20,7 +20,7 @@ import { home } from '../../lib/content';
 
 <style>
     .marquee-section {
-        background: var(--bg);
+        background: var(--color-surface-alt);
         padding: var(--space-40) 0;
         overflow: hidden;
     }
@@ -38,27 +38,27 @@ import { home } from '../../lib/content';
     .marquee-item {
         display: flex;
         align-items: center;
-        gap: var(--space-10);
+        gap: var(--space-8);
         white-space: nowrap;
-        color: var(--gray-600);
-        font-size: var(--fs-14);
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
         font-weight: var(--fw-regular);
-        background: var(--white);
-        border: 1px solid var(--gray-200);
-        padding: var(--space-10) var(--space-20);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        padding: var(--space-8) var(--space-20);
         border-radius: var(--radius-pill);
-        transition: all var(--duration-300) ease;
+        transition: all var(--duration-base) var(--ease-standard);
     }
     .marquee-item:hover {
-        border-color: var(--accent);
-        color: var(--dark);
+        border-color: var(--color-accent);
+        color: var(--color-text);
         transform: translateY(-2px);
-        box-shadow: var(--shadow-chip-hover);
+        box-shadow: var(--shadow-sm);
     }
     .marquee-item svg {
         width: 18px;
         height: 18px;
-        color: var(--accent);
+        color: var(--color-accent);
         flex-shrink: 0;
         opacity: 0.8;
     }
