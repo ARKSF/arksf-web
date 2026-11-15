@@ -1,29 +1,37 @@
 ---
-// Home: the three ways to work with ARK as photo tiles, each linking to its part of the Spolupráce page.
-// Photos from src/data/photos.json. No prices here on purpose: they live in the price list on Spolupráce.
+// Home: the three ways to work with ARK as tall photo panels cut on the "//" slant.
+// Hovering (or focusing) a panel widens it and reveals its text; on phones the panels stack.
+// Each panel links to its part of the Spolupráce page. Photos from src/data/photos.json.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import SectionHeader from '../SectionHeader.astro';
-import Photo from '../Photo.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
 import { home, photos } from '../../lib/content';
 
 const { paths } = home;
+const all = import.meta.glob<{ default: ImageMetadata }>('../../assets/photos/*.{jpg,jpeg,png,webp}', { eager: true });
+const pic = (f: string) => {
+  const hit = all[`../../assets/photos/${f}`];
+  if (!hit) throw new Error(`Photo "${f}" not found in src/assets/photos/`);
+  return hit.default;
+};
+const fileFor: Record<string, string> = { konzultace: photos.konzultace, treninky: photos.treninky, skupinove: photos.skupinove };
 ---
 <section class="paths section" id="spoluprace">
     <div class="container">
         <SectionHeader label={paths.label} title={paths.title} subtitle={paths.subtitle} />
-        <div class="paths-grid">
+        <div class="panels">
             {paths.items.map((item, i) => (
-                <a href={`spoluprace.html#${item.id}`} class={`path-card reveal delay-${i + 1}`}>
-                    <Photo file={(photos as Record<string, unknown>)[item.id] as string} alt={item.title} label={item.photoLabel} ratio="4 / 3" sizes="(max-width: 900px) 100vw, 360px" widths={[360, 540, 720]} class="path-photo" />
-                    <div class="path-body">
-                        <h3>{item.title}</h3>
-                        <p>{item.text}</p>
-                        <div class="path-foot">
-                            <span class="path-link">{paths.more}</span>
-                            <span class="path-arrow" aria-hidden="true"><Icon name="arrow-right" strokeWidth="2.5" /></span>
-                        </div>
-                    </div>
+                <a href={`spoluprace.html#${item.id}`} class={`panel panel--${i + 1} reveal delay-${i + 1}`}>
+                    <Image src={pic(fileFor[item.id])} alt="" widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 100vw, 620px" quality={85} />
+                    <span class="panel-shade" aria-hidden="true"></span>
+                    <span class="panel-body">
+                        <span class="panel-num">0{i + 1} //</span>
+                        <span class="panel-title">{item.title}</span>
+                        <span class="panel-text">{item.text}</span>
+                        <span class="panel-more">{paths.more} <Icon name="arrow-right" strokeWidth="2.5" /></span>
+                    </span>
                 </a>
             ))}
         </div>
@@ -35,65 +43,81 @@ const { paths } = home;
 
 <style>
     .paths { background: var(--color-surface-alt); }
-    .paths-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-grid-gap);
-    }
-    .path-card {
+    .panels {
         display: flex;
-        flex-direction: column;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-lg);
+        height: min(560px, 70vh);
+    }
+    .panel {
+        position: relative;
+        flex: 1 1 0;
+        min-width: 0;
         overflow: hidden;
-        transition: all var(--duration-base) var(--ease-standard);
+        color: var(--color-text-inverse);
+        clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+        margin-left: -3.6%;
+        transition: flex-grow var(--duration-slow) var(--ease-standard);
     }
-    .path-card:hover {
-        transform: translateY(-6px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--color-brand);
+    .panel:first-child { margin-left: 0; clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%); }
+    .panel:last-child { clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%); }
+    .panel:hover, .panel:focus-visible { flex-grow: 1.7; outline: none; }
+    .panel :global(img) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--duration-reveal) var(--ease-standard);
     }
-    .path-card:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-    .path-card :global(.path-photo) { border-radius: 0; }
-    .path-card :global(.path-photo img) { transition: transform var(--duration-reveal) var(--ease-standard); }
-    .path-card:hover :global(.path-photo img) { transform: scale(1.04); }
-    .path-body {
+    .panel:hover :global(img), .panel:focus-visible :global(img) { transform: scale(1.04); }
+    .panel--1 :global(img) { object-position: 35% center; }
+    .panel--2 :global(img) { object-position: center 40%; }
+    .panel--3 :global(img) { object-position: 55% center; }
+    .panel-shade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, var(--color-scrim-90) 0%, var(--color-scrim-45) 45%, var(--color-scrim-0) 75%);
+    }
+    .panel-body {
+        position: absolute;
+        left: 18%;
+        right: 12%;
+        bottom: var(--space-32);
         display: flex;
         flex-direction: column;
-        flex: 1;
-        padding: var(--space-24);
+        gap: var(--space-8);
     }
-    .path-body h3 { font-size: var(--text-xl); margin-bottom: var(--space-8); }
-    .path-body p { color: var(--color-text-muted); margin-bottom: var(--space-24); }
-    .path-foot {
-        margin-top: auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-top: var(--space-16);
-        border-top: 1px solid var(--color-border);
+    .panel:first-child .panel-body { left: var(--space-32); }
+    .panel-num { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-sm); color: var(--color-accent); letter-spacing: var(--tracking-label); }
+    .panel-title { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-2xl); line-height: var(--leading-snug); }
+    .panel-text, .panel-more {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all var(--duration-slow) var(--ease-standard);
     }
-    .path-link {
-        font-family: var(--font-heading);
-        font-weight: var(--fw-semibold);
-        color: var(--color-brand);
-    }
-    .path-arrow {
-        width: 40px; height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: var(--radius-round);
-        background: var(--color-brand-subtle);
-        color: var(--color-brand);
-        transition: all var(--duration-base) var(--ease-standard);
-    }
-    .path-arrow :global(svg) { width: 18px; height: 18px; }
-    .path-card:hover .path-arrow { background: var(--color-brand); color: var(--color-text-inverse); }
-    .paths-more { display: flex; justify-content: center; margin-top: var(--space-40); }
+    .panel-text { color: var(--color-text-inverse-strong); }
+    .panel-more { display: inline-flex; align-items: center; gap: var(--space-8); font-family: var(--font-heading); font-weight: var(--fw-semibold); }
+    .panel-more :global(svg) { width: 18px; height: 18px; }
+    .panel:hover .panel-text, .panel:focus-visible .panel-text,
+    .panel:hover .panel-more, .panel:focus-visible .panel-more { max-height: 120px; opacity: 1; }
+    .paths-more { display: flex; justify-content: center; margin-top: var(--space-48); }
 
+    /* Touch screens have no hover: show the text always */
+    @media (hover: none) {
+        .panel-text, .panel-more { max-height: none; opacity: 1; }
+    }
     @media (max-width: 900px) {
-        .paths-grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+        .panels { flex-direction: column; height: auto; gap: 0; }
+        .panel, .panel:first-child, .panel:last-child {
+            flex: none;
+            height: 300px;
+            margin: calc(var(--space-24) * -1) 0 0;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+        .panel:first-child { margin-top: 0; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
+        .panel:last-child { clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%); }
+        .panel-body, .panel:first-child .panel-body { left: var(--space-24); right: var(--space-24); bottom: var(--space-48); }
+        .panel:last-child .panel-body { bottom: var(--space-24); }
+        .panel-text, .panel-more { max-height: none; opacity: 1; }
     }
 </style>

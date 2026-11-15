@@ -44,16 +44,9 @@
     },
     "r4": {
       "slashes": [
-        "skupinova-lekce.jpg",
-        "fyzio-lehatko.jpg"
-      ],
-      "stripes": "akce-trx.jpg",
-      "typo": [
-        "fyzio-lehatko.jpg",
-        "individualni-trenink.jpg",
+        "akce-trx.jpg",
         "skupinova-lekce.jpg"
-      ],
-      "split": "kontakt-tym.jpg"
+      ]
     }
   }
 }
