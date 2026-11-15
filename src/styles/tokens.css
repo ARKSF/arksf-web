@@ -146,7 +146,6 @@
   --shadow-modal: 0 30px 60px rgba(0, 0, 0, 0.3);
   --shadow-close-button: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-accent-hover: 0 4px 16px rgba(255, 107, 107, 0.4);
-  --shadow-bottom-bar: 0 -4px 16px rgba(0, 0, 0, 0.1);
   --shadow-navbar: 0 2px 20px rgba(0, 0, 0, 0.1);   /* set by script once the page scrolls */
   --shadow-illustration: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
   --shadow-illustration-hover: drop-shadow(0 30px 50px rgba(124, 58, 237, 0.25));
