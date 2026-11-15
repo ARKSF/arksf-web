@@ -18,40 +18,41 @@ h1, h2, h3, h4 {
 a { text-decoration: none; color: inherit; }
 
 /* Scroll reveal. Zero specificity (:where), so any component rule wins over it,
-   exactly as when these rules came first in one stylesheet. */
-:where(.reveal) {
+   exactly as when these rules came first in one stylesheet. Only active when the page's
+   script runs (class "js" on <html>, set in Base.astro): without JavaScript nothing is hidden. */
+:where(.js .reveal) {
   opacity: 0;
   transform: translateY(40px);
   transition: all var(--duration-800) var(--ease-standard);
 }
-:where(.reveal.active) {
+:where(.js .reveal.active) {
   opacity: 1;
   transform: translateY(0);
 }
-:where(.reveal-left) {
+:where(.js .reveal-left) {
   opacity: 0;
   transform: translateX(-40px);
   transition: all var(--duration-800) var(--ease-standard);
 }
-:where(.reveal-left.active) {
+:where(.js .reveal-left.active) {
   opacity: 1;
   transform: translateX(0);
 }
-:where(.reveal-right) {
+:where(.js .reveal-right) {
   opacity: 0;
   transform: translateX(40px);
   transition: all var(--duration-800) var(--ease-standard);
 }
-:where(.reveal-right.active) {
+:where(.js .reveal-right.active) {
   opacity: 1;
   transform: translateX(0);
 }
-:where(.reveal-scale) {
+:where(.js .reveal-scale) {
   opacity: 0;
   transform: scale(0.9);
   transition: all var(--duration-800) var(--ease-standard);
 }
-:where(.reveal-scale.active) {
+:where(.js .reveal-scale.active) {
   opacity: 1;
   transform: scale(1);
 }
