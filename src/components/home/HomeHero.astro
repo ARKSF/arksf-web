@@ -3,20 +3,23 @@
 //   1–6   HeroRound1  (ilustrace, fotka, split, tmavá, koláž, typografie)
 //   7–12  HeroRound2  (oblouk, cesta, ilustrace XXL, editorial, kino, logo)
 //   13–15 HeroRound3  (bento, tým, panorama)
+//   16–19 HeroRound4  (lomítka, pruhy, typo //, řez) built on the // mark
 // The live site renders only the number in src/data/home.json → "hero.variant".
 // With PUBLIC_DESIGN_TOOLS=1 all fifteen are rendered and a switcher (bottom left) flips between them.
 import HeroRound1 from './hero/HeroRound1.astro';
 import HeroRound2 from './hero/HeroRound2.astro';
 import HeroRound3 from './hero/HeroRound3.astro';
+import HeroRound4 from './hero/HeroRound4.astro';
 import { home } from '../../lib/content';
 
 const chosen = home.hero.variant ?? 13;
 const tools = import.meta.env.PUBLIC_DESIGN_TOOLS === '1';
-const NAMES = ['Ilustrace', 'Fotka', 'Split', 'Tmavá', 'Koláž', 'Typografie', 'Oblouk', 'Cesta', 'Ilustrace XXL', 'Editorial', 'Kino', 'Logo', 'Bento', 'Tým', 'Panorama'];
+const NAMES = ['Ilustrace', 'Fotka', 'Split', 'Tmavá', 'Koláž', 'Typografie', 'Oblouk', 'Cesta', 'Ilustrace XXL', 'Editorial', 'Kino', 'Logo', 'Bento', 'Tým', 'Panorama', 'Lomítka', 'Pruhy', 'Typo //', 'Řez'];
 ---
 <HeroRound1 offset={0} chosen={chosen} />
 <HeroRound2 offset={6} chosen={chosen} />
 <HeroRound3 offset={12} chosen={chosen} />
+<HeroRound4 offset={15} chosen={chosen} />
 
 {tools && (
     <div class="hero-switcher" role="group" aria-label="Varianta hero">
@@ -79,10 +82,10 @@ const NAMES = ['Ilustrace', 'Fotka', 'Split', 'Tmavá', 'Koláž', 'Typografie',
         font-weight: var(--fw-semibold);
         cursor: pointer;
     }
-    .hero-switcher button:nth-child(7), .hero-switcher button:nth-child(13) { margin-left: var(--space-8); }
+    .hero-switcher button:nth-child(7), .hero-switcher button:nth-child(13), .hero-switcher button:nth-child(16) { margin-left: var(--space-8); }
     .hero-switcher button[aria-pressed="true"] { background: var(--color-accent); color: var(--color-text-on-accent); }
     @media (max-width: 768px) {
         .hero-switcher { flex-direction: column; align-items: flex-start; }
-        .hero-switcher button:nth-child(7), .hero-switcher button:nth-child(13) { margin-left: 0; }
+        .hero-switcher button:nth-child(7), .hero-switcher button:nth-child(13), .hero-switcher button:nth-child(16) { margin-left: 0; }
     }
 </style>
