@@ -47,12 +47,15 @@
       "Foto: gym",
       "Foto: gym",
       "Foto: gym"
-    ]
+    ],
+    "label": "// O nás",
+    "title": "O nás",
+    "text": "Fyzioterapeuti a trenéři, kteří vám pomůžou znovu věřit vlastnímu tělu. Kdo jsme, jak přemýšlíme a kde nás najdete."
   },
   "kontakt": {
     "label": "// Kontakt",
-    "title": "Začněme spolupráci",
+    "title": "Kontakt",
     "description": "Kontakt na ARK – Síla & Fyzio: adresa v Praze 9, doprava, parkování, e-mail a formulář.",
-    "photoLabel": "Foto: vchod nebo prostor"
+    "text": "Napište nám, zavolejte, nebo se rovnou objednejte. Najdete nás v Praze 9 – Hloubětín."
   }
 }

@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import PageHeader from '../components/PageHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import Process from '../components/home/Process.astro';
 import ServiceSection from '../components/spoluprace/ServiceSection.astro';
 import Pricing from '../components/home/Pricing.astro';
@@ -17,23 +17,19 @@ const common = { forWhomLabel: page.forWhomLabel, bookLabel: page.bookAction };
 <Base title="Spolupráce" description={page.description} path="/spoluprace.html">
     <Navbar />
     <main>
-        <div class="page-top">
-            <div class="container">
-                <PageHeader label={page.label} title={page.title} text={page.text} />
-            </div>
-        </div>
+        <PageHero label={page.label} title={page.title} text={page.text} photo={photos.pages.spoluprace} photoAlt="Úvodní konzultace v ARK" />
         <Process part="steps" />
 
-        <ServiceSection id="konzultace" {...common} label={s.konzultace.label} title={consultations.title} description={consultations.description}
+        <ServiceSection id="konzultace" tone="surface" {...common} label={s.konzultace.label} title={consultations.title} description={consultations.description}
             forWhom={s.konzultace.forWhom} photo={photos.konzultace} photoLabel={s.konzultace.photoLabel} />
 
-        <ServiceSection id="treninky" flip {...common} label={s.treninky.label} title={trainings.title} description={trainings.description}
+        <ServiceSection id="treninky" tone="alt" flip {...common} label={s.treninky.label} title={trainings.title} description={trainings.description}
             forWhom={s.treninky.forWhom} photo={photos.treninky} photoLabel={s.treninky.photoLabel} />
 
-        <ServiceSection id="skupinove" {...common} label={s.skupinove.label} title={group.title} description={fill(group.description)}
+        <ServiceSection id="skupinove" tone="surface" {...common} label={s.skupinove.label} title={group.title} description={fill(group.description)}
             forWhom={s.skupinove.forWhom} photo={photos.skupinove} photoLabel={s.skupinove.photoLabel} />
 
-        <Pricing />
+        <div class="price-wrap"><Pricing /></div>
         <div class="basics-wrap"><Process part="basics" /></div>
         <CtaBand />
     </main>
@@ -41,6 +37,8 @@ const common = { forWhomLabel: page.forWhomLabel, bookLabel: page.bookAction };
 </Base>
 
 <style>
-    .page-top { padding: calc(var(--header-height) + var(--space-64)) 0 var(--space-16); background: var(--color-surface-alt); }
-    .basics-wrap { padding-top: var(--space-section); background: var(--color-surface-alt); }
+    .price-wrap :global(.pricing) { background: var(--color-surface-alt); }
+    .price-wrap :global(.pricing-card:not(.featured)) { background: var(--color-surface); }
+    .basics-wrap { background: var(--color-surface-alt); }
+    .basics-wrap :global(.process--basics) { padding-top: 0; }
 </style>

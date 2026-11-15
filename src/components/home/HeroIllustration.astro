@@ -1,0 +1,20 @@
+---
+// The custom ARK illustration (figure with the coral dot), drawn as inline SVG.
+interface Props { class?: string; }
+const { class: className } = Astro.props;
+// Unique gradient id per instance: the hero variants render several copies, and a gradient
+// defined inside a hidden copy would not paint in the visible one.
+const gid = `arkGrad-${Math.random().toString(36).slice(2, 8)}`;
+---
+<svg class:list={["ark-illustration", className]} width="380" height="342" aria-hidden="true" viewBox="0 0 195 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="ark-illustration-card" x="25" y="7" width="162" height="160" rx="12" fill="#FAFAFA" stroke="#E5E7EB" stroke-width="0.86"/>
+                        <path d="M78.4 72.5s-17.5 29.5-25.7 30.4c-8.1.9-6.4-30.8-12.4-28l-35.1 21.2s21.4 47.5 46.2 45.4c24.8-2.1 52.3-49.7 53.9-52.2 1.6-2.5 2.7-4.8 6.1-3.9 3.4.9.7 6.8.7 6.8l-25.8 63.4H132s15.5-63.1 16.5-67.6c1-4.5 9.2-25.4-33.9-31.7-26.8-3.9-36.2 16.2-36.2 16.2z" fill={`url(#${gid})`}/>
+                        <path d="M72.6 38.4c1.5-5.3 8.2-7.5 12.9-4.5 9 5.8 23.4 13.9 40.6 19.1 16.3 5 31.4 5.8 41.6 5.5 5.8-.2 10.7 5.4 9.1 10.9-.6 2.2-2.3 4-4.5 4.5-6.6 1.4-22.2 3.1-48.2-4.1-26.4-7.3-42.7-18.7-49.4-24.2-2.1-1.7-2.9-4.6-2.1-7.2z" stroke="#FC6F6F" stroke-width="0.86" fill="none"/>
+                        <circle cx="135.6" cy="37.6" r="11.6" fill="#FC6F6F"/>
+                        <defs>
+                            <linearGradient id={gid} x1="80.8" y1="52.5" x2="70.5" y2="154" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#7D45E8"/>
+                                <stop offset="1" stop-color="#FC6F6F"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>

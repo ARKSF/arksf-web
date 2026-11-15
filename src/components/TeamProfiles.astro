@@ -1,0 +1,78 @@
+---
+// About page: every team member fully open, no pop-ups: photo, name, role, focus tags and story.
+// Each profile has an anchor (#tomas, #david …) that the home page team cards link to.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import SectionHeader from './SectionHeader.astro';
+import { home, team } from '../lib/content';
+
+const photos = import.meta.glob<{ default: ImageMetadata }>('../assets/team/*.{jpg,jpeg,png,webp}', { eager: true });
+const people = team.map((p) => {
+  const hit = photos[`../assets/team/${p.photo}`];
+  if (!hit) throw new Error(`team.json: photo "${p.photo}" not found in src/assets/team/`);
+  return { ...p, img: hit.default };
+});
+---
+<section class="profiles section" id="tym">
+    <div class="container">
+        <SectionHeader label={home.team.label} title={home.team.title} subtitle={home.team.previewSubtitle} />
+        <div class="profiles-list">
+            {people.map((p, i) => (
+                <article class:list={['profile reveal', i % 2 === 1 && 'profile--flip']} id={p.id}>
+                    <div class="profile-photo">
+                        <Image src={p.img} alt={p.fullName} widths={[360, 540, 720]} sizes="(max-width: 900px) 100vw, 360px" loading="lazy" />
+                    </div>
+                    <div class="profile-body">
+                        <h3>{p.fullName}</h3>
+                        <p class="profile-role">{p.roleFull}</p>
+                        <ul class="profile-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+                        <div class="profile-bio">{p.bio.map((para) => <p>{para}</p>)}</div>
+                    </div>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .profiles { background: var(--color-surface); }
+    .profiles-list { display: grid; gap: var(--space-80); }
+    .profile {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: var(--space-64);
+        align-items: start;
+        scroll-margin-top: calc(var(--header-height) + var(--space-24));
+    }
+    .profile--flip { grid-template-columns: 1fr 360px; }
+    .profile--flip .profile-photo { order: 2; }
+    .profile-photo {
+        position: sticky;
+        top: calc(var(--header-height) + var(--space-24));
+        aspect-ratio: 3 / 4;
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        background: var(--color-brand-subtle);
+    }
+    .profile-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .profile-body h3 { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
+    .profile-role { color: var(--color-brand); font-weight: var(--fw-semibold); margin-bottom: var(--space-20); }
+    .profile-tags { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-8); margin-bottom: var(--space-24); }
+    .profile-tags li {
+        font-size: var(--text-xs);
+        font-weight: var(--fw-medium);
+        background: var(--color-brand-subtle);
+        color: var(--color-brand-hover);
+        padding: var(--space-4) var(--space-12);
+        border-radius: var(--radius-pill);
+    }
+    .profile-bio p { color: var(--color-text-muted); line-height: var(--leading-relaxed); }
+    .profile-bio p + p { margin-top: var(--space-16); }
+
+    @media (max-width: 900px) {
+        .profile, .profile--flip { grid-template-columns: 1fr; gap: var(--space-24); }
+        .profile--flip .profile-photo { order: 0; }
+        .profile-photo { position: static; max-width: 360px; }
+        .profiles-list { gap: var(--space-64); }
+    }
+</style>

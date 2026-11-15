@@ -1,18 +1,12 @@
 ---
-// Team grid; a card opens that person's detail (photo, tags, bio). People come from src/data/team.json,
-// photos from src/assets/team/ (file name in the "photo" field).
+// Home: the team at a glance. Each card links to that person's profile on the About page.
+// People come from src/data/team.json, photos from src/assets/team/.
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import SectionHeader from '../SectionHeader.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
 import { home, team } from '../../lib/content';
-
-interface Props {
-  /** Home page: cards link to the team on the About page instead of opening the detail. */
-  preview?: boolean;
-}
-const { preview = false } = Astro.props;
 
 const photos = import.meta.glob<{ default: ImageMetadata }>('../../assets/team/*.{jpg,jpeg,png,webp}', { eager: true });
 const photoOf = (file: string) => {
@@ -21,105 +15,28 @@ const photoOf = (file: string) => {
   return hit.default;
 };
 const people = team.map((p) => ({ ...p, img: photoOf(p.photo) }));
-const position = (p: { photoPosition?: string }) => (p.photoPosition ? `object-position: ${p.photoPosition};` : undefined);
-
-// Responsive sizes: cards are 4 per row on desktop, 2 per row up to 900 px; the detail photo column is 420 px.
 const CARD = { widths: [260, 360, 520, 780], sizes: '(max-width: 900px) 50vw, 260px' };
-const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420px' };
 ---
 <section class="team section" id="tym">
     <div class="container">
-        <SectionHeader label={home.team.label} title={home.team.title} subtitle={preview ? home.team.previewSubtitle : home.team.subtitle} />
-
+        <SectionHeader label={home.team.label} title={home.team.title} subtitle={home.team.previewSubtitle} />
         <div class="team-grid">
             {people.map((p, i) => (
-                <div class={`team-card reveal delay-${i + 1}`} data-member={p.id}>
-                    <Image src={p.img} alt={p.fullName} style={position(p)} widths={CARD.widths} sizes={CARD.sizes} loading="lazy" />
+                <a href={`o-nas.html#${p.id}`} class={`team-card reveal delay-${i + 1}`}>
+                    <Image src={p.img} alt={p.fullName} widths={CARD.widths} sizes={CARD.sizes} loading="lazy" />
                     <div class="team-card-overlay">
-                        <h3 class="team-card-name">{preview
-                            ? <a href={`o-nas.html#tym`} class="team-card-open">{p.name}</a>
-                            : <button type="button" class="team-card-open" aria-haspopup="dialog" aria-controls={`team-detail-${p.id}`}>{p.name}</button>}</h3>
+                        <h3 class="team-card-name">{p.name}</h3>
                         <p class="team-card-role">{p.role}</p>
                     </div>
-                </div>
+                </a>
             ))}
         </div>
-        {preview && <div class="team-more"><Button href="o-nas.html#tym" variant="secondary">{home.team.previewAction} <Icon name="arrow-right" strokeWidth="2.5" /></Button></div>}
+        <div class="team-more"><Button href="o-nas.html#tym" variant="secondary">{home.team.previewAction} <Icon name="arrow-right" strokeWidth="2.5" /></Button></div>
     </div>
 </section>
 
-{!preview && <div class="team-modal-backdrop" id="teamModalBackdrop">
-    {people.map((p) => (
-        <div class="team-modal" data-member={p.id} id={`team-detail-${p.id}`} role="dialog" aria-modal="true" aria-labelledby={`team-name-${p.id}`}>
-            <button type="button" class="team-modal-close" aria-label="Zavřít">×</button>
-            <div class="team-modal-photo"><Image src={p.img} alt={p.fullName} style={position(p)} widths={DETAIL.widths} sizes={DETAIL.sizes} loading="lazy" /></div>
-            <div class="team-modal-content">
-                <h3 class="team-name" id={`team-name-${p.id}`}>{p.fullName}</h3>
-                <p class="team-role">{p.roleFull}</p>
-                <div class="team-tags">
-                    {p.tags.map((t) => <span class="team-tag">{t}</span>)}
-                </div>
-                <div class="team-bio">
-                    {p.bio.map((para) => <p>{para}</p>)}
-                </div>
-            </div>
-        </div>
-    ))}
-</div>}
-
-<script>
-    const backdrop = document.getElementById('teamModalBackdrop');
-    if (backdrop) {
-    let trigger = null;
-    const activeModal = () => backdrop.querySelector('.team-modal.active');
-    function openTeamModal(id, from) {
-        document.querySelectorAll('.team-modal').forEach(m => {
-            m.classList.toggle('active', m.dataset.member === id);
-        });
-        backdrop.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        trigger = from || null;
-        activeModal()?.querySelector('.team-modal-close')?.focus();
-    }
-    function closeTeamModal() {
-        if (!backdrop.classList.contains('active')) return;
-        backdrop.classList.remove('active');
-        document.querySelectorAll('.team-modal').forEach(m => m.classList.remove('active'));
-        document.body.style.overflow = '';
-        trigger?.focus();
-        trigger = null;
-    }
-    // Keep Tab inside the open detail
-    document.addEventListener('keydown', (e) => {
-        const modal = activeModal();
-        if (e.key !== 'Tab' || !modal) return;
-        const items = [...modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')];
-        if (!items.length) return;
-        const first = items[0], last = items[items.length - 1];
-        if (e.shiftKey && (document.activeElement === first || !modal.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && (document.activeElement === last || !modal.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
-    });
-    document.querySelectorAll('.team-card').forEach(card => {
-        // The name is a real button stretched over the whole card, so Enter/Space and clicks both land here
-        card.addEventListener('click', () => openTeamModal(card.dataset.member, card.querySelector('.team-card-open')));
-        // Start loading the detail photo as soon as someone points at or touches the card
-        const preload = () => {
-            const img = document.querySelector(`.team-modal[data-member="${card.dataset.member}"] img`);
-            if (img) img.loading = 'eager';
-        };
-        card.addEventListener('pointerenter', preload, { once: true });
-        card.addEventListener('pointerdown', preload, { once: true });
-    });
-    document.querySelectorAll('.team-modal-close').forEach(b => b.addEventListener('click', closeTeamModal));
-    backdrop.addEventListener('click', (event) => { if (event.target === backdrop) closeTeamModal(); });
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeTeamModal();
-    });
-    }
-</script>
-
 <style>
-    .team { background: var(--color-surface); }
+    .team { background: var(--color-surface-alt); }
     .team-more { display: flex; justify-content: center; margin-top: var(--space-40); }
     .team-grid {
         display: grid;
@@ -127,6 +44,7 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
         gap: var(--space-20);
     }
     .team-card {
+        display: block;
         position: relative;
         aspect-ratio: 3 / 4;
         border-radius: var(--radius-lg);
@@ -152,29 +70,7 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
         justify-content: flex-end;
         padding: var(--space-20) var(--space-20) var(--space-16);
     }
-    /* The name button covers the whole card (::after), so the card is one keyboard stop */
-    .team-card-open {
-        font: inherit;
-        color: inherit;
-        background: none;
-        border: 0;
-        padding: 0;
-        margin: 0;
-        text-align: inherit;
-        cursor: inherit;
-        appearance: none;
-        display: inline;
-    }
-    .team-card-open::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-    }
-    .team-card-open:focus { outline: none; }
-    .team-card:has(.team-card-open:focus-visible) {
-        outline: 3px solid var(--color-brand);
-        outline-offset: 3px;
-    }
+    .team-card:focus-visible { outline: none; box-shadow: var(--focus-ring); }
     .team-card-name {
         color: var(--color-text-inverse);
         font-size: var(--text-base);
@@ -187,111 +83,11 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
         margin-bottom: 0;
     }
 
-    /* Detail */
-    .team-modal-backdrop {
-        position: fixed;
-        inset: 0;
-        background: var(--color-overlay);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        z-index: var(--z-modal);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-24);
-        opacity: 0;
-        transition: opacity var(--duration-base) var(--ease-standard);
-    }
-    .team-modal-backdrop.active {
-        display: flex;
-        opacity: 1;
-    }
-    .team-modal {
-        display: none;
-        background: var(--color-surface);
-        border-radius: var(--radius-xl);
-        overflow: hidden;
-        max-width: 940px;
-        width: 100%;
-        height: 520px;
-        max-height: 85vh;
-        grid-template-columns: 420px 1fr;
-        position: relative;
-        box-shadow: var(--shadow-xl);
-    }
-    .team-modal.active { display: grid; }
-    .team-modal-close {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        width: 36px;
-        height: 36px;
-        border-radius: var(--radius-round);
-        background: var(--color-surface-glass);
-        border: none;
-        font-size: var(--text-xl);
-        line-height: var(--leading-none);
-        cursor: pointer;
-        z-index: var(--z-raised);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-text);
-        transition: all var(--duration-fast) var(--ease-standard);
-    }
-    .team-modal-close:hover { background: var(--color-surface); transform: scale(1.08); }
-    .team-modal-photo {
-        position: relative;
-        height: 100%;
-    }
-    .team-modal-photo img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-    }
-    .team-modal-content {
-        height: 100%;
-        padding: var(--space-40);
-        overflow-y: auto;
-    }
-    .team-modal-content .team-name { font-size: var(--text-xl); margin-bottom: var(--space-4); }
-    .team-modal-content .team-role {
-        font-size: var(--text-sm);
-        color: var(--color-brand);
-        font-weight: var(--fw-semibold);
-        margin-bottom: var(--space-20);
-    }
-    .team-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-8);
-        margin-bottom: var(--space-24);
-    }
-    .team-tag {
-        font-size: var(--text-xs);
-        background: var(--color-brand-subtle);
-        color: var(--color-brand-hover);
-        padding: var(--space-8) var(--space-12);
-        border-radius: var(--radius-pill);
-        font-weight: var(--fw-medium);
-    }
-    .team-bio p {
-        color: var(--color-text-muted);
-        font-size: var(--text-sm);
-        line-height: var(--leading-relaxed);
-        margin-bottom: var(--space-12);
-    }
 
     @media (max-width: 900px) {
         .team-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
         .team-grid { gap: var(--space-12); }
-        .team-modal { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); height: 80vh; max-height: 80vh; }
-        .team-modal-photo { width: 100%; height: auto; aspect-ratio: 4 / 5; max-height: 36vh; }
-        .team-modal-photo img { object-position: center 20%; }
-        .team-modal-content { height: 100%; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: var(--space-24) var(--space-20) var(--space-32); }
     }
 </style>

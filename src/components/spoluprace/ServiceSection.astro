@@ -16,10 +16,12 @@ interface Props {
   photoLabel: string;
   bookLabel: string;
   flip?: boolean;
+  /** Section background, so neighbouring sections alternate. */
+  tone?: 'surface' | 'alt';
 }
-const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel, bookLabel, flip = false } = Astro.props;
+const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel, bookLabel, flip = false, tone = 'surface' } = Astro.props;
 ---
-<section class:list={['service', flip && 'service--flip']} id={id}>
+<section class:list={['service', `service--${tone}`, flip && 'service--flip']} id={id}>
     <div class="container service-grid">
         <div class="service-media reveal">
             <Photo file={photo} alt={title} label={photoLabel} ratio="4 / 5" sizes="(max-width: 900px) 100vw, 520px" widths={[480, 720, 1040]} />
@@ -41,7 +43,8 @@ const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel,
 
 <style>
     .service { padding: var(--space-section) 0; scroll-margin-top: var(--header-height); }
-    .service:nth-of-type(even) { background: var(--color-surface); }
+    .service--surface { background: var(--color-surface); }
+    .service--alt { background: var(--color-surface-alt); }
     .service-grid {
         display: grid;
         grid-template-columns: 1fr 1.1fr;

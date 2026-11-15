@@ -11,5 +11,9 @@
     "prostor-terapie-2.jpg",
     "prostor-detail.jpg"
   ],
-  "kontakt": "kontakt-tym.jpg"
+  "pages": {
+    "spoluprace": "spoluprace-konzultace.jpg",
+    "onas": "onas-tym-hovor.jpg",
+    "kontakt": "kontakt-tym.jpg"
+  }
 }

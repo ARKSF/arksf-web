@@ -2,10 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
 import About from '../components/home/About.astro';
 import Approach from '../components/home/Approach.astro';
 import Quote from '../components/home/Quote.astro';
-import Team from '../components/home/Team.astro';
+import TeamProfiles from '../components/TeamProfiles.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Gallery from '../components/Gallery.astro';
 import CtaBand from '../components/CtaBand.astro';
@@ -16,10 +17,11 @@ const page = pages.onas;
 <Base title="O nás" description={page.description} path="/o-nas.html">
     <Navbar />
     <main>
-        <About asPageTitle />
+        <PageHero label={page.label} title={page.title} text={page.text} photo={photos.pages.onas} photoAlt="Tým ARK při rozhovoru" />
         <Approach />
+        <About />
+        <TeamProfiles />
         <Quote />
-        <Team />
         <section class="section space" id="prostor">
             <div class="container">
                 <SectionHeader label={page.spaceLabel} title={page.spaceTitle} subtitle={page.spaceText} />

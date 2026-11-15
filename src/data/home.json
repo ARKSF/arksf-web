@@ -12,7 +12,8 @@
       "text": "Už jste náš klient?",
       "label": "Rezervace",
       "href": "rezervace.html"
-    }
+    },
+    "variant": 1
   },
   "services": {
     "label": "// Naše služby",

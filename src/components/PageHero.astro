@@ -1,0 +1,84 @@
+---
+// Header band of a subpage (Spolupráce, O nás, Kontakt): dark, with a breadcrumb, the page title (h1),
+// one line of text and a photo, so it is always clear which page you are on.
+import Photo from './Photo.astro';
+
+interface Props {
+  label: string;
+  title: string;
+  text: string;
+  photo?: string;
+  photoAlt: string;
+}
+const { label, title, text, photo, photoAlt } = Astro.props;
+---
+<header class="page-hero">
+    <div class="container page-hero-inner">
+        <div class="page-hero-text">
+            <nav class="page-hero-crumbs" aria-label="Drobečková navigace">
+                <a href="index.html">Úvod</a> <span aria-hidden="true">/</span> <span aria-current="page">{title}</span>
+            </nav>
+            <span class="section-label">{label}</span>
+            <h1>{title}</h1>
+            <p>{text}</p>
+        </div>
+        <div class="page-hero-media">
+            <Photo file={photo} alt={photoAlt} ratio="4 / 3" eager sizes="(max-width: 900px) 100vw, 520px" widths={[480, 720, 1040]} class="page-hero-photo" />
+        </div>
+    </div>
+</header>
+
+<style>
+    .page-hero {
+        position: relative;
+        overflow: hidden;
+        background: var(--color-surface-inverse);
+        color: var(--color-text-inverse);
+        padding: calc(var(--header-height) + var(--space-64)) 0 var(--space-80);
+    }
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        top: -30%;
+        right: -10%;
+        width: 60%;
+        height: 160%;
+        background: radial-gradient(circle at 60% 40%, var(--color-brand-glow) 0%, transparent 60%);
+        pointer-events: none;
+    }
+    .page-hero::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--color-brand), var(--color-accent));
+    }
+    .page-hero-inner {
+        position: relative;
+        z-index: var(--z-raised);
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: var(--space-64);
+        align-items: center;
+    }
+    .page-hero-crumbs {
+        font-size: var(--text-sm);
+        color: var(--color-text-inverse-muted);
+        margin-bottom: var(--space-24);
+        display: flex;
+        gap: var(--space-8);
+    }
+    .page-hero-crumbs a:hover { color: var(--color-text-inverse); }
+    .page-hero-crumbs [aria-current] { color: var(--color-text-inverse); }
+    .page-hero .section-label { color: var(--color-accent); }
+    .page-hero h1 { font-size: var(--text-h1); line-height: var(--leading-tight); margin-bottom: var(--space-20); }
+    .page-hero p { font-size: var(--text-lg); color: var(--color-text-inverse-muted); max-width: 480px; }
+    .page-hero-media :global(.page-hero-photo) { border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); }
+
+    @media (max-width: 900px) {
+        .page-hero-inner { grid-template-columns: 1fr; gap: var(--space-40); }
+        .page-hero { padding-bottom: var(--space-64); }
+    }
+</style>

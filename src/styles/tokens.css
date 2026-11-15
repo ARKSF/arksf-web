@@ -116,6 +116,7 @@
   --text-4xl: var(--size-48);     /* decorative quote marks */
   --text-h2: clamp(28px, 4vw, 40px);
   --text-h1: clamp(36px, 5.5vw, 56px);
+  --text-display: clamp(44px, 7.5vw, 96px);   /* oversized hero headline */
 
   --fw-regular: 400;
   --fw-medium: 500;
@@ -129,6 +130,7 @@
   --leading-normal: 1.5;          /* UI, small text */
   --leading-relaxed: 1.7;         /* running text */
 
+  --tracking-tight: -0.02em;      /* display sizes */
   --tracking-wide: 0.05em;
   --tracking-label: 0.1em;        /* uppercase labels */
 
