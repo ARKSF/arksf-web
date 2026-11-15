@@ -1,15 +1,15 @@
 {
   "_help": "Fotky ulož do src/assets/photos/ a sem napiš název souboru. Prázdné místo = na webu se ukáže šedý zástupný rámeček.",
-  "hero": "",
-  "konzultace": "",
-  "treninky": "",
-  "skupinove": "",
+  "hero": "hero-trenink-trx.jpg",
+  "konzultace": "fyzio-lehatko.jpg",
+  "treninky": "individualni-trenink.jpg",
+  "skupinove": "skupinova-lekce.jpg",
   "prostor": [
-    "",
-    "",
-    "",
-    "",
-    ""
+    "prostor-gym.jpg",
+    "prostor-gym-2.jpg",
+    "prostor-terapie.jpg",
+    "prostor-terapie-2.jpg",
+    "prostor-detail.jpg"
   ],
-  "kontakt": ""
+  "kontakt": "kontakt-tym.jpg"
 }

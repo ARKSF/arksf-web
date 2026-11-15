@@ -1,6 +1,7 @@
 ---
-// Client reviews from src/data/reviews.json. Hidden when there are none,
-// except in preview builds (PUBLIC_PREVIEW=1), which show labelled sample cards for the layout.
+// Client reviews from src/data/reviews.json: the Google rating summary (rating + count) and, if any,
+// review cards (items). Hidden when there is neither. Preview builds (PUBLIC_PREVIEW=1) without items
+// show labelled sample cards for the layout.
 import SectionHeader from '../SectionHeader.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
@@ -11,12 +12,26 @@ const items = showSamples
   ? [1, 2, 3].map((n) => ({ name: `Ukázka ${n}`, text: 'Tady bude skutečná recenze klienta. Zástupný text jen pro náhled rozložení, na živém webu se neukáže.', rating: 5, date: undefined, source: 'Google' }))
   : reviews.items;
 const { label, title, googleAction } = home.reviews;
+const hasSummary = typeof reviews.rating === 'number' && typeof reviews.count === 'number' && reviews.count > 0;
+const ratingText = reviews.rating?.toLocaleString('cs-CZ', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const countText = (n: number) => `${n} ${n === 1 ? 'recenze' : n < 5 ? 'recenze' : 'recenzí'} na Googlu`;
 ---
-{items.length > 0 && (
+{(items.length > 0 || hasSummary) && (
 <section class="reviews section" id="recenze">
     <div class="container">
         <SectionHeader label={label} title={title} />
-        <ul class="reviews-track" aria-label={title}>
+        {hasSummary && (
+            <a href={reviews.googleUrl} target="_blank" rel="noopener" class="reviews-summary">
+                <span class="reviews-score">{ratingText}</span>
+                <span class="reviews-summary-body">
+                    <span class="review-stars" aria-label={`${ratingText} z 5 hvězd`}>
+                        {Array.from({ length: 5 }, (_, i) => <span class:list={['review-star', i < Math.round(reviews.rating!) && 'is-on']}><Icon name="star" /></span>)}
+                    </span>
+                    <span class="reviews-count">{countText(reviews.count!)} <Icon name="external-link" strokeWidth="2.5" /></span>
+                </span>
+            </a>
+        )}
+        {items.length > 0 && <ul class="reviews-track" aria-label={title}>
             {items.map((r) => (
                 <li class:list={['review-card', showSamples && 'review-card--sample']}>
                     <div class="review-stars" aria-label={`${r.rating} z 5 hvězd`}>
@@ -29,8 +44,8 @@ const { label, title, googleAction } = home.reviews;
                     </footer>
                 </li>
             ))}
-        </ul>
-        {reviews.googleUrl && (
+        </ul>}
+        {reviews.googleUrl && items.length > 0 && (
             <div class="reviews-more">
                 <Button href={reviews.googleUrl} variant="secondary" target="_blank" rel="noopener">{googleAction} <Icon name="external-link" strokeWidth="2.5" /></Button>
             </div>
@@ -41,6 +56,25 @@ const { label, title, googleAction } = home.reviews;
 
 <style>
     .reviews { background: var(--color-surface); }
+    .reviews-summary {
+        display: flex;
+        align-items: center;
+        gap: var(--space-20);
+        width: fit-content;
+        margin: 0 auto var(--space-48);
+        padding: var(--space-20) var(--space-32);
+        background: var(--color-surface-alt);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        transition: all var(--duration-base) var(--ease-standard);
+    }
+    .reviews-summary:hover { border-color: var(--color-brand); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .reviews-summary:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    .reviews-score { font-family: var(--font-heading); font-weight: var(--fw-bold); font-size: var(--text-4xl); line-height: var(--leading-none); color: var(--color-text); }
+    .reviews-summary-body { display: flex; flex-direction: column; gap: var(--space-8); }
+    .reviews-count { display: inline-flex; align-items: center; gap: var(--space-8); font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--color-brand); }
+    .reviews-count :global(svg) { width: 14px; height: 14px; }
+    .reviews-summary:last-child { margin-bottom: 0; }
     .reviews-track {
         list-style: none;
         display: grid;

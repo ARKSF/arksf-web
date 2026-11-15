@@ -66,6 +66,9 @@ export const photos = photosJson;
 
 const reviewsSchema = z.object({
   googleUrl: z.string(),
+  /** Average and number of Google reviews (update by hand, Google does not push changes). */
+  rating: z.number().min(1).max(5).optional(),
+  count: z.number().int().min(0).optional(),
   items: z.array(z.object({
     name: z.string(),
     text: z.string(),
