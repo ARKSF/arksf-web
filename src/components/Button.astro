@@ -4,7 +4,7 @@
 // variant: primary   filled violet (main call to action, has the light sweep)
 //          secondary violet outline
 //          soft      light violet fill, violet text
-//          accent    coral fill, white text (on dark panels)
+//          accent    coral fill, dark text (white on coral fails contrast)
 // size:    sm (40 px) | md (48 px) | lg (56 px)
 // block:   fills the container width; blockOnMobile: only below 768 px
 // Icons go in the slot after the label (<Icon name="arrow-right" />).
@@ -107,13 +107,13 @@ const classes = [
   }
 
   .btn--accent {
-    background: var(--color-accent-strong);
-    border-color: var(--color-accent-strong);
-    color: var(--color-text-inverse);
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-text-on-accent);
   }
   .btn--accent:hover {
-    background: var(--color-accent-strong-hover);
-    border-color: var(--color-accent-strong-hover);
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
     box-shadow: var(--shadow-accent);
   }
 

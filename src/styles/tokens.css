@@ -22,8 +22,7 @@
   --violet-600: #7C3AED;
   --violet-700: #6D28D9;
   --coral-400: #FF6B6B;
-  --coral-600: #C93C3C;      /* coral dark enough for white text (5 : 1) */
-  --coral-700: #B33333;
+  --coral-500: #FF5252;
   --ink-950: #0F0F1A;
   --gray-50: #FAFAFA;
   --gray-200: #E5E7EB;
@@ -98,9 +97,9 @@
   --color-brand-tint: rgba(124, 58, 237, 0.08);               /* hover wash, hero gradient */
   --color-brand-border: rgba(124, 58, 237, 0.2);
   --color-brand-glow: rgba(124, 58, 237, 0.3);
-  --color-accent: var(--coral-400);                           /* decoration, and text on dark */
-  --color-accent-strong: var(--coral-600);                    /* surfaces that carry white text */
-  --color-accent-strong-hover: var(--coral-700);
+  --color-accent: var(--coral-400);                           /* coral: buttons, badges, accents */
+  --color-accent-hover: var(--coral-500);
+  --color-text-on-accent: var(--ink-950);                     /* text on coral: dark, 6.9 : 1 (white is only 2.8 : 1) */
   --color-sheen: rgba(255, 255, 255, 0.2);                    /* light sweep on the primary button */
 
   /* Type */
@@ -156,7 +155,7 @@
   --shadow-lg: 0 16px 40px rgba(15, 15, 26, 0.12);
   --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.3);
   --shadow-brand: 0 8px 20px rgba(124, 58, 237, 0.35);
-  --shadow-accent: 0 8px 20px rgba(201, 60, 60, 0.35);
+  --shadow-accent: 0 8px 20px rgba(255, 107, 107, 0.4);
   --focus-ring: 0 0 0 3px rgba(124, 58, 237, 0.4);
   --shadow-illustration: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
   --shadow-illustration-hover: drop-shadow(0 30px 50px rgba(124, 58, 237, 0.25));
