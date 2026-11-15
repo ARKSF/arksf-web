@@ -1,68 +1,117 @@
 ---
-// Client reviews from src/data/reviews.json: the Google rating summary (rating + count) and, if any,
-// review cards (items). Hidden when there is neither. Preview builds (PUBLIC_PREVIEW=1) without items
-// show labelled sample cards for the layout.
+// Client reviews from src/data/reviews.json: the Google rating summary (rating + count) and the review
+// cards (items) in a swipeable row with previous/next buttons. Long reviews are clamped with a
+// "Číst celou" toggle. Hidden when there is neither a summary nor reviews.
+// Preview builds (PUBLIC_PREVIEW=1) without items show labelled sample cards for the layout.
 import SectionHeader from '../SectionHeader.astro';
-import Button from '../Button.astro';
 import Icon from '../Icon.astro';
 import { home, reviews } from '../../lib/content';
 
 const showSamples = import.meta.env.PUBLIC_PREVIEW === '1' && reviews.items.length === 0;
 const items = showSamples
-  ? [1, 2, 3].map((n) => ({ name: `Ukázka ${n}`, text: 'Tady bude skutečná recenze klienta. Zástupný text jen pro náhled rozložení, na živém webu se neukáže.', rating: 5, date: undefined, source: 'Google' }))
+  ? [1, 2, 3].map((n) => ({ name: `Ukázka ${n}`, topic: 'Téma', text: 'Tady bude skutečná recenze klienta. Zástupný text jen pro náhled rozložení, na živém webu se neukáže.', rating: 5, date: undefined, source: 'Google' }))
   : reviews.items;
-const { label, title, googleAction } = home.reviews;
+const { label, title } = home.reviews;
 const hasSummary = typeof reviews.rating === 'number' && typeof reviews.count === 'number' && reviews.count > 0;
 const ratingText = reviews.rating?.toLocaleString('cs-CZ', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-const countText = (n: number) => `${n} ${n === 1 ? 'recenze' : n < 5 ? 'recenze' : 'recenzí'} na Googlu`;
+const countText = (n: number) => `${n} ${n < 5 ? 'recenze' : 'recenzí'} na Googlu`;
+const initials = (name: string) => name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
 ---
 {(items.length > 0 || hasSummary) && (
 <section class="reviews section" id="recenze">
     <div class="container">
-        <SectionHeader label={label} title={title} />
-        {hasSummary && (
-            <a href={reviews.googleUrl} target="_blank" rel="noopener" class="reviews-summary">
-                <span class="reviews-score">{ratingText}</span>
-                <span class="reviews-summary-body">
-                    <span class="review-stars" aria-label={`${ratingText} z 5 hvězd`}>
-                        {Array.from({ length: 5 }, (_, i) => <span class:list={['review-star', i < Math.round(reviews.rating!) && 'is-on']}><Icon name="star" /></span>)}
+        <div class="reviews-head">
+            <SectionHeader label={label} title={title} />
+            {hasSummary && (
+                <a href={reviews.googleUrl} target="_blank" rel="noopener" class="reviews-summary">
+                    <span class="reviews-score">{ratingText}</span>
+                    <span class="reviews-summary-body">
+                        <span class="review-stars" aria-label={`${ratingText} z 5 hvězd`}>
+                            {Array.from({ length: 5 }, (_, i) => <span class:list={['review-star', i < Math.round(reviews.rating!) && 'is-on']}><Icon name="star" /></span>)}
+                        </span>
+                        <span class="reviews-count">{countText(reviews.count!)} <Icon name="external-link" strokeWidth="2.5" /></span>
                     </span>
-                    <span class="reviews-count">{countText(reviews.count!)} <Icon name="external-link" strokeWidth="2.5" /></span>
-                </span>
-            </a>
-        )}
-        {items.length > 0 && <ul class="reviews-track" aria-label={title}>
-            {items.map((r) => (
-                <li class:list={['review-card', showSamples && 'review-card--sample']}>
-                    <div class="review-stars" aria-label={`${r.rating} z 5 hvězd`}>
-                        {Array.from({ length: 5 }, (_, i) => <span class:list={['review-star', i < r.rating && 'is-on']}><Icon name="star" /></span>)}
-                    </div>
-                    <blockquote>{r.text}</blockquote>
-                    <footer>
-                        <span class="review-name">{r.name}</span>
-                        {(r.source || r.date) && <span class="review-meta">{[r.source, r.date].filter(Boolean).join(' · ')}</span>}
-                    </footer>
-                </li>
-            ))}
-        </ul>}
-        {reviews.googleUrl && items.length > 0 && (
-            <div class="reviews-more">
-                <Button href={reviews.googleUrl} variant="secondary" target="_blank" rel="noopener">{googleAction} <Icon name="external-link" strokeWidth="2.5" /></Button>
+                </a>
+            )}
+        </div>
+
+        {items.length > 0 && (
+            <div class="reviews-carousel" data-reviews>
+                <ul class="reviews-track" aria-label={title} tabindex="0">
+                    {items.map((r, i) => (
+                        <li class:list={['review-card', showSamples && 'review-card--sample']}>
+                            <div class="review-top">
+                                <div class="review-stars" aria-label={`${r.rating} z 5 hvězd`}>
+                                    {Array.from({ length: 5 }, (_, s) => <span class:list={['review-star', s < r.rating && 'is-on']}><Icon name="star" /></span>)}
+                                </div>
+                                {r.topic && <span class="review-topic">{r.topic}</span>}
+                            </div>
+                            <blockquote class="review-text" id={`review-text-${i}`}>
+                                {r.text.split('\n').map((para) => <p>{para}</p>)}
+                            </blockquote>
+                            <button type="button" class="review-more" aria-expanded="false" aria-controls={`review-text-${i}`} hidden>Číst celou recenzi</button>
+                            <footer class="review-author">
+                                <span class="review-avatar" aria-hidden="true">{initials(r.name)}</span>
+                                <span>
+                                    <span class="review-name">{r.name}</span>
+                                    {(r.source || r.date) && <span class="review-meta">{[r.source, r.date].filter(Boolean).join(' · ')}</span>}
+                                </span>
+                            </footer>
+                        </li>
+                    ))}
+                </ul>
+                <div class="reviews-nav">
+                    <button type="button" class="reviews-arrow" data-dir="-1" aria-label="Předchozí recenze"><Icon name="arrow-left" strokeWidth="2.5" /></button>
+                    <button type="button" class="reviews-arrow" data-dir="1" aria-label="Další recenze"><Icon name="arrow-right" strokeWidth="2.5" /></button>
+                </div>
             </div>
         )}
     </div>
 </section>
 )}
 
+<script>
+    document.querySelectorAll('[data-reviews]').forEach((carousel) => {
+        const track = carousel.querySelector('.reviews-track');
+        const arrows = carousel.querySelectorAll('.reviews-arrow');
+        const step = () => (track.querySelector('.review-card')?.getBoundingClientRect().width ?? 320) + 24;
+        const update = () => {
+            const max = track.scrollWidth - track.clientWidth - 2;
+            arrows[0].disabled = track.scrollLeft <= 2;
+            arrows[1].disabled = track.scrollLeft >= max;
+            carousel.classList.toggle('is-static', max <= 0);
+        };
+        arrows.forEach((a) => a.addEventListener('click', () => track.scrollBy({ left: Number(a.dataset.dir) * step(), behavior: 'smooth' })));
+        track.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+
+        // "Číst celou recenzi" only where the text is actually cut off
+        track.querySelectorAll('.review-card').forEach((card) => {
+            const text = card.querySelector('.review-text');
+            const more = card.querySelector('.review-more');
+            if (text.scrollHeight > text.clientHeight + 2) more.hidden = false;
+            more.addEventListener('click', () => {
+                const open = card.classList.toggle('is-open');
+                more.setAttribute('aria-expanded', String(open));
+                more.textContent = open ? 'Skrýt' : 'Číst celou recenzi';
+            });
+        });
+    });
+</script>
+
 <style>
     .reviews { background: var(--color-surface); }
+    .reviews-head { display: flex; flex-direction: column; align-items: center; }
+    .reviews-head :global(.section-header) { margin-bottom: var(--space-24); }
+
+    /* Google rating summary */
     .reviews-summary {
         display: flex;
         align-items: center;
         gap: var(--space-20);
-        width: fit-content;
-        margin: 0 auto var(--space-48);
-        padding: var(--space-20) var(--space-32);
+        margin-bottom: var(--space-48);
+        padding: var(--space-16) var(--space-24);
         background: var(--color-surface-alt);
         border: 1px solid var(--color-border);
         border-radius: var(--radius-lg);
@@ -74,14 +123,29 @@ const countText = (n: number) => `${n} ${n === 1 ? 'recenze' : n < 5 ? 'recenze'
     .reviews-summary-body { display: flex; flex-direction: column; gap: var(--space-8); }
     .reviews-count { display: inline-flex; align-items: center; gap: var(--space-8); font-size: var(--text-sm); font-weight: var(--fw-semibold); color: var(--color-brand); }
     .reviews-count :global(svg) { width: 14px; height: 14px; }
-    .reviews-summary:last-child { margin-bottom: 0; }
+
+    /* Stars */
+    .review-stars { display: flex; gap: var(--space-4); }
+    .review-star { color: var(--color-border); display: flex; }
+    .review-star.is-on { color: var(--color-accent); }
+    .review-star :global(svg) { width: 16px; height: 16px; fill: currentColor; }
+
+    /* Carousel */
     .reviews-track {
         list-style: none;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-grid-gap);
+        display: flex;
+        gap: var(--space-24);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding: var(--space-4) var(--space-4) var(--space-16);
+        margin: 0 calc(var(--space-4) * -1);
     }
+    .reviews-track::-webkit-scrollbar { display: none; }
+    .reviews-track:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-lg); }
     .review-card {
+        flex: 0 0 calc((100% - 2 * var(--space-24)) / 3);
+        scroll-snap-align: start;
         display: flex;
         flex-direction: column;
         gap: var(--space-16);
@@ -91,33 +155,79 @@ const countText = (n: number) => `${n} ${n === 1 ? 'recenze' : n < 5 ? 'recenze'
         padding: var(--space-card);
     }
     .review-card--sample { border-style: dashed; border-color: var(--color-brand-border); }
-    .review-stars { display: flex; gap: var(--space-4); }
-    .review-star { color: var(--color-border); display: flex; }
-    .review-star.is-on { color: var(--color-accent); }
-    .review-star :global(svg) { width: 18px; height: 18px; fill: currentColor; }
-    .review-card blockquote {
-        font-size: var(--text-base);
-        line-height: var(--leading-relaxed);
-        color: var(--color-text);
-        flex: 1;
+    .review-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); flex-wrap: wrap; }
+    .review-topic {
+        font-size: var(--text-xs);
+        font-weight: var(--fw-semibold);
+        color: var(--color-brand);
+        background: var(--color-brand-subtle);
+        padding: var(--space-4) var(--space-12);
+        border-radius: var(--radius-pill);
     }
-    .review-card footer { display: flex; flex-direction: column; gap: var(--space-4); }
-    .review-name { font-family: var(--font-heading); font-weight: var(--fw-semibold); }
-    .review-meta { font-size: var(--text-sm); color: var(--color-text-muted); }
-    .reviews-more { display: flex; justify-content: center; margin-top: var(--space-40); }
+    .review-text {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 7;
+        overflow: hidden;
+        color: var(--color-text);
+        line-height: var(--leading-relaxed);
+    }
+    .review-text p + p { margin-top: var(--space-8); }
+    .review-card.is-open .review-text { display: block; -webkit-line-clamp: unset; }
+    .review-more {
+        align-self: flex-start;
+        background: none;
+        border: 0;
+        padding: 0;
+        font: inherit;
+        font-size: var(--text-sm);
+        font-weight: var(--fw-semibold);
+        color: var(--color-brand);
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .review-more:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-sm); }
+    .review-author { margin-top: auto; display: flex; align-items: center; gap: var(--space-12); padding-top: var(--space-16); border-top: 1px solid var(--color-border); }
+    .review-avatar {
+        width: 40px; height: 40px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-round);
+        background: var(--color-surface-inverse);
+        color: var(--color-text-inverse);
+        font-family: var(--font-heading);
+        font-weight: var(--fw-bold);
+        font-size: var(--text-sm);
+    }
+    .review-name { display: block; font-family: var(--font-heading); font-weight: var(--fw-semibold); }
+    .review-meta { display: block; font-size: var(--text-sm); color: var(--color-text-muted); }
 
-    /* Phones and tablets: swipeable row */
-    @media (max-width: 900px) {
-        .reviews-track {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: var(--space-8);
-            margin: 0 calc(var(--space-16) * -1);
-            padding-left: var(--space-16);
-            padding-right: var(--space-16);
-            scroll-padding: 0 var(--space-16);
-        }
-        .review-card { flex: 0 0 82%; scroll-snap-align: start; }
+    .reviews-nav { display: flex; justify-content: center; gap: var(--space-12); margin-top: var(--space-24); }
+    .reviews-carousel.is-static .reviews-nav { display: none; }
+    .reviews-arrow {
+        width: 48px; height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-round);
+        border: 2px solid var(--color-brand);
+        background: transparent;
+        color: var(--color-brand);
+        cursor: pointer;
+        transition: all var(--duration-base) var(--ease-standard);
+    }
+    .reviews-arrow :global(svg) { width: 20px; height: 20px; }
+    .reviews-arrow:hover:not(:disabled) { background: var(--color-brand); color: var(--color-text-inverse); }
+    .reviews-arrow:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    .reviews-arrow:disabled { opacity: 0.35; cursor: default; }
+
+    @media (max-width: 1024px) {
+        .review-card { flex-basis: calc((100% - var(--space-24)) / 2); }
+    }
+    @media (max-width: 768px) {
+        .review-card { flex-basis: 85%; padding: var(--space-card-mobile); }
     }
 </style>

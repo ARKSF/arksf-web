@@ -2,5 +2,41 @@
   "googleUrl": "https://maps.app.goo.gl/gtFvMZHRdvtFoCnm8",
   "rating": 5.0,
   "count": 11,
-  "items": []
+  "items": [
+    {
+      "name": "Petr S.",
+      "topic": "Bolest pod žebry",
+      "rating": 5,
+      "source": "Google",
+      "text": "Přišel jsem s bolestí pod žebry, která mě trápila delší dobu. Po pár návštěvách bolest postupně odeznívala a teď je pryč. Hned od začátku bylo vidět, že Tomáše práce baví a přistupuje k ní moderně a otevřeně. Oceňuju třeba i to, že do tělocvičny mohou přijít rodiče s dětmi.\nNejvíc si cením jeho komunikativnosti a rozhledu, vždy věcně odpověděl na moje dotazy k tréninku. Výsledky jsou znát i jinak. Výdrž a síla se mi subjektivně výrazně zlepšily, kopce na kole dávám s větší grácií a kluka zvedám v pohodě (občas ho používám jako cvičební nářadí 🙂)."
+    },
+    {
+      "name": "Petra H.",
+      "topic": "První individuální trénink",
+      "rating": 5,
+      "source": "Google",
+      "text": "Nikdy jsem předtím nešla na individuální trénink a měla jsem obavy, jestli to vůbec zvládnu. Zvládám. A jsem na sebe pyšná.\nNejvíc oceňuji přístup a zájem o to, jak se při cvičení cítím, a odbornost, které věřím. Atmosféra při cvičení je příjemná a motivující. Výsledky na sebe nenechaly dlouho čekat. Cítím se fyzicky silnější a přestaly mě časté bolesti hlavy od krku. Už se tolik nebojím a více věřím svému tělu."
+    },
+    {
+      "name": "Lucka H.",
+      "topic": "Návrat po zranění kolene",
+      "rating": 5,
+      "source": "Google",
+      "text": "Po zranění kolene jsem měla velké pochyby, jestli se vůbec zvládnu vrátit do normálního bezbolestného pohybu, natož ke sportu. Tyhle obavy se postupně rozplynuly. Dnes se hýbu bez bolesti jak při každodenních činnostech tak i ve sportu, ke kterému se postupně ale jistě vracím. Tréninky jsou pokaždé trochu jiné, dají se dobře přizpůsobit tomu, co zrovna potřebuji a domluva na nich funguje přirozeně. Jsem ráda, že jsem se při hledání trefila tak dobře."
+    },
+    {
+      "name": "Marko P.",
+      "topic": "Krční páteř",
+      "rating": 5,
+      "source": "Google",
+      "text": "Individuální přístup zaměřený na zdraví. Měl jsem problémy s krční páteří, které se projevovaly až do uší. Jindy zase s levým bokem a kyčlí nebo bolestmi v oblasti lopatek.\nI když mi například lékař řekl, že s ušima a krční páteří už mnoho nezmůže, stačilo pár cvičení s Tomášem, cviky na doma a problémy jsou dlouhodobě pryč. Dokonce i pískání v uších, lopatky vůbec nebolí a to jsem domácí cvičení přestal dělat.\nVelké díky za klidný, profesionální a především odborný přístup. Jestli si někdo získal mou důvěru svými výsledky, pak je to Tomáš a jeho Ark Fyzio. 🙂"
+    },
+    {
+      "name": "Ondřej K.",
+      "topic": "Rehabilitace",
+      "rating": 5,
+      "source": "Google",
+      "text": "Tomáš je skvělý a vstřícný profesionál, který vede tréninky formou spolupráce a pomáhá mi na cestě ke zlepšení fyzického stavu a také s rehabilitací několika neduhů. Výborná spolupráce!"
+    }
+  ]
 }

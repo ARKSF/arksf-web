@@ -71,6 +71,8 @@ const reviewsSchema = z.object({
   count: z.number().int().min(0).optional(),
   items: z.array(z.object({
     name: z.string(),
+    /** Short label of the client's situation, shown as a tag (e.g. "Krční páteř"). */
+    topic: z.string().optional(),
     text: z.string(),
     rating: z.number().int().min(1).max(5),
     date: z.string().optional(),
