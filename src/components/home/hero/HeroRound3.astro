@@ -28,8 +28,6 @@ const pic = (f: string) => {
   return hit.default;
 };
 const hv = photos.heroVariants.r3;
-const teamPics = import.meta.glob<{ default: ImageMetadata }>('../../../assets/team/*.{jpg,jpeg,png,webp}', { eager: true });
-const faces = team.map((p) => teamPics[`../../../assets/team/${p.photo}`]?.default).filter(Boolean) as ImageMetadata[];
 const rating = reviews.rating?.toLocaleString('cs-CZ', { minimumFractionDigits: 1 });
 const bentoAlt = ['Skupinová lekce v ARK', 'Trénink s fyzioterapeutem', 'Fyzioterapie 1:1', 'Tým ARK'];
 const dark = (v: number) => v === 2;
@@ -49,7 +47,6 @@ const dark = (v: number) => v === 2;
             </div>
             {v !== 2 && (
                 <div class="hero-trust">
-                    <span class="hero-faces" aria-hidden="true">{faces.map((f) => <Image src={f} alt="" widths={[96]} sizes="40px" />)}</span>
                     {rating && <a href={reviews.googleUrl} target="_blank" rel="noopener" class="hero-rating"><Icon name="star" /> <strong>{rating}</strong> · {reviews.count} recenzí na Googlu</a>}
                 </div>
             )}
@@ -122,16 +119,6 @@ const dark = (v: number) => v === 2;
     .hero-secondary strong { color: var(--color-brand); font-weight: var(--fw-semibold); }
     .hero-secondary:hover strong { text-decoration: underline; }
     .hero-trust { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-12) var(--space-16); margin-top: var(--space-40); }
-    .hero-faces { display: flex; }
-    .hero-faces :global(img) {
-        width: 40px; height: 40px;
-        border-radius: var(--radius-round);
-        object-fit: cover;
-        object-position: center 18%;
-        border: 2px solid var(--color-surface);
-        margin-left: calc(var(--space-12) * -1);
-    }
-    .hero-faces :global(img:first-child) { margin-left: 0; }
     .hero-rating { display: inline-flex; align-items: center; gap: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); }
     .hero-rating :global(svg) { width: 16px; height: 16px; color: var(--color-accent); fill: currentColor; }
     .hero-rating strong { color: var(--color-text); }
