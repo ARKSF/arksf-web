@@ -15,5 +15,20 @@
     "spoluprace": "spoluprace-konzultace.jpg",
     "onas": "onas-tym-hovor.jpg",
     "kontakt": "kontakt-tym.jpg"
+  },
+  "heroVariants": {
+    "arch": "akce-vypad.jpg",
+    "steps": [
+      "fyzio-lehatko.jpg",
+      "akce-trx.jpg",
+      "akce-osa.jpg"
+    ],
+    "floating": [
+      "akce-kolo.jpg",
+      "akce-mrtvy-tah.jpg"
+    ],
+    "editorial": "akce-osa.jpg",
+    "cinema": "akce-vypad.jpg",
+    "logo": "skupinova-lekce.jpg"
   }
 }

@@ -13,7 +13,38 @@
       "label": "Rezervace",
       "href": "rezervace.html"
     },
-    "variant": 1
+    "variant": 1,
+    "steps": [
+      {
+        "n": "01",
+        "label": "Úvodní konzultace"
+      },
+      {
+        "n": "02",
+        "label": "Vedený trénink"
+      },
+      {
+        "n": "03",
+        "label": "Síla zpátky"
+      }
+    ],
+    "facts": {
+      "rating": "hodnocení na Googlu",
+      "team": "fyzioterapeuti a trenéři",
+      "group": "lidí ve skupině"
+    },
+    "quote": {
+      "text": "Po pár návštěvách bolest postupně odeznívala a teď je pryč.",
+      "author": "Petr S."
+    },
+    "ribbon": [
+      "Fyzio 1:1",
+      "Individuální tréninky",
+      "Skupinové lekce",
+      "Návrat po zranění",
+      "Řešení bolesti",
+      "Bez strachu z pohybu"
+    ]
   },
   "services": {
     "label": "// Naše služby",
