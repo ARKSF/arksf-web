@@ -79,7 +79,7 @@
   "contact": {
     "label": "// Kontakt",
     "title": "Začněme spolupráci",
-    "bookingBanner": { "text": "Chcete rovnou rezervovat termín?", "action": "Vyberte termín online →", "href": "rezervace.html" },
+    "bookingBanner": { "text": "Chcete rovnou rezervovat termín?", "action": "Vyberte termín online", "href": "rezervace.html" },
     "formTitle": "Napište nám",
     "form": {
       "name": { "label": "Jméno *", "placeholder": "Vaše jméno" },

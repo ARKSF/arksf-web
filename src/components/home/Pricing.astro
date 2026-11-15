@@ -30,7 +30,7 @@ const note = home.pricing.note;
 </section>
 
 <style>
-    .pricing { background: var(--white); }
+    .pricing { background: var(--color-surface); }
     .pricing-paths {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -39,16 +39,16 @@ const note = home.pricing.note;
     }
     .pricing-note {
         text-align: center;
-        font-size: var(--fs-14);
-        color: var(--gray-600);
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
         margin: var(--space-24) 0;
     }
     .pricing-note a {
-        color: var(--primary);
+        color: var(--color-brand);
         text-decoration: underline;
     }
     .pricing-note a:hover {
-        color: var(--primary-dark);
+        color: var(--color-brand-hover);
     }
 
     @media (max-width: 900px) {

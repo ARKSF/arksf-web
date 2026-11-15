@@ -2,6 +2,7 @@
 // Message form. Sends to Formspree (address in src/data/site.json) without leaving the page,
 // then replaces the form with a thank-you note. Above it: a shortcut to online booking.
 import Button from '../Button.astro';
+import Icon from '../Icon.astro';
 import { home, site } from '../../lib/content';
 
 interface Props {
@@ -13,10 +14,10 @@ const { contact } = home;
 const f = contact.form;
 ---
 <div class:list={['contact-form', className]}>
-    <a href={contact.bookingBanner.href} class="booking-banner">
+    <div class="booking-banner">
         <span class="booking-banner-text">{contact.bookingBanner.text}</span>
-        <span class="booking-banner-action">{contact.bookingBanner.action}</span>
-    </a>
+        <Button href={contact.bookingBanner.href} variant="primary" size="sm">{contact.bookingBanner.action} <Icon name="arrow-right" strokeWidth="2.5" /></Button>
+    </div>
     <h3>{contact.formTitle}</h3>
     <form id="contactForm" action={site.formspree} method="POST" data-sending={f.sending} data-success-title={f.successTitle} data-success-text={f.successText} data-error={`${f.error} ${site.email}`}>
         <div class="form-row">
@@ -73,40 +74,40 @@ const f = contact.form;
 
 <style>
     .contact-form {
-        background: var(--white);
-        border-radius: var(--radius-20);
+        background: var(--color-surface);
+        border-radius: var(--radius-lg);
         padding: var(--space-40);
-        box-shadow: var(--shadow-panel);
-        transition: box-shadow var(--duration-300) ease;
+        box-shadow: var(--shadow-md);
+        transition: box-shadow var(--duration-base) var(--ease-standard);
     }
-    .contact-form:hover { box-shadow: var(--shadow-panel-hover); }
-    .contact-form h3 { font-size: var(--fs-20); margin-bottom: var(--space-24); }
+    .contact-form:hover { box-shadow: var(--shadow-lg); }
+    .contact-form h3 { font-size: var(--text-xl); margin-bottom: var(--space-24); }
     .form-group { margin-bottom: var(--space-20); }
     .form-group label {
         display: block;
         font-weight: var(--fw-semibold);
-        font-size: var(--fs-14);
+        font-size: var(--text-sm);
         margin-bottom: var(--space-8);
-        transition: color var(--duration-300) ease;
+        transition: color var(--duration-base) var(--ease-standard);
     }
-    .form-group:focus-within label { color: var(--primary); }
+    .form-group:focus-within label { color: var(--color-brand); }
     .form-group input,
     .form-group textarea {
         width: 100%;
-        padding: var(--space-14) var(--space-18);
-        border: 2px solid var(--gray-200);
-        border-radius: var(--radius-10);
+        padding: var(--space-12) var(--space-16);
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-sm);
         font-family: inherit;
-        font-size: var(--fs-15);
-        transition: all var(--duration-300) ease;
-        background: var(--bg);
+        font-size: var(--text-base);
+        transition: all var(--duration-base) var(--ease-standard);
+        background: var(--color-surface-alt);
     }
     .form-group input:focus,
     .form-group textarea:focus {
         outline: none;
-        border-color: var(--primary);
-        background: var(--white);
-        box-shadow: var(--shadow-focus);
+        border-color: var(--color-brand);
+        background: var(--color-surface);
+        box-shadow: var(--focus-ring);
     }
     .form-group textarea { min-height: 120px; resize: vertical; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); }
@@ -116,35 +117,19 @@ const f = contact.form;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: var(--soft);
-        border: 1.5px solid var(--primary-a20);
-        border-radius: var(--radius-pill);
-        padding: var(--space-14) var(--space-20) var(--space-14) var(--space-24);
+        flex-wrap: wrap;
+        gap: var(--space-12);
+        background: var(--color-brand-subtle);
+        border: 1px solid var(--color-brand-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-12) var(--space-12) var(--space-12) var(--space-20);
         margin-bottom: var(--space-24);
-        text-decoration: none;
-        transition: all var(--duration-300) ease;
     }
-    .booking-banner:hover {
-        background: var(--soft-hover);
-        border-color: var(--primary);
-    }
-    .booking-banner-text { font-size: var(--fs-14); color: var(--dark); }
-    .booking-banner-action {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-6);
-        background: var(--primary);
-        color: var(--white);
-        font-size: var(--fs-13);
-        font-weight: var(--fw-semibold);
-        padding: var(--space-8) var(--space-16);
-        border-radius: var(--radius-pill);
-        white-space: nowrap;
-    }
+    .booking-banner-text { font-size: var(--text-sm); color: var(--color-text); }
 
     /* Thank-you note that replaces the form (inserted by the script, hence :global) */
-    .contact-form :global(.form-success) { text-align: center; padding: var(--space-32) 0; font-size: var(--fs-17); color: var(--primary); font-weight: var(--fw-semibold); }
-    .contact-form :global(.form-success span) { font-size: var(--fs-14); color: var(--gray-600); font-weight: var(--fw-regular); display: block; margin-top: var(--space-8); }
+    .contact-form :global(.form-success) { text-align: center; padding: var(--space-32) 0; font-size: var(--text-lg); color: var(--color-brand); font-weight: var(--fw-semibold); }
+    .contact-form :global(.form-success span) { font-size: var(--text-sm); color: var(--color-text-muted); font-weight: var(--fw-regular); display: block; margin-top: var(--space-8); }
 
     @media (max-width: 768px) {
         .form-row { grid-template-columns: 1fr; }

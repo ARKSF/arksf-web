@@ -23,19 +23,19 @@ const { process } = home;
 </section>
 
 <style>
-    .process { background: var(--soft); }
+    .process { background: var(--color-brand-subtle); }
     .process-info {
-        background: var(--soft);
-        border-radius: var(--radius-16);
+        background: var(--color-brand-subtle);
+        border-radius: var(--radius-lg);
         padding: var(--space-24) var(--space-32);
     }
     .process-info-label {
         font-family: var(--font-heading);
-        font-size: var(--fs-12);
+        font-size: var(--text-xs);
         font-weight: var(--fw-semibold);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-wide);
-        color: var(--primary);
+        letter-spacing: var(--tracking-label);
+        color: var(--color-brand);
         margin-bottom: var(--space-16);
         display: block;
     }
@@ -49,18 +49,18 @@ const { process } = home;
         display: flex;
         align-items: flex-start;
         gap: var(--space-8);
-        font-size: var(--fs-13);
-        color: var(--gray-600);
-        line-height: var(--leading-1-5);
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
+        line-height: var(--leading-normal);
     }
     .process-list li::before {
         content: '•';
-        color: var(--primary);
+        color: var(--color-brand);
         font-weight: var(--fw-semibold);
         flex-shrink: 0;
     }
     .process-list a {
-        color: var(--primary);
+        color: var(--color-brand);
         text-decoration: underline;
     }
 

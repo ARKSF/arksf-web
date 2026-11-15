@@ -10,7 +10,7 @@ const { about } = home;
                 <span class="section-label">{about.label}</span>
                 <h2 class="section-title">{about.title}</h2>
                 <p class="about-lead">{about.lead}</p>
-                <Badge variant="dark">{about.badge}</Badge>
+                <Badge tone="dark" dot>{about.badge}</Badge>
             </div>
 
             <div class="values-grid reveal-right">
@@ -26,19 +26,19 @@ const { about } = home;
 </section>
 
 <style>
-    .about { background: var(--dark); color: var(--white); }
+    .about { background: var(--color-surface-inverse); color: var(--color-text-inverse); }
     .about-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--space-64);
         align-items: center;
     }
-    .about .section-label { color: var(--accent); }
-    .about .section-title { color: var(--white); }
+    .about .section-label { color: var(--color-accent); }
+    .about .section-title { color: var(--color-text-inverse); }
     .about-lead {
-        font-size: var(--fs-20);
-        line-height: var(--leading-1-7);
-        color: var(--white-a90);
+        font-size: var(--text-xl);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text-inverse-strong);
         margin-bottom: var(--space-24);
     }
     .values-grid {
@@ -47,25 +47,25 @@ const { about } = home;
         gap: var(--space-16);
     }
     .value-card {
-        background: var(--white-a05);
+        background: var(--color-surface-inverse-raised);
         backdrop-filter: blur(10px);
-        border: 1px solid var(--white-a10);
-        border-radius: var(--radius-12);
+        border: 1px solid var(--color-border-inverse);
+        border-radius: var(--radius-md);
         padding: var(--space-24);
-        transition: all var(--duration-300) ease;
+        transition: all var(--duration-base) var(--ease-standard);
     }
     .value-card:hover {
-        background: var(--white-a08);
-        border-color: var(--white-a20);
+        background: var(--color-surface-inverse-raised-hover);
+        border-color: var(--color-border-inverse-strong);
         transform: translateY(-4px);
     }
     .value-card h4 {
-        font-size: var(--fs-16);
-        margin-bottom: var(--space-6);
-        transition: color var(--duration-300) ease;
+        font-size: var(--text-base);
+        margin-bottom: var(--space-8);
+        transition: color var(--duration-base) var(--ease-standard);
     }
-    .value-card:hover h4 { color: var(--accent); }
-    .value-card p { font-size: var(--fs-14); color: var(--white-a50); margin: 0; }
+    .value-card:hover h4 { color: var(--color-accent); }
+    .value-card p { font-size: var(--text-sm); color: var(--color-text-inverse-muted); margin: 0; }
 
     @media (max-width: 1024px) {
         .about-grid { grid-template-columns: 1fr; gap: var(--space-48); }
@@ -74,6 +74,6 @@ const { about } = home;
     @media (max-width: 768px) {
         .values-grid { grid-template-columns: 1fr; gap: var(--space-12); }
         .value-card { padding: var(--space-20); }
-        .value-card p { font-size: var(--fs-13); }
+        .value-card p { font-size: var(--text-sm); }
     }
 </style>

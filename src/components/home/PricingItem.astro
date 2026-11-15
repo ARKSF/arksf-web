@@ -55,30 +55,30 @@ const detailsId = `price-details-${title.toLowerCase().normalize('NFD').replace(
         justify-content: space-between;
         align-items: center;
         padding: var(--space-16) 0;
-        border-bottom: 1px solid var(--gray-200);
+        border-bottom: 1px solid var(--color-border);
     }
     .pricing-item:last-child {
         border-bottom: none;
     }
     .pricing-item h4 {
-        font-size: var(--fs-15);
-        margin-bottom: var(--space-2);
+        font-size: var(--text-base);
+        margin-bottom: var(--space-4);
     }
     .pricing-item span {
-        font-size: var(--fs-13);
-        color: var(--gray-600);
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
     }
     .pricing-item-price {
         font-family: var(--font-heading);
-        font-size: var(--fs-18);
+        font-size: var(--text-lg);
         font-weight: var(--fw-bold);
-        color: var(--primary);
+        color: var(--color-brand);
         white-space: nowrap;
     }
     .pricing-item-price span {
-        font-size: var(--fs-13);
+        font-size: var(--text-sm);
         font-weight: var(--fw-medium);
-        color: var(--gray-600);
+        color: var(--color-text-muted);
     }
     .pricing-item.has-desc {
         flex-direction: column;
@@ -105,7 +105,7 @@ const detailsId = `price-details-${title.toLowerCase().normalize('NFD').replace(
     }
     .pricing-item-button:focus { outline: none; }
     .pricing-item.has-desc:has(.pricing-item-button:focus-visible) {
-        outline: 3px solid var(--primary);
+        outline: 3px solid var(--color-brand);
         outline-offset: 3px;
     }
     .pricing-item-header {
@@ -122,21 +122,21 @@ const detailsId = `price-details-${title.toLowerCase().normalize('NFD').replace(
     .pricing-item-arrow {
         width: 20px;
         height: 20px;
-        color: var(--primary);
-        transition: transform var(--duration-300) ease;
+        color: var(--color-brand);
+        transition: transform var(--duration-base) var(--ease-standard);
         flex-shrink: 0;
     }
     .pricing-item.has-desc.active .pricing-item-arrow {
         transform: rotate(180deg);
     }
     .pricing-item-desc {
-        font-size: var(--fs-13);
-        color: var(--gray-600);
-        line-height: var(--leading-1-6);
+        font-size: var(--text-sm);
+        color: var(--color-text-muted);
+        line-height: var(--leading-relaxed);
         margin: 0;
         max-height: 0;
         overflow: hidden;
-        transition: max-height var(--duration-300) ease, margin-top var(--duration-300) ease;
+        transition: max-height var(--duration-base) var(--ease-standard), margin-top var(--duration-base) var(--ease-standard);
     }
     .pricing-item.has-desc.active .pricing-item-desc {
         max-height: 200px;
@@ -145,18 +145,18 @@ const detailsId = `price-details-${title.toLowerCase().normalize('NFD').replace(
 
     /* inside a featured (dark) card */
     :global(.pricing-card.featured) .pricing-item h4 {
-        color: var(--white);
+        color: var(--color-text-inverse);
     }
     :global(.pricing-card.featured) .pricing-item span {
-        color: var(--white-a60);
+        color: var(--color-text-inverse-muted);
     }
     :global(.pricing-card.featured) .pricing-item-price {
-        color: var(--accent);
+        color: var(--color-accent);
     }
     :global(.pricing-card.featured) .pricing-item-price span {
-        color: var(--white-a50);
+        color: var(--color-text-inverse-muted);
     }
     :global(.pricing-card.featured) .pricing-item {
-        border-color: var(--white-a10);
+        border-color: var(--color-border-inverse);
     }
 </style>

@@ -12,10 +12,10 @@ const { title } = Astro.props;
 
 <style>
     .vop-section { margin-bottom: var(--space-40); }
-    .vop-section h2 { font-size: var(--fs-20); margin-bottom: var(--space-16); color: var(--dark); }
+    .vop-section h2 { font-size: var(--text-xl); margin-bottom: var(--space-16); color: var(--color-text); }
     .vop-section :global(p),
-    .vop-section :global(li) { color: var(--gray-600); font-size: var(--fs-15); line-height: var(--leading-1-8); margin-bottom: var(--space-12); }
+    .vop-section :global(li) { color: var(--color-text-muted); font-size: var(--text-base); line-height: var(--leading-relaxed); margin-bottom: var(--space-12); }
     .vop-section :global(ul) { list-style: none; margin-left: 0; }
     .vop-section :global(li) { padding-left: var(--space-24); position: relative; }
-    .vop-section :global(li)::before { content: '—'; position: absolute; left: 0; color: var(--primary); }
+    .vop-section :global(li)::before { content: '—'; position: absolute; left: 0; color: var(--color-brand); }
 </style>

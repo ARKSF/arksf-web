@@ -4,6 +4,8 @@
 //   corner radius, shadows, z-index, spacing (padding/margin/gap in px/rem/em), easing curves and durations,
 //   and @media breakpoints other than the three listed in tokens.css.
 // Checks .css files in src/styles, <style> blocks and style="" attributes in .astro files.
+// Components must use semantic tokens, not the primitives in layer 1 of tokens.css (spacing scale excepted),
+// and every var(--…) must exist.
 // Sizes of individual elements (width, height, top, translate...) may stay raw: they belong to that component.
 // A justified exception: add /* lint-allow */ on that line.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -18,6 +20,12 @@ const rel = (p) => relative(ROOT, p).split(sep).join('/');
 const tokensCss = readFileSync(TOKENS, 'utf8');
 const BREAKPOINTS = [...tokensCss.matchAll(/^\s+(\d+px)\s+\S/gm)].map((m) => m[1]);
 
+// Every defined token, and the primitives (layer 1) that components must not use directly.
+// The spacing scale (--space-4 … --space-120) is shared on purpose and allowed everywhere.
+const [primitiveCss] = tokensCss.split('2. SEMANTIC ─');
+const DEFINED = new Set([...tokensCss.matchAll(/^\s+--([\w-]+)\s*:/gm)].map((m) => m[1]));
+const PRIMITIVES = new Set([...primitiveCss.matchAll(/^\s+--([\w-]+)\s*:/gm)].map((m) => m[1]).filter((n) => !n.startsWith('space-')));
+
 const COLOR_PROPS = /^(color|background|background-color|background-image|border|border-[\w-]*color|border-(top|right|bottom|left)|outline|fill|stroke|box-shadow|text-decoration-color|caret-color|accent-color)$/;
 const NAMED = /\b(white|black|red|green|blue|gr[ae]y|yellow|orange|purple|pink|brown|navy|gold|silver)\b/i;
 const VAR_ONLY = (v) => /^(var\(--[\w-]+\)|inherit|initial|unset|normal|none|0|auto)$/.test(v);
@@ -26,6 +34,10 @@ function checkDecl(prop, value) {
   const p = prop.toLowerCase();
   const v = value.trim();
   const out = [];
+  for (const m of v.matchAll(/var\(--([\w-]+)/g)) {
+    if (!DEFINED.has(m[1])) out.push(`unknown token --${m[1]}`);
+    else if (PRIMITIVES.has(m[1])) out.push(`primitive --${m[1]} (use a semantic token)`);
+  }
   if (/#[0-9a-fA-F]{3,8}\b/.test(v)) out.push('raw hex colour');
   if (/\b(rgba?|hsla?|oklch|lab|lch|color-mix)\(/.test(v)) out.push('raw colour function');
   if (COLOR_PROPS.test(p) && NAMED.test(v.replace(/var\([^)]*\)/g, ''))) out.push('named colour');
