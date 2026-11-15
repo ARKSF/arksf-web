@@ -10,7 +10,7 @@ import { terms, site, fill } from '../lib/content';
 // "{email}" in a paragraph becomes the contact e-mail link
 const withEmail = (text: string) => fill(text.replace('{email}', '\u0000')).split('\u0000');
 ---
-<Base title={site.title} description="Obchodní podmínky ARK – Síla & Fyzio">
+<Base title="Obchodní podmínky" description="Obchodní podmínky ARK – Síla & Fyzio" path="/vop.html">
     <Navbar variant="back" />
     <main class="page-content">
         <div class="container">

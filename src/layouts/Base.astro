@@ -3,24 +3,44 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 
+import { site } from '../lib/content';
+
 interface Props {
-  title: string;
+  /** Page title; the site name is added after it. Leave out on the home page. */
+  title?: string;
   description: string;
+  /** Address of the page on the site, e.g. '/' or '/vop.html' (used for the canonical link and Open Graph). */
+  path: string;
   /** 'home' = the one-pager (clips horizontal overflow, tighter container on phones); 'page' = subpages. */
   layout?: 'home' | 'page';
-  favicon?: boolean;
 }
 
-const { title, description, layout = 'page', favicon = false } = Astro.props;
+const { title, description, path, layout = 'page' } = Astro.props;
+const fullTitle = title ? `${title} | ${site.name}` : site.title;
+const url = new URL(path, Astro.site).href;
+const image = new URL('/favicon.png', Astro.site).href;
 ---
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    {favicon && <link rel="icon" href="favicon.png" type="image/png">}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description}>
+    <link rel="canonical" href={url}>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="sitemap" href="/sitemap.xml">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="cs_CZ">
+    <meta property="og:site_name" content={site.name}>
+    <meta property="og:title" content={fullTitle}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={url}>
+    <meta property="og:image" content={image}>
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="400">
+    <meta name="twitter:card" content="summary">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
