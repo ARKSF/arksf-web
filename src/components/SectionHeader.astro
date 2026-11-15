@@ -1,0 +1,27 @@
+---
+// Centred section header: "// label", title, optional subtitle. Fades in on scroll.
+interface Props {
+  label: string;
+  title: string;
+  subtitle?: string;
+}
+const { label, title, subtitle } = Astro.props;
+---
+<div class="section-header reveal">
+    <span class="section-label">{label}</span>
+    <h2 class="section-title">{title}</h2>
+    {subtitle && <p class="section-subtitle">{subtitle}</p>}
+</div>
+
+<style>
+    .section-header {
+        text-align: center;
+        margin-bottom: var(--space-56);
+    }
+    .section-header .section-subtitle {
+        color: var(--gray-600);
+        max-width: 500px;
+        margin: 0 auto;
+        font-size: var(--fs-17);
+    }
+</style>

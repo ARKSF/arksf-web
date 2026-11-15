@@ -1,0 +1,112 @@
+---
+// Contact: address, e-mail, opening hours (src/data/site.json) and the message form.
+import Icon from '../Icon.astro';
+import ContactForm from './ContactForm.astro';
+import { home, site } from '../../lib/content';
+const { contact } = home;
+---
+<section class="section" id="kontakt">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info reveal-left">
+                <span class="section-label">{contact.label}</span>
+                <h2>{contact.title}</h2>
+                <p>{site.replyPromise}</p>
+
+                <ul class="contact-list">
+                    <li>
+                        <div class="contact-list-icon">
+                            <Icon name="map-pin" />
+                        </div>
+                        <div>
+                            <h4>Adresa</h4>
+                            <p><a href={site.address.mapsUrl} target="_blank" rel="noopener" class="address-link">{site.address.full}</a></p>
+                            <p class="contact-note">{site.address.transport}<br>{site.address.parking}</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-list-icon">
+                            <Icon name="mail" />
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-list-icon">
+                            <Icon name="clock-hands" />
+                        </div>
+                        <div>
+                            <h4>Otevírací doba</h4>
+                            {site.hours.map((h) => <p>{h.days} {h.time}</p>)}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <ContactForm class="reveal-right" />
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: var(--space-48);
+        align-items: start;
+    }
+    .contact-info h2 { font-size: var(--fs-28); margin-bottom: var(--space-12); }
+    .contact-info > p { color: var(--gray-600); margin-bottom: var(--space-32); }
+    .contact-list { list-style: none; }
+    .contact-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-16);
+        margin-bottom: var(--space-16);
+        padding: var(--space-12);
+        border-radius: var(--radius-12);
+        transition: background var(--duration-300) ease;
+        margin-left: calc(var(--space-12) * -1);
+    }
+    .contact-list li:hover { background: var(--primary-a05); }
+    .contact-list-icon {
+        width: 40px; height: 40px;
+        background: var(--soft);
+        border-radius: var(--radius-8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: var(--space-2);
+        transition: all var(--duration-300) ease;
+    }
+    .contact-list li:hover .contact-list-icon {
+        background: var(--primary);
+        transform: scale(1.05);
+    }
+    .contact-list-icon svg {
+        width: 18px; height: 18px;
+        color: var(--primary);
+        transition: color var(--duration-300) ease;
+    }
+    .contact-list li:hover .contact-list-icon svg { color: var(--white); }
+    .contact-list h4 { font-size: var(--fs-14); margin-bottom: var(--space-2); }
+    .contact-list p { color: var(--gray-600); font-size: var(--fs-14); margin: 0; }
+    .contact-list p.contact-note { font-size: var(--fs-13); margin-top: var(--space-4); }
+    .contact-list a.address-link {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px dashed var(--gray-200);
+        transition: all var(--duration-300) ease;
+    }
+    .contact-list a.address-link:hover {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+    }
+
+    @media (max-width: 900px) {
+        .contact-grid { grid-template-columns: 1fr; }
+    }
+</style>

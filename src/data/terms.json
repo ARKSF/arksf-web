@@ -1,0 +1,56 @@
+{
+  "header": {
+    "label": "// Dokumenty",
+    "title": "Obchodní podmínky",
+    "text": "Platné od {termsValidFrom}"
+  },
+  "sections": [
+    {
+      "title": "1. Úvodní ustanovení",
+      "paragraphs": [
+        "Tyto obchodní podmínky upravují práva a povinnosti mezi poskytovatelem služeb ARK – Síla & Fyzio (dále jen „poskytovatel\") a klientem.",
+        "Služby poskytovatele zahrnují úvodní a navazující konzultace, pravidelné tréninky a skupinové tréninky."
+      ]
+    },
+    {
+      "title": "2. Úhrada služeb",
+      "items": [
+        "Úvodní i navazující konzultace se hradí předem.",
+        "Pravidelné individuální tréninky jsou hrazeny formou měsíčního paušálu.",
+        "Cena paušálu se odvíjí od frekvence tréninků týdně (počítáno s průměrem {weeksPerMonth} týdne za měsíc).",
+        "Skupinové tréninky se hradí předem nebo na místě před zahájením tréninku."
+      ]
+    },
+    {
+      "title": "3. Zrušení a náhrady",
+      "items": [
+        "Zrušení tréninku méně než {cancelHours} hodin předem je účtováno v plné výši.",
+        "Nevyužité lekce v rámci měsíčního paušálu lze nahradit.",
+        "Náhrady je možné čerpat do {makeupMonths} měsíců od původního termínu.",
+        "Maximální počet náhrad v evidenci je {makeupMax}."
+      ]
+    },
+    {
+      "title": "4. Odpovědnost",
+      "items": [
+        "Služby poskytovatele nejsou zdravotní péčí ve smyslu zákona.",
+        "Klienti cvičí na vlastní odpovědnost.",
+        "Klient je povinen informovat poskytovatele o svém zdravotním stavu a případných omezeních.",
+        "V případě akutních zdravotních problémů doporučujeme klientům konzultaci s lékařem."
+      ]
+    },
+    {
+      "title": "5. Ochrana osobních údajů",
+      "paragraphs": [
+        "Poskytovatel zpracovává osobní údaje klientů v souladu s GDPR. Údaje jsou využívány pouze pro účely poskytování služeb a komunikace s klientem. Klient má právo na přístup ke svým údajům, jejich opravu nebo výmaz."
+      ]
+    },
+    {
+      "title": "6. Závěrečná ustanovení",
+      "paragraphs": [
+        "Tyto obchodní podmínky nabývají účinnosti dnem {termsValidFrom}. Poskytovatel si vyhrazuje právo na změnu těchto podmínek. O změnách bude klient informován.",
+        "V případě dotazů nás kontaktujte na {email}."
+      ]
+    }
+  ]
+}

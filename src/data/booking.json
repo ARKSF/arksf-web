@@ -1,0 +1,27 @@
+{
+  "header": {
+    "label": "// Rezervace",
+    "title": "Pro klienty",
+    "text": "Vítejte zpět! Zde najdete vše potřebné pro správu vašich rezervací a tréninků."
+  },
+  "cards": [
+    {
+      "icon": "calendar-plus",
+      "title": "Nová rezervace",
+      "text": "Pro nové i stávající klienty. Objednejte se na konzultaci, individuální trénink nebo skupinové lekce.",
+      "action": { "label": "Rezervovat", "opens": "reservations", "icon": "arrow-right" }
+    },
+    {
+      "icon": "user",
+      "title": "Klientská zóna",
+      "text": "Přihlaste se pro správu rezervací, přehled permanentek a historii návštěv.",
+      "action": { "label": "Přihlásit se", "link": "login", "icon": "external-link" }
+    }
+  ],
+  "newClient": {
+    "label": "// Nový klient?",
+    "title": "Ještě nejste náš klient?",
+    "text": "Každá spolupráce začíná úvodní konzultací. Rezervujte si termín nebo nám napište na",
+    "action": "Rezervovat termín"
+  }
+}

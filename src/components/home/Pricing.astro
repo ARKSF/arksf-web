@@ -1,0 +1,57 @@
+---
+// Price list. Prices and rules come from src/data/pricing.json and src/data/rules.json.
+import SectionHeader from '../SectionHeader.astro';
+import PricingCard from './PricingCard.astro';
+import PricingItem from './PricingItem.astro';
+import PricingGroup from './PricingGroup.astro';
+import { home, pricing, fill } from '../../lib/content';
+
+const { consultations, trainings, group } = pricing;
+const note = home.pricing.note;
+---
+<section class="pricing section" id="cenik">
+    <div class="container">
+        <SectionHeader label={home.pricing.label} title={home.pricing.title} subtitle={home.pricing.subtitle} />
+
+        <div class="pricing-paths">
+            <PricingCard class="reveal delay-1" icon={consultations.icon as any} label={consultations.label} title={consultations.title} description={consultations.description}>
+                {consultations.items.map((item) => <PricingItem {...item} />)}
+            </PricingCard>
+
+            <PricingCard class="reveal delay-2" featured badge={trainings.badge} icon={trainings.icon as any} label={trainings.label} title={trainings.title} description={trainings.description} footer={fill(trainings.footer)}>
+                {trainings.items.map((item) => <PricingItem {...item} unit={trainings.unit} />)}
+            </PricingCard>
+        </div>
+
+        <PricingGroup class="reveal delay-3" icon={group.icon as any} title={group.title} description={fill(group.description)} price={group.price} unit={group.unit} />
+
+        <p class="pricing-note">{note.text} <a href={note.href}>{note.linkLabel}</a></p>
+    </div>
+</section>
+
+<style>
+    .pricing { background: var(--white); }
+    .pricing-paths {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-24);
+        margin-bottom: var(--space-24);
+    }
+    .pricing-note {
+        text-align: center;
+        font-size: var(--fs-14);
+        color: var(--gray-600);
+        margin: var(--space-24) 0;
+    }
+    .pricing-note a {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+    .pricing-note a:hover {
+        color: var(--primary-dark);
+    }
+
+    @media (max-width: 900px) {
+        .pricing-paths { grid-template-columns: 1fr; }
+    }
+</style>

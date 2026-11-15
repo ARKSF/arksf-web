@@ -1,0 +1,152 @@
+---
+// Message form. Sends to Formspree (address in src/data/site.json) without leaving the page,
+// then replaces the form with a thank-you note. Above it: a shortcut to online booking.
+import Button from '../Button.astro';
+import { home, site } from '../../lib/content';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const { contact } = home;
+const f = contact.form;
+---
+<div class:list={['contact-form', className]}>
+    <a href={contact.bookingBanner.href} class="booking-banner">
+        <span class="booking-banner-text">{contact.bookingBanner.text}</span>
+        <span class="booking-banner-action">{contact.bookingBanner.action}</span>
+    </a>
+    <h3>{contact.formTitle}</h3>
+    <form id="contactForm" action={site.formspree} method="POST" data-sending={f.sending} data-success-title={f.successTitle} data-success-text={f.successText} data-error={`${f.error} ${site.email}`}>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="name">{f.name.label}</label>
+                <input type="text" id="name" name="name" required placeholder={f.name.placeholder}>
+            </div>
+            <div class="form-group">
+                <label for="email">{f.email.label}</label>
+                <input type="email" id="email" name="email" required placeholder={f.email.placeholder}>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone">{f.phone.label}</label>
+            <input type="tel" id="phone" name="phone" placeholder={f.phone.placeholder}>
+        </div>
+        <div class="form-group">
+            <label for="message">{f.message.label}</label>
+            <textarea id="message" name="message" required placeholder={f.message.placeholder}></textarea>
+        </div>
+        <Button type="submit" variant="primary" size="lg" block>{f.submit}</Button>
+    </form>
+
+</div>
+
+<script>
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = this.querySelector('button[type="submit"]');
+        var originalHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.textContent = this.dataset.sending;
+
+        try {
+            var response = await fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                this.innerHTML = '<p class="form-success">&#10003; ' + this.dataset.successTitle + '<br><span>' + this.dataset.successText + '</span></p>';
+            } else {
+                throw new Error('err');
+            }
+        } catch (err) {
+            btn.disabled = false;
+            btn.innerHTML = originalHTML;
+            alert(this.dataset.error);
+        }
+    });
+</script>
+
+<style>
+    .contact-form {
+        background: var(--white);
+        border-radius: var(--radius-20);
+        padding: var(--space-40);
+        box-shadow: var(--shadow-panel);
+        transition: box-shadow var(--duration-300) ease;
+    }
+    .contact-form:hover { box-shadow: var(--shadow-panel-hover); }
+    .contact-form h3 { font-size: var(--fs-20); margin-bottom: var(--space-24); }
+    .form-group { margin-bottom: var(--space-20); }
+    .form-group label {
+        display: block;
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-14);
+        margin-bottom: var(--space-8);
+        transition: color var(--duration-300) ease;
+    }
+    .form-group:focus-within label { color: var(--primary); }
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: var(--space-14) var(--space-18);
+        border: 2px solid var(--gray-200);
+        border-radius: var(--radius-10);
+        font-family: inherit;
+        font-size: var(--fs-15);
+        transition: all var(--duration-300) ease;
+        background: var(--bg);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: var(--white);
+        box-shadow: var(--shadow-focus);
+    }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); }
+
+    /* Shortcut to online booking */
+    .booking-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--soft);
+        border: 1.5px solid var(--primary-a20);
+        border-radius: var(--radius-pill);
+        padding: var(--space-14) var(--space-20) var(--space-14) var(--space-24);
+        margin-bottom: var(--space-24);
+        text-decoration: none;
+        transition: all var(--duration-300) ease;
+    }
+    .booking-banner:hover {
+        background: var(--soft-hover);
+        border-color: var(--primary);
+    }
+    .booking-banner-text { font-size: var(--fs-14); color: var(--dark); }
+    .booking-banner-action {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-6);
+        background: var(--primary);
+        color: var(--white);
+        font-size: var(--fs-13);
+        font-weight: var(--fw-semibold);
+        padding: var(--space-8) var(--space-16);
+        border-radius: var(--radius-pill);
+        white-space: nowrap;
+    }
+
+    /* Thank-you note that replaces the form (inserted by the script, hence :global) */
+    .contact-form :global(.form-success) { text-align: center; padding: var(--space-32) 0; font-size: var(--fs-17); color: var(--primary); font-weight: var(--fw-semibold); }
+    .contact-form :global(.form-success span) { font-size: var(--fs-14); color: var(--gray-600); font-weight: var(--fw-regular); display: block; margin-top: var(--space-8); }
+
+    @media (max-width: 768px) {
+        .form-row { grid-template-columns: 1fr; }
+    }
+</style>

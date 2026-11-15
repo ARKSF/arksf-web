@@ -1,0 +1,91 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-16);
+  line-height: var(--leading-1-6);
+  color: var(--dark);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+/* The home page clips horizontal overflow and tightens the container on phones; the subpages do not. */
+body[data-layout="home"] { overflow-x: hidden; }
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  line-height: var(--leading-1-2);
+}
+a { text-decoration: none; color: inherit; }
+
+/* Scroll reveal. Zero specificity (:where), so any component rule wins over it,
+   exactly as when these rules came first in one stylesheet. Only active when the page's
+   script runs (class "js" on <html>, set in Base.astro): without JavaScript nothing is hidden. */
+:where(.js .reveal) {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all var(--duration-800) var(--ease-standard);
+}
+:where(.js .reveal.active) {
+  opacity: 1;
+  transform: translateY(0);
+}
+:where(.js .reveal-left) {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: all var(--duration-800) var(--ease-standard);
+}
+:where(.js .reveal-left.active) {
+  opacity: 1;
+  transform: translateX(0);
+}
+:where(.js .reveal-right) {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: all var(--duration-800) var(--ease-standard);
+}
+:where(.js .reveal-right.active) {
+  opacity: 1;
+  transform: translateX(0);
+}
+:where(.js .reveal-scale) {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all var(--duration-800) var(--ease-standard);
+}
+:where(.js .reveal-scale.active) {
+  opacity: 1;
+  transform: scale(1);
+}
+:where(.delay-1) { transition-delay: var(--duration-100); }
+:where(.delay-2) { transition-delay: var(--duration-200); }
+:where(.delay-3) { transition-delay: var(--duration-300); }
+:where(.delay-4) { transition-delay: var(--duration-400); }
+:where(.delay-5) { transition-delay: var(--duration-500); }
+
+/* Layout */
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-24); }
+.section { padding: var(--space-100) 0; }
+
+/* Section label and title (used by SectionHeader and directly in sections) */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-13);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: var(--space-8);
+}
+.section-title {
+  font-size: var(--fs-section-title);
+  margin-bottom: var(--space-16);
+}
+
+@media (max-width: 768px) {
+  [data-layout="home"] .container { padding: 0 var(--space-16); }
+  .section { padding: var(--space-60) 0; }
+  .section-title { font-size: var(--fs-28); }
+}

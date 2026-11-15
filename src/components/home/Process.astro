@@ -1,0 +1,73 @@
+---
+// How it works: numbered steps and the basic rules (rules come from pricing.json "basics" + rules.json).
+import SectionHeader from '../SectionHeader.astro';
+import Stepper from './Stepper.astro';
+import { home, pricing, fill, parts } from '../../lib/content';
+const { process } = home;
+---
+<section class="process section" id="spoluprace">
+    <div class="container">
+        <SectionHeader label={process.label} title={process.title} />
+
+        <Stepper steps={process.steps} class="reveal" />
+
+        <div class="process-info reveal">
+            <span class="process-info-label">{process.infoLabel}</span>
+            <ul class="process-list">
+                {pricing.basics.map((line) => (
+                    <li>{parts(fill(line)).map((part) => (part.href ? <a href={part.href}>{part.text}</a> : part.text))}</li>
+                ))}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    .process { background: var(--soft); }
+    .process-info {
+        background: var(--soft);
+        border-radius: var(--radius-16);
+        padding: var(--space-24) var(--space-32);
+    }
+    .process-info-label {
+        font-family: var(--font-heading);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-semibold);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+        color: var(--primary);
+        margin-bottom: var(--space-16);
+        display: block;
+    }
+    .process-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8) var(--space-32);
+    }
+    .process-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-8);
+        font-size: var(--fs-13);
+        color: var(--gray-600);
+        line-height: var(--leading-1-5);
+    }
+    .process-list li::before {
+        content: '•';
+        color: var(--primary);
+        font-weight: var(--fw-semibold);
+        flex-shrink: 0;
+    }
+    .process-list a {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+        .process-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .process-info { padding: var(--space-20); }
+    }
+</style>

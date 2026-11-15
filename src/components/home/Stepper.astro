@@ -1,0 +1,102 @@
+---
+// Numbered steps joined by a gradient line (stacked on phones).
+interface Props {
+  steps: Array<{ title: string; text: string }>;
+  class?: string;
+}
+const { steps, class: className } = Astro.props;
+---
+<div class:list={['stepper-wrapper', className]}>
+    <div class="stepper">
+        {steps.map((step, i) => (
+            <div class="step">
+                <div class="step-number">{i + 1}</div>
+                <h4>{step.title}</h4>
+                <p>{step.text}</p>
+            </div>
+        ))}
+    </div>
+</div>
+
+<style>
+    .stepper-wrapper {
+        background: var(--white);
+        border-radius: var(--radius-16);
+        padding: var(--space-32);
+        border: 1px solid var(--gray-200);
+        margin-bottom: var(--space-24);
+    }
+    .stepper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: relative;
+    }
+    .stepper::before {
+        content: '';
+        position: absolute;
+        top: 28px;
+        left: 80px;
+        right: 80px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        z-index: var(--z-base);
+    }
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+        position: relative;
+        z-index: var(--z-raised);
+    }
+    .step-number {
+        width: 56px;
+        height: 56px;
+        background: var(--soft);
+        border: 3px solid var(--primary);
+        border-radius: var(--radius-round);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        font-size: var(--fs-20);
+        font-weight: var(--fw-bold);
+        color: var(--primary);
+        margin-bottom: var(--space-16);
+        transition: all var(--duration-300) ease;
+    }
+    .step:hover .step-number {
+        background: var(--primary);
+        color: var(--white);
+        transform: scale(1.1);
+    }
+    .step h4 {
+        font-size: var(--fs-16);
+        margin-bottom: var(--space-8);
+        color: var(--dark);
+    }
+    .step p {
+        font-size: var(--fs-14);
+        color: var(--gray-600);
+        line-height: var(--leading-1-5);
+        max-width: 200px;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .stepper-wrapper { padding: var(--space-24); }
+        .stepper { flex-direction: column; gap: var(--space-32); }
+        .stepper::before { display: none; }
+        .step { flex-direction: row; text-align: left; gap: var(--space-20); }
+        .step-number { flex-shrink: 0; margin-bottom: 0; }
+        .step p { max-width: none; }
+    }
+    @media (max-width: 768px) {
+        .stepper-wrapper { padding: var(--space-24) var(--space-16); }
+        .stepper { gap: var(--space-24); }
+        .step { gap: var(--space-16); }
+        .step-number { width: 48px; height: 48px; font-size: var(--fs-18); }
+    }
+</style>

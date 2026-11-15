@@ -1,0 +1,135 @@
+---
+// Price card: icon, label, title, description, a list of <PricingItem>s (slot) and an optional footer note.
+// `featured` = dark card with a coral badge.
+import Icon from '../Icon.astro';
+import type { IconName } from '../icons';
+
+interface Props {
+  icon: IconName;
+  label: string;
+  title: string;
+  description: string;
+  featured?: boolean;
+  badge?: string;
+  footer?: string;
+  class?: string;
+}
+
+const { icon, label, title, description, featured = false, badge, footer, class: className } = Astro.props;
+---
+<div class:list={['pricing-card', { featured }, className]}>
+    {badge && <div class="pricing-badge">{badge}</div>}
+    <div class="pricing-card-icon">
+        <Icon name={icon} />
+    </div>
+    <div class="pricing-card-header">
+        <span class="pricing-label">{label}</span>
+        <h3>{title}</h3>
+        <p class="pricing-desc">{description}</p>
+    </div>
+    <div class="pricing-card-body">
+        <slot />
+    </div>
+    {footer && (
+        <div class="pricing-card-footer">
+            <p>{footer}</p>
+        </div>
+    )}
+</div>
+
+<style>
+    .pricing-card {
+        background: var(--bg);
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-20);
+        padding: var(--space-32);
+        position: relative;
+        transition: all var(--duration-400) ease;
+    }
+    .pricing-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-price-card-hover);
+    }
+    .pricing-card.featured {
+        background: var(--dark);
+        border-color: var(--dark);
+    }
+    .pricing-card.featured .pricing-label,
+    .pricing-card.featured h3 {
+        color: var(--white);
+    }
+    .pricing-card.featured .pricing-desc,
+    .pricing-card.featured .pricing-card-footer p {
+        color: var(--white-a60);
+    }
+    .pricing-badge {
+        position: absolute;
+        top: -12px;
+        left: 32px;
+        background: var(--accent);
+        color: var(--white);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-semibold);
+        padding: var(--space-6) var(--space-14);
+        border-radius: var(--radius-20);
+    }
+    .pricing-card-icon {
+        width: 56px;
+        height: 56px;
+        background: var(--soft);
+        border-radius: var(--radius-14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--space-20);
+        transition: all var(--duration-300) ease;
+    }
+    .pricing-card:hover .pricing-card-icon {
+        transform: scale(1.05);
+    }
+    .pricing-card-icon svg {
+        width: 26px;
+        height: 26px;
+        color: var(--primary);
+    }
+    .pricing-card.featured .pricing-card-icon {
+        background: var(--white-a10);
+    }
+    .pricing-card.featured .pricing-card-icon svg {
+        color: var(--accent);
+    }
+    .pricing-card-header {
+        margin-bottom: var(--space-24);
+    }
+    .pricing-label {
+        font-family: var(--font-heading);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-semibold);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+        color: var(--primary);
+        margin-bottom: var(--space-8);
+        display: block;
+    }
+    .pricing-card-header h3 {
+        font-size: var(--fs-24);
+        margin-bottom: var(--space-8);
+    }
+    .pricing-desc {
+        color: var(--gray-600);
+        font-size: var(--fs-14);
+        line-height: var(--leading-1-6);
+    }
+    .pricing-card-body {
+        margin-bottom: var(--space-20);
+    }
+    .pricing-card-footer p {
+        font-size: var(--fs-13);
+        color: var(--gray-600);
+        line-height: var(--leading-1-6);
+    }
+
+    @media (max-width: 768px) {
+        .pricing-card { padding: var(--space-24); }
+    }
+</style>

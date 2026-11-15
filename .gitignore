@@ -1,0 +1,10 @@
+# build output and dependencies (also marked ignored for Dropbox)
+node_modules/
+dist/
+.astro/
+
+# local env and logs
+.env
+.env.*
+npm-debug.log*
+.DS_Store

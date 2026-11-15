@@ -1,0 +1,207 @@
+---
+// Fixed top bar.
+// variant="full": home page: section links, Rezervace button, scroll progress, phone menu.
+// variant="back": subpages: logo and a "Zpět" link to the home page.
+import Logo from './Logo.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import nav from '../data/nav.json';
+
+interface Props {
+  variant?: 'full' | 'back';
+}
+
+const { variant = 'full' } = Astro.props;
+const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === id)!);
+---
+{variant === 'full' ? (
+    <nav class="navbar navbar--full">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="container navbar-inner">
+            <a href="#" class="logo-wrap">
+                <Logo class="logo-svg" />
+            </a>
+            <ul class="nav-menu">
+                {links.map((l) => <li><a href={`#${l.id}`} class="nav-link">{l.label}</a></li>)}
+                <li><Button href={nav.booking.href} variant="outline" size="sm">{nav.booking.label}</Button></li>
+            </ul>
+            <button class="nav-toggle" data-menu-toggle aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <Logo class="logo-svg" />
+            <button class="mobile-nav-close" data-menu-toggle>×</button>
+        </div>
+        <ul class="mobile-nav-menu">
+            {links.map((l) => <li><a href={`#${l.id}`} data-menu-toggle>{l.label}</a></li>)}
+        </ul>
+        <Button href={nav.booking.href} variant="outline" block data-menu-toggle>{nav.booking.label}</Button>
+    </div>
+) : (
+    <nav class="navbar navbar--back">
+        <div class="container navbar-inner">
+            <a href={nav.back.href}>
+                <Logo class="logo-svg" />
+            </a>
+            <a href={nav.back.href} class="back-link">
+                <Icon name="arrow-left" />
+                {nav.back.label}
+            </a>
+        </div>
+    </nav>
+)}
+
+<script>
+    // Phone menu
+    const mobileNav = document.getElementById('mobileNav');
+    function toggleMobileMenu() {
+        mobileNav.classList.toggle('active');
+        document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    }
+    document.querySelectorAll('[data-menu-toggle]').forEach((el) => el.addEventListener('click', toggleMobileMenu));
+
+    // Progress bar and shadow (home page bar only)
+    const navbar = document.querySelector('.navbar--full');
+    const progressBar = document.getElementById('progressBar');
+    if (navbar && progressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = 'var(--shadow-navbar)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    }
+</script>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: var(--z-header);
+        background: var(--bg-a90);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--gray-200-a50);
+    }
+    .navbar--back {
+        z-index: var(--z-header-page);
+        background: var(--bg-a95);
+    }
+    .navbar-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 72px;
+    }
+    .progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        width: 0%;
+        transition: width var(--duration-100) ease-out;
+    }
+    .logo-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        transition: transform var(--duration-300) ease;
+    }
+    .logo-wrap:hover { transform: scale(1.02); }
+    .logo-svg { height: 28px; width: auto; }
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: var(--space-32);
+        list-style: none;
+    }
+    .nav-link {
+        font-weight: var(--fw-medium);
+        font-size: var(--fs-15);
+        color: var(--dark);
+        transition: color var(--duration-300) ease;
+        position: relative;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width var(--duration-300) ease;
+    }
+    .nav-link:hover { color: var(--primary); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: var(--space-5);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: var(--space-8);
+    }
+    .nav-toggle span { width: 24px; height: 2px; background: var(--dark); transition: all var(--duration-300) ease; }
+
+    .back-link { display: inline-flex; align-items: center; gap: var(--space-8); color: var(--primary); font-weight: var(--fw-medium); font-size: var(--fs-15); transition: gap var(--duration-300) ease; }
+    .back-link:hover { gap: var(--space-12); }
+    .back-link :global(svg) { width: 18px; height: 18px; }
+
+    /* Phone menu */
+    .mobile-nav {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--white);
+        z-index: var(--z-menu);
+        padding: var(--space-24);
+        flex-direction: column;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all var(--duration-400) ease;
+    }
+    .mobile-nav.active {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0);
+    }
+    .mobile-nav-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-48);
+    }
+    .mobile-nav-close {
+        background: none;
+        border: none;
+        font-size: var(--fs-32);
+        cursor: pointer;
+        line-height: var(--leading-1);
+    }
+    .mobile-nav-menu { list-style: none; flex: 1; }
+    .mobile-nav-menu li { margin-bottom: var(--space-24); }
+    .mobile-nav-menu a {
+        font-family: var(--font-heading);
+        font-size: var(--fs-24);
+        font-weight: var(--fw-semibold);
+    }
+
+    @media (max-width: 768px) {
+        .nav-menu { display: none; }
+        .nav-toggle { display: flex; }
+    }
+</style>
