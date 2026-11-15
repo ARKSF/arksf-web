@@ -28,7 +28,7 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
                 <div class={`team-card reveal delay-${i + 1}`} data-member={p.id}>
                     <Image src={p.img} alt={p.fullName} style={position(p)} widths={CARD.widths} sizes={CARD.sizes} loading="lazy" />
                     <div class="team-card-overlay">
-                        <h3 class="team-card-name">{p.name}</h3>
+                        <h3 class="team-card-name"><button type="button" class="team-card-open" aria-haspopup="dialog" aria-controls={`team-detail-${p.id}`}>{p.name}</button></h3>
                         <p class="team-card-role">{p.role}</p>
                     </div>
                 </div>
@@ -39,11 +39,11 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
 
 <div class="team-modal-backdrop" id="teamModalBackdrop">
     {people.map((p) => (
-        <div class="team-modal" data-member={p.id}>
-            <button class="team-modal-close" aria-label="Zavřít">×</button>
+        <div class="team-modal" data-member={p.id} id={`team-detail-${p.id}`} role="dialog" aria-modal="true" aria-labelledby={`team-name-${p.id}`}>
+            <button type="button" class="team-modal-close" aria-label="Zavřít">×</button>
             <div class="team-modal-photo"><Image src={p.img} alt={p.fullName} style={position(p)} widths={DETAIL.widths} sizes={DETAIL.sizes} loading="lazy" /></div>
             <div class="team-modal-content">
-                <h3 class="team-name">{p.fullName}</h3>
+                <h3 class="team-name" id={`team-name-${p.id}`}>{p.fullName}</h3>
                 <p class="team-role">{p.roleFull}</p>
                 <div class="team-tags">
                     {p.tags.map((t) => <span class="team-tag">{t}</span>)}
@@ -58,20 +58,38 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
 
 <script>
     const backdrop = document.getElementById('teamModalBackdrop');
-    function openTeamModal(id) {
+    let trigger = null;
+    const activeModal = () => backdrop.querySelector('.team-modal.active');
+    function openTeamModal(id, from) {
         document.querySelectorAll('.team-modal').forEach(m => {
             m.classList.toggle('active', m.dataset.member === id);
         });
         backdrop.classList.add('active');
         document.body.style.overflow = 'hidden';
+        trigger = from || null;
+        activeModal()?.querySelector('.team-modal-close')?.focus();
     }
     function closeTeamModal() {
+        if (!backdrop.classList.contains('active')) return;
         backdrop.classList.remove('active');
         document.querySelectorAll('.team-modal').forEach(m => m.classList.remove('active'));
         document.body.style.overflow = '';
+        trigger?.focus();
+        trigger = null;
     }
+    // Keep Tab inside the open detail
+    document.addEventListener('keydown', (e) => {
+        const modal = activeModal();
+        if (e.key !== 'Tab' || !modal) return;
+        const items = [...modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')];
+        if (!items.length) return;
+        const first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && (document.activeElement === first || !modal.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && (document.activeElement === last || !modal.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    });
     document.querySelectorAll('.team-card').forEach(card => {
-        card.addEventListener('click', () => openTeamModal(card.dataset.member));
+        // The name is a real button stretched over the whole card, so Enter/Space and clicks both land here
+        card.addEventListener('click', () => openTeamModal(card.dataset.member, card.querySelector('.team-card-open')));
         // Start loading the detail photo as soon as someone points at or touches the card
         const preload = () => {
             const img = document.querySelector(`.team-modal[data-member="${card.dataset.member}"] img`);
@@ -119,6 +137,29 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
         flex-direction: column;
         justify-content: flex-end;
         padding: var(--space-20) var(--space-20) var(--space-16);
+    }
+    /* The name button covers the whole card (::after), so the card is one keyboard stop */
+    .team-card-open {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        text-align: inherit;
+        cursor: inherit;
+        appearance: none;
+        display: inline;
+    }
+    .team-card-open::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+    .team-card-open:focus { outline: none; }
+    .team-card:has(.team-card-open:focus-visible) {
+        outline: 3px solid var(--primary);
+        outline-offset: 3px;
     }
     .team-card-name {
         color: var(--white);

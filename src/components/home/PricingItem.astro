@@ -12,12 +12,13 @@ interface Props {
 }
 
 const { title, meta, price, unit, details } = Astro.props;
+const detailsId = `price-details-${title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-')}`;
 ---
 {details ? (
     <div class="pricing-item has-desc">
         <div class="pricing-item-header">
             <div class="pricing-item-info">
-                <h4>{title}</h4>
+                <h4><button type="button" class="pricing-item-button" aria-expanded="false" aria-controls={detailsId}>{title}</button></h4>
                 <span>{meta}</span>
             </div>
             <div class="pricing-item-toggle">
@@ -25,7 +26,7 @@ const { title, meta, price, unit, details } = Astro.props;
                 <Icon name="chevron-down" class="pricing-item-arrow" />
             </div>
         </div>
-        <p class="pricing-item-desc">{details}</p>
+        <p class="pricing-item-desc" id={detailsId}>{details}</p>
     </div>
 ) : (
     <div class="pricing-item">
@@ -38,8 +39,13 @@ const { title, meta, price, unit, details } = Astro.props;
 )}
 
 <script>
+    // The title is a real button stretched over the whole row; clicks anywhere on the row land on it
     document.querySelectorAll('.pricing-item.has-desc').forEach((item) => {
-        item.addEventListener('click', () => item.classList.toggle('active'));
+        const button = item.querySelector('.pricing-item-button');
+        item.addEventListener('click', () => {
+            const open = item.classList.toggle('active');
+            button?.setAttribute('aria-expanded', String(open));
+        });
     });
 </script>
 
@@ -78,6 +84,29 @@ const { title, meta, price, unit, details } = Astro.props;
         flex-direction: column;
         align-items: stretch;
         cursor: pointer;
+        position: relative;
+    }
+    .pricing-item-button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        text-align: inherit;
+        cursor: inherit;
+        appearance: none;
+        display: inline;
+    }
+    .pricing-item-button::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+    .pricing-item-button:focus { outline: none; }
+    .pricing-item.has-desc:has(.pricing-item-button:focus-visible) {
+        outline: 3px solid var(--primary);
+        outline-offset: 3px;
     }
     .pricing-item-header {
         display: flex;
