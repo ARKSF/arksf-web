@@ -59,7 +59,7 @@ const f = contact.form;
             });
 
             if (response.ok) {
-                this.innerHTML = '<p style="text-align:center;padding:32px 0;font-size:17px;color:#7C3AED;font-weight:600;">&#10003; ' + this.dataset.successTitle + '<br><span style="font-size:14px;color:#4B5563;font-weight:400;display:block;margin-top:8px;">' + this.dataset.successText + '</span></p>';
+                this.innerHTML = '<p class="form-success">&#10003; ' + this.dataset.successTitle + '<br><span>' + this.dataset.successText + '</span></p>';
             } else {
                 throw new Error('err');
             }
@@ -74,31 +74,31 @@ const f = contact.form;
 <style>
     .contact-form {
         background: var(--white);
-        border-radius: 20px;
-        padding: 40px;
-        box-shadow: 0 4px 24px rgba(15,15,26,0.08);
-        transition: box-shadow 0.3s ease;
+        border-radius: var(--radius-20);
+        padding: var(--space-40);
+        box-shadow: var(--shadow-panel);
+        transition: box-shadow var(--duration-300) ease;
     }
-    .contact-form:hover { box-shadow: 0 8px 40px rgba(15,15,26,0.12); }
-    .contact-form h3 { font-size: 20px; margin-bottom: 24px; }
-    .form-group { margin-bottom: 20px; }
+    .contact-form:hover { box-shadow: var(--shadow-panel-hover); }
+    .contact-form h3 { font-size: var(--fs-20); margin-bottom: var(--space-24); }
+    .form-group { margin-bottom: var(--space-20); }
     .form-group label {
         display: block;
-        font-weight: 600;
-        font-size: 14px;
-        margin-bottom: 8px;
-        transition: color 0.3s ease;
+        font-weight: var(--fw-semibold);
+        font-size: var(--fs-14);
+        margin-bottom: var(--space-8);
+        transition: color var(--duration-300) ease;
     }
     .form-group:focus-within label { color: var(--primary); }
     .form-group input,
     .form-group textarea {
         width: 100%;
-        padding: 14px 18px;
+        padding: var(--space-14) var(--space-18);
         border: 2px solid var(--gray-200);
-        border-radius: 10px;
+        border-radius: var(--radius-10);
         font-family: inherit;
-        font-size: 15px;
-        transition: all 0.3s ease;
+        font-size: var(--fs-15);
+        transition: all var(--duration-300) ease;
         background: var(--bg);
     }
     .form-group input:focus,
@@ -106,10 +106,10 @@ const f = contact.form;
         outline: none;
         border-color: var(--primary);
         background: var(--white);
-        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+        box-shadow: var(--shadow-focus);
     }
     .form-group textarea { min-height: 120px; resize: vertical; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); }
 
     /* Shortcut to online booking */
     .booking-banner {
@@ -117,30 +117,34 @@ const f = contact.form;
         align-items: center;
         justify-content: space-between;
         background: var(--soft);
-        border: 1.5px solid rgba(124,58,237,0.2);
-        border-radius: 50px;
-        padding: 14px 20px 14px 24px;
-        margin-bottom: 24px;
+        border: 1.5px solid var(--primary-a20);
+        border-radius: var(--radius-pill);
+        padding: var(--space-14) var(--space-20) var(--space-14) var(--space-24);
+        margin-bottom: var(--space-24);
         text-decoration: none;
-        transition: all 0.3s ease;
+        transition: all var(--duration-300) ease;
     }
     .booking-banner:hover {
-        background: #ede0ff;
+        background: var(--soft-hover);
         border-color: var(--primary);
     }
-    .booking-banner-text { font-size: 14px; color: var(--dark); }
+    .booking-banner-text { font-size: var(--fs-14); color: var(--dark); }
     .booking-banner-action {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: var(--space-6);
         background: var(--primary);
-        color: #fff;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 8px 16px;
-        border-radius: 50px;
+        color: var(--white);
+        font-size: var(--fs-13);
+        font-weight: var(--fw-semibold);
+        padding: var(--space-8) var(--space-16);
+        border-radius: var(--radius-pill);
         white-space: nowrap;
     }
+
+    /* Thank-you note that replaces the form (inserted by the script, hence :global) */
+    .contact-form :global(.form-success) { text-align: center; padding: var(--space-32) 0; font-size: var(--fs-17); color: var(--primary); font-weight: var(--fw-semibold); }
+    .contact-form :global(.form-success span) { font-size: var(--fs-14); color: var(--gray-600); font-weight: var(--fw-regular); display: block; margin-top: var(--space-8); }
 
     @media (max-width: 768px) {
         .form-row { grid-template-columns: 1fr; }

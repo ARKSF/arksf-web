@@ -21,10 +21,10 @@ const { steps, class: className } = Astro.props;
 <style>
     .stepper-wrapper {
         background: var(--white);
-        border-radius: 16px;
-        padding: 32px;
+        border-radius: var(--radius-16);
+        padding: var(--space-32);
         border: 1px solid var(--gray-200);
-        margin-bottom: 24px;
+        margin-bottom: var(--space-24);
     }
     .stepper {
         display: flex;
@@ -40,7 +40,7 @@ const { steps, class: className } = Astro.props;
         right: 80px;
         height: 2px;
         background: linear-gradient(90deg, var(--primary), var(--accent));
-        z-index: 0;
+        z-index: var(--z-base);
     }
     .step {
         display: flex;
@@ -49,23 +49,23 @@ const { steps, class: className } = Astro.props;
         text-align: center;
         flex: 1;
         position: relative;
-        z-index: 1;
+        z-index: var(--z-raised);
     }
     .step-number {
         width: 56px;
         height: 56px;
         background: var(--soft);
         border: 3px solid var(--primary);
-        border-radius: 50%;
+        border-radius: var(--radius-round);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 20px;
-        font-weight: 700;
+        font-family: var(--font-heading);
+        font-size: var(--fs-20);
+        font-weight: var(--fw-bold);
         color: var(--primary);
-        margin-bottom: 16px;
-        transition: all 0.3s ease;
+        margin-bottom: var(--space-16);
+        transition: all var(--duration-300) ease;
     }
     .step:hover .step-number {
         background: var(--primary);
@@ -73,32 +73,32 @@ const { steps, class: className } = Astro.props;
         transform: scale(1.1);
     }
     .step h4 {
-        font-size: 16px;
-        margin-bottom: 8px;
+        font-size: var(--fs-16);
+        margin-bottom: var(--space-8);
         color: var(--dark);
     }
     .step p {
-        font-size: 14px;
+        font-size: var(--fs-14);
         color: var(--gray-600);
-        line-height: 1.5;
+        line-height: var(--leading-1-5);
         max-width: 200px;
         margin: 0;
     }
 
     @media (max-width: 900px) {
-        .stepper-wrapper { padding: 24px; }
-        .stepper { flex-direction: column; gap: 32px; }
+        .stepper-wrapper { padding: var(--space-24); }
+        .stepper { flex-direction: column; gap: var(--space-32); }
         .stepper::before { display: none; }
-        .step { flex-direction: row; text-align: left; gap: 20px; }
+        .step { flex-direction: row; text-align: left; gap: var(--space-20); }
         .step-number { flex-shrink: 0; margin-bottom: 0; }
         .step p { max-width: none; }
     }
     @media (max-width: 768px) {
-        .stepper-wrapper { padding: 24px 16px; }
-        .stepper { flex-direction: column; gap: 24px; }
+        .stepper-wrapper { padding: var(--space-24) var(--space-16); }
+        .stepper { flex-direction: column; gap: var(--space-24); }
         .stepper::before { display: none; }
-        .step { flex-direction: row; text-align: left; gap: 16px; }
-        .step-number { flex-shrink: 0; margin-bottom: 0; width: 48px; height: 48px; font-size: 18px; }
+        .step { flex-direction: row; text-align: left; gap: var(--space-16); }
+        .step-number { flex-shrink: 0; margin-bottom: 0; width: 48px; height: 48px; font-size: var(--fs-18); }
         .step p { max-width: none; }
     }
 </style>

@@ -16,7 +16,7 @@ const { quote } = home;
 <style>
     .quote-section {
         background: var(--dark);
-        padding: 56px 0;
+        padding: var(--space-56) 0;
         position: relative;
         overflow: hidden;
     }
@@ -25,39 +25,39 @@ const { quote } = home;
         max-width: 700px;
         margin: 0 auto;
         position: relative;
-        z-index: 1;
+        z-index: var(--z-raised);
     }
     .quote-marks {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 48px;
-        font-weight: 700;
+        font-family: var(--font-heading);
+        font-size: var(--fs-48);
+        font-weight: var(--fw-bold);
         color: var(--accent);
-        line-height: 0.5;
+        line-height: var(--leading-0-5);
         display: block;
     }
     .quote-marks-end {
-        line-height: 1;
-        margin-top: 8px;
+        line-height: var(--leading-1);
+        margin-top: var(--space-8);
     }
     .quote-text {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: clamp(20px, 3vw, 24px);
-        font-weight: 600;
+        font-family: var(--font-heading);
+        font-size: var(--fs-quote);
+        font-weight: var(--fw-semibold);
         color: var(--white);
-        line-height: 1.5;
-        margin: 12px 0;
+        line-height: var(--leading-1-5);
+        margin: var(--space-12) 0;
     }
     .quote-signature {
-        font-family: 'Manrope', sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(255,255,255,0.5);
-        margin-top: 16px;
+        font-family: var(--font-body);
+        font-size: var(--fs-14);
+        font-weight: var(--fw-regular);
+        color: var(--white-a50);
+        margin-top: var(--space-16);
     }
 
     @media (max-width: 768px) {
-        .quote-section { padding: 40px 0; }
-        .quote-text { font-size: 18px; }
-        .quote-marks { font-size: 36px; }
+        .quote-section { padding: var(--space-40) 0; }
+        .quote-text { font-size: var(--fs-18); }
+        .quote-marks { font-size: var(--fs-36); }
     }
 </style>

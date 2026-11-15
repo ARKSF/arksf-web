@@ -30,51 +30,51 @@ const { about } = home;
     .about-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 64px;
+        gap: var(--space-64);
         align-items: center;
     }
     .about .section-label { color: var(--accent); }
     .about .section-title { color: var(--white); }
     .about-lead {
-        font-size: 20px;
-        line-height: 1.7;
-        color: rgba(255,255,255,0.9);
-        margin-bottom: 24px;
+        font-size: var(--fs-20);
+        line-height: var(--leading-1-7);
+        color: var(--white-a90);
+        margin-bottom: var(--space-24);
     }
     .values-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: var(--space-16);
     }
     .value-card {
-        background: rgba(255,255,255,0.05);
+        background: var(--white-a05);
         backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px;
-        padding: 24px;
-        transition: all 0.3s ease;
+        border: 1px solid var(--white-a10);
+        border-radius: var(--radius-12);
+        padding: var(--space-24);
+        transition: all var(--duration-300) ease;
     }
     .value-card:hover {
-        background: rgba(255,255,255,0.08);
-        border-color: rgba(255,255,255,0.2);
+        background: var(--white-a08);
+        border-color: var(--white-a20);
         transform: translateY(-4px);
     }
     .value-card h4 {
-        font-size: 16px;
-        margin-bottom: 6px;
-        transition: color 0.3s ease;
+        font-size: var(--fs-16);
+        margin-bottom: var(--space-6);
+        transition: color var(--duration-300) ease;
     }
     .value-card:hover h4 { color: var(--accent); }
-    .value-card p { font-size: 14px; color: rgba(255,255,255,0.5); margin: 0; }
+    .value-card p { font-size: var(--fs-14); color: var(--white-a50); margin: 0; }
 
     @media (max-width: 1024px) {
-        .about-grid { grid-template-columns: 1fr; gap: 48px; }
+        .about-grid { grid-template-columns: 1fr; gap: var(--space-48); }
         .values-grid { grid-template-columns: repeat(4, 1fr); }
     }
     @media (max-width: 768px) {
-        .values-grid { grid-template-columns: 1fr; gap: 12px; }
-        .value-card { padding: 20px; }
-        .value-card h4 { font-size: 16px; }
-        .value-card p { font-size: 13px; }
+        .values-grid { grid-template-columns: 1fr; gap: var(--space-12); }
+        .value-card { padding: var(--space-20); }
+        .value-card h4 { font-size: var(--fs-16); }
+        .value-card p { font-size: var(--fs-13); }
     }
 </style>

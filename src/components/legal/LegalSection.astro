@@ -11,11 +11,11 @@ const { title } = Astro.props;
 </div>
 
 <style>
-    .vop-section { margin-bottom: 40px; }
-    .vop-section h2 { font-size: 20px; margin-bottom: 16px; color: var(--dark); }
+    .vop-section { margin-bottom: var(--space-40); }
+    .vop-section h2 { font-size: var(--fs-20); margin-bottom: var(--space-16); color: var(--dark); }
     .vop-section :global(p),
-    .vop-section :global(li) { color: var(--gray-600); font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+    .vop-section :global(li) { color: var(--gray-600); font-size: var(--fs-15); line-height: var(--leading-1-8); margin-bottom: var(--space-12); }
     .vop-section :global(ul) { list-style: none; margin-left: 0; }
-    .vop-section :global(li) { padding-left: 24px; position: relative; }
+    .vop-section :global(li) { padding-left: var(--space-24); position: relative; }
     .vop-section :global(li)::before { content: '—'; position: absolute; left: 0; color: var(--primary); }
 </style>

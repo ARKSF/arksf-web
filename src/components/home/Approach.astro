@@ -30,52 +30,52 @@ const { approach } = home;
     .approach-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 80px;
+        gap: var(--space-80);
         align-items: start;
     }
     .approach-text {
-        font-size: 17px;
-        line-height: 1.8;
+        font-size: var(--fs-17);
+        line-height: var(--leading-1-8);
         color: var(--gray-600);
-        margin-bottom: 24px;
+        margin-bottom: var(--space-24);
     }
     .approach-list {
         list-style: none;
     }
     .approach-list li {
-        padding: 24px 0;
+        padding: var(--space-24) 0;
         border-bottom: 1px solid var(--gray-200);
-        transition: all 0.3s ease;
+        transition: all var(--duration-300) ease;
     }
     .approach-list li:first-child {
         border-top: 1px solid var(--gray-200);
     }
     .approach-list li:hover {
-        padding-left: 8px;
+        padding-left: var(--space-8);
     }
     .approach-list-label {
-        font-family: 'Space Grotesk', sans-serif;
-        font-weight: 700;
+        font-family: var(--font-heading);
+        font-weight: var(--fw-bold);
         color: var(--primary);
-        font-size: 14px;
-        margin-bottom: 8px;
+        font-size: var(--fs-14);
+        margin-bottom: var(--space-8);
     }
     .approach-list h4 {
-        font-size: 17px;
-        margin-bottom: 6px;
-        transition: color 0.3s ease;
+        font-size: var(--fs-17);
+        margin-bottom: var(--space-6);
+        transition: color var(--duration-300) ease;
     }
     .approach-list li:hover h4 {
         color: var(--primary);
     }
     .approach-list p {
         color: var(--gray-600);
-        font-size: 15px;
-        line-height: 1.6;
+        font-size: var(--fs-15);
+        line-height: var(--leading-1-6);
         margin: 0;
     }
 
     @media (max-width: 900px) {
-        .approach-grid { grid-template-columns: 1fr; gap: 48px; }
+        .approach-grid { grid-template-columns: 1fr; gap: var(--space-48); }
     }
 </style>

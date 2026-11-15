@@ -21,39 +21,39 @@ import { home } from '../../lib/content';
 <style>
     .marquee-section {
         background: var(--bg);
-        padding: 40px 0;
+        padding: var(--space-40) 0;
         overflow: hidden;
     }
     .marquee-track {
         display: flex;
-        animation: marquee 40s linear infinite;
+        animation: marquee var(--duration-marquee) linear infinite;
     }
     .marquee-track:hover { animation-play-state: paused; }
     .marquee-content {
         display: flex;
         align-items: center;
-        gap: 16px;
-        padding-right: 16px;
+        gap: var(--space-16);
+        padding-right: var(--space-16);
     }
     .marquee-item {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: var(--space-10);
         white-space: nowrap;
         color: var(--gray-600);
-        font-size: 14px;
-        font-weight: 400;
+        font-size: var(--fs-14);
+        font-weight: var(--fw-regular);
         background: var(--white);
         border: 1px solid var(--gray-200);
-        padding: 10px 20px;
-        border-radius: 50px;
-        transition: all 0.3s ease;
+        padding: var(--space-10) var(--space-20);
+        border-radius: var(--radius-pill);
+        transition: all var(--duration-300) ease;
     }
     .marquee-item:hover {
         border-color: var(--accent);
         color: var(--dark);
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        box-shadow: var(--shadow-chip-hover);
     }
     .marquee-item svg {
         width: 18px;

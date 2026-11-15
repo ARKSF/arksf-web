@@ -44,7 +44,7 @@ const { hero } = home;
         align-items: center;
         position: relative;
         overflow: hidden;
-        padding: 120px 0 80px;
+        padding: var(--space-120) 0 var(--space-80);
         background: var(--bg);
     }
     .hero::before {
@@ -54,23 +54,23 @@ const { hero } = home;
         right: -10%;
         width: 55%;
         height: 140%;
-        background: linear-gradient(135deg, var(--soft) 0%, rgba(124, 58, 237, 0.08) 100%);
+        background: linear-gradient(135deg, var(--soft) 0%, var(--primary-a08) 100%);
         transform: skewX(-12deg);
-        z-index: 0;
+        z-index: var(--z-base);
     }
     .hero-inner {
         display: grid;
         grid-template-columns: 1.1fr 1fr;
-        gap: 60px;
+        gap: var(--space-60);
         align-items: center;
         position: relative;
-        z-index: 1;
+        z-index: var(--z-raised);
     }
     .hero-content { max-width: 580px; }
     .hero h1 {
-        font-size: clamp(40px, 5.5vw, 56px);
-        line-height: 1.1;
-        margin-bottom: 24px;
+        font-size: var(--fs-hero);
+        line-height: var(--leading-1-1);
+        margin-bottom: var(--space-24);
     }
     .hero h1 .highlight {
         background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
@@ -79,10 +79,10 @@ const { hero } = home;
         background-clip: text;
     }
     .hero-text {
-        font-size: 17px;
+        font-size: var(--fs-17);
         color: var(--gray-600);
-        margin-bottom: 32px;
-        line-height: 1.7;
+        margin-bottom: var(--space-32);
+        line-height: var(--leading-1-7);
         max-width: 480px;
     }
     .hero-graphic {
@@ -95,14 +95,14 @@ const { hero } = home;
         width: 380px;
         height: auto;
         position: relative;
-        z-index: 1;
-        animation: illustrationFloat 5s ease-in-out infinite;
-        filter: drop-shadow(0 20px 40px rgba(124, 58, 237, 0.15));
-        transition: transform 0.4s ease, filter 0.4s ease;
+        z-index: var(--z-raised);
+        animation: illustrationFloat var(--duration-float) ease-in-out infinite;
+        filter: var(--shadow-illustration);
+        transition: transform var(--duration-400) ease, filter var(--duration-400) ease;
     }
     .hero-illustration:hover {
         transform: scale(1.02) translateY(-8px);
-        filter: drop-shadow(0 30px 50px rgba(124, 58, 237, 0.25));
+        filter: var(--shadow-illustration-hover);
     }
     @keyframes illustrationFloat {
         0%, 100% {
@@ -115,16 +115,16 @@ const { hero } = home;
 
     @media (max-width: 1024px) {
         .hero::before { width: 60%; }
-        .hero-inner { gap: 40px; }
+        .hero-inner { gap: var(--space-40); }
     }
     @media (max-width: 900px) {
         .hero::before { display: none; }
         .hero-inner { grid-template-columns: 1fr; }
         .hero-graphic { display: none; }
-        .hero h1 { font-size: clamp(36px, 8vw, 56px); }
+        .hero h1 { font-size: var(--fs-hero-narrow); }
     }
     @media (max-width: 768px) {
-        .hero { padding: 100px 0 60px; }
-        .hero-title { font-size: 32px; }
+        .hero { padding: var(--space-100) 0 var(--space-60); }
+        .hero-title { font-size: var(--fs-32); }
     }
 </style>

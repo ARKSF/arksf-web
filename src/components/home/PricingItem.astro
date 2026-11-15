@@ -48,30 +48,30 @@ const { title, meta, price, unit, details } = Astro.props;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 0;
+        padding: var(--space-16) 0;
         border-bottom: 1px solid var(--gray-200);
     }
     .pricing-item:last-child {
         border-bottom: none;
     }
     .pricing-item h4 {
-        font-size: 15px;
-        margin-bottom: 2px;
+        font-size: var(--fs-15);
+        margin-bottom: var(--space-2);
     }
     .pricing-item span {
-        font-size: 13px;
+        font-size: var(--fs-13);
         color: var(--gray-600);
     }
     .pricing-item-price {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 18px;
-        font-weight: 700;
+        font-family: var(--font-heading);
+        font-size: var(--fs-18);
+        font-weight: var(--fw-bold);
         color: var(--primary);
         white-space: nowrap;
     }
     .pricing-item-price span {
-        font-size: 13px;
-        font-weight: 500;
+        font-size: var(--fs-13);
+        font-weight: var(--fw-medium);
         color: var(--gray-600);
     }
     .pricing-item.has-desc {
@@ -88,30 +88,30 @@ const { title, meta, price, unit, details } = Astro.props;
     .pricing-item-toggle {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: var(--space-12);
     }
     .pricing-item-arrow {
         width: 20px;
         height: 20px;
         color: var(--primary);
-        transition: transform 0.3s ease;
+        transition: transform var(--duration-300) ease;
         flex-shrink: 0;
     }
     .pricing-item.has-desc.active .pricing-item-arrow {
         transform: rotate(180deg);
     }
     .pricing-item-desc {
-        font-size: 13px;
+        font-size: var(--fs-13);
         color: var(--gray-600);
-        line-height: 1.6;
+        line-height: var(--leading-1-6);
         margin: 0;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease, margin-top 0.3s ease;
+        transition: max-height var(--duration-300) ease, margin-top var(--duration-300) ease;
     }
     .pricing-item.has-desc.active .pricing-item-desc {
         max-height: 200px;
-        margin-top: 12px;
+        margin-top: var(--space-12);
     }
 
     /* inside a featured (dark) card */
@@ -119,15 +119,15 @@ const { title, meta, price, unit, details } = Astro.props;
         color: var(--white);
     }
     :global(.pricing-card.featured) .pricing-item span {
-        color: rgba(255,255,255,0.6);
+        color: var(--white-a60);
     }
     :global(.pricing-card.featured) .pricing-item-price {
         color: var(--accent);
     }
     :global(.pricing-card.featured) .pricing-item-price span {
-        color: rgba(255,255,255,0.5);
+        color: var(--white-a50);
     }
     :global(.pricing-card.featured) .pricing-item {
-        border-color: rgba(255,255,255,0.1);
+        border-color: var(--white-a10);
     }
 </style>

@@ -41,14 +41,14 @@ const { icon, label, title, description, featured = false, badge, footer, class:
     .pricing-card {
         background: var(--bg);
         border: 1px solid var(--gray-200);
-        border-radius: 20px;
-        padding: 32px;
+        border-radius: var(--radius-20);
+        padding: var(--space-32);
         position: relative;
-        transition: all 0.4s ease;
+        transition: all var(--duration-400) ease;
     }
     .pricing-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 16px 40px rgba(15, 15, 26, 0.1);
+        box-shadow: var(--shadow-price-card-hover);
     }
     .pricing-card.featured {
         background: var(--dark);
@@ -60,7 +60,7 @@ const { icon, label, title, description, featured = false, badge, footer, class:
     }
     .pricing-card.featured .pricing-desc,
     .pricing-card.featured .pricing-card-footer p {
-        color: rgba(255,255,255,0.6);
+        color: var(--white-a60);
     }
     .pricing-badge {
         position: absolute;
@@ -68,21 +68,21 @@ const { icon, label, title, description, featured = false, badge, footer, class:
         left: 32px;
         background: var(--accent);
         color: var(--white);
-        font-size: 12px;
-        font-weight: 600;
-        padding: 6px 14px;
-        border-radius: 20px;
+        font-size: var(--fs-12);
+        font-weight: var(--fw-semibold);
+        padding: var(--space-6) var(--space-14);
+        border-radius: var(--radius-20);
     }
     .pricing-card-icon {
         width: 56px;
         height: 56px;
         background: var(--soft);
-        border-radius: 14px;
+        border-radius: var(--radius-14);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
+        margin-bottom: var(--space-20);
+        transition: all var(--duration-300) ease;
     }
     .pricing-card:hover .pricing-card-icon {
         transform: scale(1.05);
@@ -93,43 +93,43 @@ const { icon, label, title, description, featured = false, badge, footer, class:
         color: var(--primary);
     }
     .pricing-card.featured .pricing-card-icon {
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--white-a10);
     }
     .pricing-card.featured .pricing-card-icon svg {
         color: var(--accent);
     }
     .pricing-card-header {
-        margin-bottom: 24px;
+        margin-bottom: var(--space-24);
     }
     .pricing-label {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 12px;
-        font-weight: 600;
+        font-family: var(--font-heading);
+        font-size: var(--fs-12);
+        font-weight: var(--fw-semibold);
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        letter-spacing: var(--tracking-wide);
         color: var(--primary);
-        margin-bottom: 8px;
+        margin-bottom: var(--space-8);
         display: block;
     }
     .pricing-card-header h3 {
-        font-size: 24px;
-        margin-bottom: 8px;
+        font-size: var(--fs-24);
+        margin-bottom: var(--space-8);
     }
     .pricing-desc {
         color: var(--gray-600);
-        font-size: 14px;
-        line-height: 1.6;
+        font-size: var(--fs-14);
+        line-height: var(--leading-1-6);
     }
     .pricing-card-body {
-        margin-bottom: 20px;
+        margin-bottom: var(--space-20);
     }
     .pricing-card-footer p {
-        font-size: 13px;
+        font-size: var(--fs-13);
         color: var(--gray-600);
-        line-height: 1.6;
+        line-height: var(--leading-1-6);
     }
 
     @media (max-width: 768px) {
-        .pricing-card { padding: 24px; }
+        .pricing-card { padding: var(--space-24); }
     }
 </style>
