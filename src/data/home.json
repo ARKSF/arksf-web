@@ -45,25 +45,23 @@
         "id": "konzultace",
         "title": "Konzultace a fyzio 1:1",
         "text": "Pochopíme vaši situaci a dostanete plán, se kterým můžete cvičit samostatně.",
-        "from": "consultations",
         "photoLabel": "Foto: fyzio 1:1"
       },
       {
         "id": "treninky",
         "title": "Individuální tréninky",
         "text": "Pravidelné vedení fyzioterapeuta, jistota v každém cviku.",
-        "from": "trainings",
         "photoLabel": "Foto: individuální trénink"
       },
       {
         "id": "skupinove",
         "title": "Skupinové lekce",
         "text": "Malá skupina, klidné prostředí a individuální přístup.",
-        "from": "group",
         "photoLabel": "Foto: skupinová lekce"
       }
     ],
-    "action": "Jak to probíhá a ceny"
+    "action": "Spolupráce a ceník",
+    "more": "Jak to probíhá"
   },
   "about": {
     "label": "// O nás",
@@ -140,8 +138,8 @@
   },
   "pricing": {
     "label": "// Ceník",
-    "title": "Jak začít spolupráci",
-    "subtitle": "Každá spolupráce začíná úvodní konzultací. Poté si vyberete cestu, která vám dává největší smysl.",
+    "title": "Ceník",
+    "subtitle": "Všechny ceny na jednom místě. Každá spolupráce začíná úvodní konzultací.",
     "note": {
       "text": "Jste již náš klient?",
       "linkLabel": "Přejít na rezervaci →",

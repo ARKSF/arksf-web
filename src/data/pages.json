@@ -2,7 +2,7 @@
   "spoluprace": {
     "label": "// Spolupráce",
     "title": "Spolupráce a ceník",
-    "text": "Jak spolupráce probíhá, co vás čeká a kolik to stojí. Všechno na jednom místě.",
+    "text": "Jak spolupráce probíhá a co vás u nás čeká. Ceník najdete na konci stránky.",
     "description": "Jak probíhá spolupráce v ARK: úvodní konzultace, individuální tréninky a skupinové lekce. Ceny a pravidla na jednom místě.",
     "services": {
       "konzultace": {
@@ -34,7 +34,8 @@
       }
     },
     "forWhomLabel": "Pro koho",
-    "bookAction": "Rezervovat termín"
+    "bookAction": "Rezervovat termín",
+    "priceLink": "Ceny najdete v ceníku ↓"
   },
   "onas": {
     "description": "Kdo jsme, jak přemýšlíme a kdo se o vás postará. Fyzioterapeuti a trenéři ARK – Síla & Fyzio v Praze 9.",

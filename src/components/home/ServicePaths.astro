@@ -1,18 +1,13 @@
 ---
 // Home: the three ways to work with ARK as photo tiles, each linking to its part of the Spolupráce page.
-// Starting prices come from src/data/pricing.json, photos from src/data/photos.json.
+// Photos from src/data/photos.json. No prices here on purpose: they live in the price list on Spolupráce.
 import SectionHeader from '../SectionHeader.astro';
 import Photo from '../Photo.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
-import { home, pricing, photos, price } from '../../lib/content';
+import { home, photos } from '../../lib/content';
 
 const { paths } = home;
-const from: Record<string, { value: number; unit: string }> = {
-  consultations: { value: Math.min(...pricing.consultations.items.map((i) => i.price)), unit: '' },
-  trainings: { value: Math.min(...pricing.trainings.items.map((i) => i.price)), unit: pricing.trainings.unit },
-  group: { value: pricing.group.price, unit: pricing.group.unit },
-};
 ---
 <section class="paths section" id="spoluprace">
     <div class="container">
@@ -25,7 +20,7 @@ const from: Record<string, { value: number; unit: string }> = {
                         <h3>{item.title}</h3>
                         <p>{item.text}</p>
                         <div class="path-foot">
-                            <span class="path-price">od {price(from[item.from].value)} <small>{from[item.from].unit}</small></span>
+                            <span class="path-link">{paths.more}</span>
                             <span class="path-arrow" aria-hidden="true"><Icon name="arrow-right" strokeWidth="2.5" /></span>
                         </div>
                     </div>
@@ -79,13 +74,11 @@ const from: Record<string, { value: number; unit: string }> = {
         padding-top: var(--space-16);
         border-top: 1px solid var(--color-border);
     }
-    .path-price {
+    .path-link {
         font-family: var(--font-heading);
-        font-weight: var(--fw-bold);
-        font-size: var(--text-lg);
+        font-weight: var(--fw-semibold);
         color: var(--color-brand);
     }
-    .path-price small { font-size: var(--text-sm); font-weight: var(--fw-medium); color: var(--color-text-muted); }
     .path-arrow {
         width: 40px; height: 40px;
         display: flex;
