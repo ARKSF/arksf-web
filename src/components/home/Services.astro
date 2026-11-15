@@ -1,0 +1,78 @@
+---
+import SectionHeader from '../SectionHeader.astro';
+import Icon from '../Icon.astro';
+import { home } from '../../lib/content';
+const { services } = home;
+---
+<section class="services section" id="sluzby">
+    <div class="container">
+        <SectionHeader label={services.label} title={services.title} subtitle={services.subtitle} />
+
+        <div class="services-grid">
+            {services.items.map((item, i) => (
+                <div class={`service-card reveal delay-${i + 1}`}>
+                    <div class="service-icon">
+                        <Icon name={item.icon as any} />
+                    </div>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<style>
+    .services { background: var(--white); }
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+    .service-card {
+        background: var(--bg);
+        border: 1px solid var(--gray-200);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(15, 15, 26, 0.12);
+        border-color: var(--primary);
+    }
+    .service-icon {
+        width: 48px; height: 48px;
+        background: var(--soft);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+        transition: all 0.3s ease;
+    }
+    .service-card:hover .service-icon {
+        background: var(--primary);
+        transform: scale(1.1);
+    }
+    .service-icon svg {
+        width: 24px; height: 24px;
+        color: var(--primary);
+        transition: color 0.3s ease;
+    }
+    .service-card:hover .service-icon svg { color: var(--white); }
+    .service-card h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+        transition: color 0.3s ease;
+    }
+    .service-card:hover h3 { color: var(--primary); }
+    .service-card p { color: var(--gray-600); font-size: 15px; }
+
+    @media (max-width: 900px) {
+        .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+        .services-grid { grid-template-columns: 1fr; }
+    }
+</style>

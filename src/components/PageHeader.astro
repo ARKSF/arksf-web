@@ -1,0 +1,30 @@
+---
+// Centred header of a subpage: "// label", h1, one line of text.
+// size="lg" (booking page) or "md" (terms page): the two pages had different header sizes.
+interface Props {
+  label: string;
+  title: string;
+  text: string;
+  size?: 'lg' | 'md';
+}
+const { label, title, text, size = 'lg' } = Astro.props;
+---
+<div class:list={['page-header', `page-header--${size}`]}>
+    <span class="section-label">{label}</span>
+    <h1>{title}</h1>
+    <p>{text}</p>
+</div>
+
+<style>
+    .page-header { text-align: center; }
+    .page-header .section-label { display: block; margin-bottom: 12px; }
+    .page-header h1 { margin-bottom: 16px; }
+    .page-header p { color: var(--gray-600); font-size: 17px; }
+
+    .page-header--lg { margin-bottom: 56px; }
+    .page-header--lg h1 { font-size: clamp(32px, 5vw, 48px); }
+    .page-header--lg p { max-width: 500px; margin: 0 auto; }
+
+    .page-header--md { margin-bottom: 48px; }
+    .page-header--md h1 { font-size: clamp(28px, 4vw, 36px); }
+</style>

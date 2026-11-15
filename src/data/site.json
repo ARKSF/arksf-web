@@ -1,0 +1,30 @@
+{
+  "name": "ARK – Síla & Fyzio",
+  "title": "ARK | Síla & Fyzio",
+  "url": "https://arksf.cz",
+  "email": "info@arksf.cz",
+  "tagline": "ARK je místo, kde se znovu buduje důvěra v tělo.",
+  "address": {
+    "full": "Nademlejnská 651/7, 198 00 Praha 9",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nademlejnská+651/7,+Praha+9",
+    "transport": "zastávka: Nademlejnská, Starý Hloubětín",
+    "parking": "parkování v areálu zdarma"
+  },
+  "district": "Praha 9 – Hloubětín",
+  "hours": [
+    { "days": "Po–Pá", "time": "dle domluvy" }
+  ],
+  "replyPromise": "Máte otázky? Napište nám a ozveme se vám do 24 hodin.",
+  "instagram": "https://www.instagram.com/ark_sila_fyzio",
+  "director": "Ing. Bc. Tomáš Neubert",
+  "copyright": "© 2026 ARK – Síla & Fyzio",
+  "credit": {
+    "label": "vibecoded by: Anna Kutíková ✳",
+    "url": "https://www.linkedin.com/in/anna-kutikova/"
+  },
+  "fyzion": {
+    "reservations": "https://arksf.fyzion.cz/reservations",
+    "login": "https://arksf.fyzion.cz/login"
+  },
+  "formspree": "https://formspree.io/f/xykdjrzk"
+}

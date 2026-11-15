@@ -1,0 +1,8 @@
+{
+  "cancelHours": 24,
+  "weeksPerMonth": "4,3",
+  "makeupMonths": 3,
+  "makeupMax": 5,
+  "groupMax": 5,
+  "termsValidFrom": "1. 1. 2026"
+}

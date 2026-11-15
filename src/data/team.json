@@ -1,0 +1,82 @@
+[
+  {
+    "id": "tomas",
+    "name": "Tomáš Neubert",
+    "fullName": "Ing. Bc. Tomáš Neubert",
+    "role": "zakladatel ARK, fyzioterapeut",
+    "roleFull": "zakladatel ARK, fyzioterapeut a osobní trenér",
+    "photo": "tomas-neubert.jpg",
+    "tags": [
+      "návrat do kondice po porodu",
+      "sportovní zranění kloubů a svalů",
+      "dlouhodobá bolest",
+      "návrat k běžnému fungování"
+    ],
+    "bio": [
+      "Pomáhám nejčastěji ženám, které se chtějí po porodu vrátit zpátky do kondice, rekreačním i poloprofesionálním sportovcům, které trápí zranění kloubů nebo svalů, a lidem jakéhokoliv věku, kterým dlouhodobá bolest bere chuť do běžných věcí a nejvíc ze všeho chtějí zase normálně fungovat.",
+      "Vystudoval jsem fyzioterapii a svoje postupy opírám hlavně o vědecké studie a mezinárodní doporučené postupy. Nejradši se přitom dál vzdělávám na kurzech u předních světových odborníků, kteří sami stojí za nejnovějším výzkumem. Pracuji klientsky, takže první, co potřebuju vědět, je, co je důležité pro vás, co od spolupráce čekáte a kam se chcete dostat.",
+      "Pohyb beru jako jednu z nejlepších prevencí a věřím, že tělo je často potřeba naopak dostatečně zatížit. Většina mojí práce proto stojí na tom, naučit člověka nebát se pohybu a získat zpátky důvěru ve vlastní tělo. Přesně proto mi spojení silového tréninku a fyzioterapie dává takový smysl, že jsem kolem něj postavil ARK. Nejvíc mě potěší, když mi klient napíše, že zvládl něco, čeho se ještě nedávno bál.",
+      "Od mládí jsem sportoval, od vesnické úrovně až po tu světovou, a cestou nasbíral spoustu zranění. Vždycky mě přitom hnalo hlavně jedno, vrátit se zpátky k pohybu, a právě to mě nakonec přivedlo ke spojení rehabilitace a tréninku. Volný čas trávím s rodinou a přáteli, nejradši u dobrého kafe nebo někde v horách s krosnou na zádech a pohorkami zamazanými od hlíny."
+    ]
+  },
+  {
+    "id": "david",
+    "name": "David Jisl",
+    "fullName": "Bc. David Jisl",
+    "role": "fyzioterapeut a osobní trenér",
+    "roleFull": "fyzioterapeut a osobní trenér",
+    "photo": "david-jisl.jpg",
+    "tags": [
+      "síla a soběstačnost ve vyšším věku",
+      "pohybová příprava dětí a mládeže",
+      "návrat ke sportu a výkonu",
+      "stavy po operacích a úrazech"
+    ],
+    "bio": [
+      "Baví mě pomáhat lidem, kteří si chtějí udržet sílu a soběstačnost i v pozdějším věku. Vedle toho pracuji se sportovci, kteří se vracejí zpátky k pohybu a výkonu, od atletiky po bojové sporty, a s lidmi po operacích a úrazech, včetně těch větších, jako je náhrada kyčle.",
+      "Vystudoval jsem bakaláře na 2. lékařské fakultě, kde teď dělám magistra. Vedle fyzioterapie trénuji i atletické žactvo a záleží mi na tom, aby se děti co nejvíc hýbaly a bavil je pohyb. Fungování lidského těla je složité a právě to mě na téhle práci baví. Nechci nic uspěchat ani slibovat zázraky přes noc. Jde mi hlavně o to, aby člověk porozuměl tomu, proč ho něco bolí a jak s tím může pracovat.",
+      "Věřím, že opravdová změna, ať už jde o bolest nebo o lepší formu, přichází přes aktivní účast, ne přes zkratky a pasivní metody. Vážím si každého, kdo se rozhodne na sobě zapracovat, a nejvíc mě baví sledovat, jak se klient krok za krokem zlepšuje a jak mu pohyb mění život.",
+      "Sám jsem se zranil mockrát, od vymknutých kotníků a natržených hamstringů ze závodní atletiky, po bolavé šlachy z běhání a posilování, a právě to mě nakonec do oboru přivedlo. Ve volnu sám trénuju na závody ve čtyřboji, lezu bouldery a rád zajdu do kina."
+    ]
+  },
+  {
+    "id": "kristyna",
+    "name": "Kristýna Ranawat",
+    "fullName": "Bc. Kristýna Ranawat",
+    "role": "fyzioterapeutka a trenérka",
+    "roleFull": "fyzioterapeutka a osobní trenérka",
+    "photo": "kristyna-ranawat.jpg",
+    "tags": [
+      "silový trénink pro začátečníky",
+      "sportovci z tance a gymnastiky",
+      "návrat k pohybu po operacích a úrazech"
+    ],
+    "bio": [
+      "Pracuji hlavně s lidmi, kteří se silovým tréninkem teprve začínají, a se sportovci, zejména z tance a gymnastiky. Často za mnou chodí i lidé po operacích a úrazech nohou nebo ramen.",
+      "Vystudovala jsem bakalářskou fyzioterapii na 2. lékařské fakultě a teď dodělávám magistra v aplikované fyzioterapii. K tomu se dál vzdělávám v silovém tréninku a plyometrii. Vycházím z toho, co má oporu v datech, ale stejně důležitý je pro mě zdravý rozum. Neběžím slepě za trendy a nedělám věci složitější, než musí být.",
+      "Nejdřív potřebuju pochopit, co vás omezuje a k čemu se chcete vrátit. Pak společně nastavíme reálné cíle, ať je změna vidět krok za krokem. Ráda lidem ukazuju, že zvládnou víc, než si sami myslí, a záleží mi na tom, abyste se časem obešli beze mě.",
+      "Přes deset let jsem se věnovala sportovnímu tanci, poslední sezónu i v české reprezentaci. Právě kvůli němu jsem si natrhla hamstring, začala chodit na fyzioterapii a nakonec ji šla i studovat. Ve volnu hraju na kytaru, chodím na golf a nejradši vypnu někde v přírodě."
+    ]
+  },
+  {
+    "id": "michal",
+    "name": "Michal Marek",
+    "fullName": "Mgr. Michal Marek",
+    "role": "fyzioterapeut a osobní trenér",
+    "roleFull": "fyzioterapeut a osobní trenér",
+    "photo": "michal-marek.jpg",
+    "photoPosition": "center 15%",
+    "tags": [
+      "bolesti zad",
+      "návrat k pohybu po úrazech a operacích",
+      "silový trénink pro začátečníky i sportovce",
+      "běžci"
+    ],
+    "bio": [
+      "Nejčastěji ke mně chodí lidé po úrazech a operacích, ale i s akutními nebo dlouhodobými bolestmi. Stejně tak sportovci a úplní začátečníci, kteří chtějí se silovým tréninkem teprve začít nebo si zlepšit kondici. S každým hledám cestu, jak se bezbolestně a beze strachu vrátit k pohybu.",
+      "Vystudoval jsem fyzioterapii na brněnské lékařské fakultě a od té doby prošel kurzy hlavně kolem bolestí zad a fyzioterapie ve sportu. Vycházím převážně z moderního chápání bolesti a schopnosti našeho těla se adaptovat na zátěž, které ho vystavíme.",
+      "Nejdřív spolu vyloučíme, že za potížemi nestojí něco vážného, pak si řekneme, co je pro vás důležité a čeho chcete dosáhnout, a nakonec najdeme formu pohybu, která vám sedne a bude vás bavit. Věřím, že žádný pohyb není špatný, když je správně dávkovaný.",
+      "Se zády se peru sám už od mládí a na pár blízkých jsem viděl, jak umí zhoršené zdraví na čas sebrat to, na čem člověku opravdu záleží. Být v té situaci pro někoho oporou mě motivuje. Ve volnu běhám dlouhé tratě, čtu a dlouhodobě se utápím ve světě výběrové kávy."
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+---
+import Badge from '../Badge.astro';
+import { home } from '../../lib/content';
+const { about } = home;
+---
+<section class="about section" id="o-nas">
+    <div class="container">
+        <div class="about-grid">
+            <div class="reveal-left">
+                <span class="section-label">{about.label}</span>
+                <h2 class="section-title">{about.title}</h2>
+                <p class="about-lead">{about.lead}</p>
+                <Badge variant="dark">{about.badge}</Badge>
+            </div>
+
+            <div class="values-grid reveal-right">
+                {about.values.map((v) => (
+                    <div class="value-card">
+                        <h4>{v.title}</h4>
+                        <p>{v.text}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .about { background: var(--dark); color: var(--white); }
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+    }
+    .about .section-label { color: var(--accent); }
+    .about .section-title { color: var(--white); }
+    .about-lead {
+        font-size: 20px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 24px;
+    }
+    .values-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .value-card {
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 24px;
+        transition: all 0.3s ease;
+    }
+    .value-card:hover {
+        background: rgba(255,255,255,0.08);
+        border-color: rgba(255,255,255,0.2);
+        transform: translateY(-4px);
+    }
+    .value-card h4 {
+        font-size: 16px;
+        margin-bottom: 6px;
+        transition: color 0.3s ease;
+    }
+    .value-card:hover h4 { color: var(--accent); }
+    .value-card p { font-size: 14px; color: rgba(255,255,255,0.5); margin: 0; }
+
+    @media (max-width: 1024px) {
+        .about-grid { grid-template-columns: 1fr; gap: 48px; }
+        .values-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 768px) {
+        .values-grid { grid-template-columns: 1fr; gap: 12px; }
+        .value-card { padding: 20px; }
+        .value-card h4 { font-size: 16px; }
+        .value-card p { font-size: 13px; }
+    }
+</style>

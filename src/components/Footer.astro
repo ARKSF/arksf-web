@@ -1,0 +1,174 @@
+---
+// Site footer. The three pages had three slightly different footers; `variant` reproduces each:
+//   home:  home page (in-page links incl. "Náš tým", separators between bottom items)
+//   page:  booking page (links back to home sections, no separators)
+//   legal: terms page (short logo with a text line, no director line)
+import Logo from './Logo.astro';
+import LogoExtended from './LogoExtended.astro';
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+import nav from '../data/nav.json';
+
+interface Props {
+  variant?: 'home' | 'page' | 'legal';
+}
+
+const { variant = 'home' } = Astro.props;
+const home = variant === 'home';
+const ids = home ? nav.footerSections : nav.footerSectionsSubpage;
+const links = ids.map((id) => nav.sections.find((s) => s.id === id)!);
+const prefix = home ? '#' : 'index.html#';
+---
+<footer class:list={['footer', `footer--${variant}`]}>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                {variant === 'legal' ? (
+                    <div class="footer-logo">
+                        <Logo class="footer-logo-ark" tone="light" />
+                        <span class="footer-logo-text">Síla & Fyzio</span>
+                    </div>
+                ) : (
+                    <LogoExtended class="logo-extended" />
+                )}
+                <p>{site.tagline}</p>
+                <div class="footer-social">
+                    <a href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram">
+                        <Icon name="instagram" />
+                    </a>
+                </div>
+            </div>
+            <div class="footer-nav-columns">
+                <div>
+                    <h4>Navigace</h4>
+                    <ul class="footer-links">
+                        {links.map((l) => <li><a href={`${prefix}${l.id}`}>{l.label}</a></li>)}
+                    </ul>
+                </div>
+                <div>
+                    <h4>Pro klienty</h4>
+                    <ul class="footer-links">
+                        {nav.clientLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>{site.copyright}</p>
+            <p>{site.address.full}</p>
+            {variant !== 'legal' && <p>jednatel {site.director}</p>}
+            <p><a href={site.credit.url} target="_blank" rel="noopener" class="footer-credit">{site.credit.label}</a></p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background: var(--dark);
+        color: var(--white);
+        padding: 64px 0 24px;
+    }
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+    }
+    .footer-nav-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+    .footer-brand .logo-extended {
+        height: 56px;
+        width: auto;
+        margin-bottom: 20px;
+    }
+    .footer-brand > p {
+        color: rgba(255,255,255,0.6);
+        font-size: 15px;
+        max-width: 300px;
+        line-height: 1.6;
+    }
+    .footer-social { display: flex; gap: 12px; margin-top: 24px; }
+    .footer-social a {
+        width: 40px; height: 40px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .footer-social a:hover {
+        background: var(--primary);
+        transform: translateY(-4px);
+    }
+    .footer-social :global(svg) {
+        width: 18px; height: 18px;
+        color: var(--white);
+    }
+    .footer h4 { font-size: 14px; margin-bottom: 16px; }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 10px; }
+    .footer-links a {
+        color: rgba(255,255,255,0.6);
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    .footer-links a:hover {
+        color: var(--accent);
+        transform: translateX(4px);
+    }
+    .footer-credit { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* home */
+    .footer--home .footer-social :global(svg) { transition: transform 0.3s ease; }
+    .footer--home .footer-social a:hover :global(svg) { transform: scale(1.1); }
+    .footer--home .footer-bottom {
+        padding-top: 24px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 0;
+        color: rgba(255,255,255,0.4);
+        font-size: 13px;
+        text-align: center;
+    }
+    .footer--home .footer-bottom p {
+        padding: 0 16px;
+        border-right: 1px solid rgba(255,255,255,0.2);
+    }
+    .footer--home .footer-bottom p:last-child { border-right: none; }
+
+    /* page and legal */
+    .footer--page .footer-bottom,
+    .footer--legal .footer-bottom { padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; }
+    .footer--page .footer-bottom p,
+    .footer--legal .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 13px; }
+
+    /* legal: short logo with a text line */
+    .footer--legal .footer-brand { margin-bottom: 20px; }
+    .footer-logo { margin-bottom: 20px; }
+    .footer-logo-ark { height: 40px; width: auto; display: block; margin-bottom: 8px; }
+    .footer-logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.8); letter-spacing: 0.05em; }
+    .footer--legal .footer-brand > p { margin-top: 16px; }
+
+    @media (max-width: 1024px) {
+        .footer--home .footer-grid { grid-template-columns: 1.5fr 1fr; }
+    }
+    @media (max-width: 900px) {
+        .footer--page .footer-grid,
+        .footer--legal .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+        .footer--home .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+        .footer-nav-columns { grid-template-columns: 1fr 1fr; }
+        .footer--home .footer-bottom p {
+            border-right: none;
+            padding: 4px 0;
+        }
+    }
+</style>

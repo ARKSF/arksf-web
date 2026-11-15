@@ -1,0 +1,74 @@
+---
+// How it works: numbered steps and the basic rules (rules come from pricing.json "basics" + rules.json).
+import SectionHeader from '../SectionHeader.astro';
+import Stepper from './Stepper.astro';
+import { home, pricing, fill, parts } from '../../lib/content';
+const { process } = home;
+---
+<section class="process section" id="spoluprace">
+    <div class="container">
+        <SectionHeader label={process.label} title={process.title} />
+
+        <Stepper steps={process.steps} class="reveal" />
+
+        <div class="process-info reveal">
+            <span class="process-info-label">{process.infoLabel}</span>
+            <ul class="process-list">
+                {pricing.basics.map((line) => (
+                    <li>{parts(fill(line)).map((part) => (part.href ? <a href={part.href}>{part.text}</a> : part.text))}</li>
+                ))}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<style>
+    .process { background: var(--soft); }
+    .process-info {
+        background: var(--soft);
+        border-radius: 16px;
+        padding: 24px 32px;
+    }
+    .process-info-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+        margin-bottom: 16px;
+        display: block;
+    }
+    .process-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 32px;
+    }
+    .process-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--gray-600);
+        line-height: 1.5;
+    }
+    .process-list li::before {
+        content: '•';
+        color: var(--primary);
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+    .process-list a {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+        .process-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .process-info { padding: 20px; }
+        .process-list { grid-template-columns: 1fr; }
+    }
+</style>

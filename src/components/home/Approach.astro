@@ -1,0 +1,81 @@
+---
+import { home } from '../../lib/content';
+const { approach } = home;
+---
+<section class="approach section" id="pristup">
+    <div class="container">
+        <div class="approach-grid">
+            <div class="reveal-left">
+                <span class="section-label">{approach.label}</span>
+                <h2 class="section-title">{approach.title}</h2>
+                {approach.paragraphs.map((text) => <p class="approach-text">{text}</p>)}
+            </div>
+            <div class="reveal-right">
+                <ul class="approach-list">
+                    {approach.points.map((point) => (
+                        <li>
+                            <div class="approach-list-label">//</div>
+                            <h4>{point.title}</h4>
+                            <p>{point.text}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .approach { background: var(--bg); }
+    .approach-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+    }
+    .approach-text {
+        font-size: 17px;
+        line-height: 1.8;
+        color: var(--gray-600);
+        margin-bottom: 24px;
+    }
+    .approach-list {
+        list-style: none;
+    }
+    .approach-list li {
+        padding: 24px 0;
+        border-bottom: 1px solid var(--gray-200);
+        transition: all 0.3s ease;
+    }
+    .approach-list li:first-child {
+        border-top: 1px solid var(--gray-200);
+    }
+    .approach-list li:hover {
+        padding-left: 8px;
+    }
+    .approach-list-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    .approach-list h4 {
+        font-size: 17px;
+        margin-bottom: 6px;
+        transition: color 0.3s ease;
+    }
+    .approach-list li:hover h4 {
+        color: var(--primary);
+    }
+    .approach-list p {
+        color: var(--gray-600);
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .approach-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+</style>

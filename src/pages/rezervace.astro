@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import ReservationCard from '../components/booking/ReservationCard.astro';
+import NewClient from '../components/booking/NewClient.astro';
+import IframeModal from '../components/booking/IframeModal.astro';
+import { booking, site } from '../lib/content';
+
+const links: Record<string, string> = { login: site.fyzion.login };
+---
+<Base title={site.title} description="Rezervujte si termín konzultace nebo tréninku v ARK – Síla & Fyzio">
+    <Navbar variant="back" />
+    <main class="page-content">
+        <div class="container">
+            <PageHeader label={booking.header.label} title={booking.header.title} text={booking.header.text} />
+            <div class="cards-grid">
+                {booking.cards.map((card) => (
+                    <ReservationCard icon={card.icon as any} title={card.title} text={card.text}>
+                        {card.action.link ? (
+                            <Button href={links[card.action.link]} target="_blank" rel="noopener" variant="soft" size="card">{card.action.label} <Icon name={card.action.icon as any} strokeWidth="2.5" /></Button>
+                        ) : (
+                            <Button variant="soft" size="card" data-open-booking>{card.action.label} <Icon name={card.action.icon as any} strokeWidth="2.5" /></Button>
+                        )}
+                    </ReservationCard>
+                ))}
+            </div>
+            <NewClient />
+        </div>
+    </main>
+    <Footer variant="page" />
+    <IframeModal src={site.fyzion.reservations} />
+</Base>
+
+<style>
+    .page-content { padding: 120px 0 80px; }
+    .cards-grid { display: grid; gap: 24px; max-width: 900px; margin: 0 auto 64px; }
+</style>

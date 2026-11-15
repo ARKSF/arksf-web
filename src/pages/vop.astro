@@ -1,0 +1,43 @@
+---
+// Terms (VOP). Text in src/data/terms.json; numbers like 24 h or 4,3 weeks come from src/data/rules.json.
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/PageHeader.astro';
+import LegalSection from '../components/legal/LegalSection.astro';
+import { terms, site, fill } from '../lib/content';
+
+// "{email}" in a paragraph becomes the contact e-mail link
+const withEmail = (text: string) => fill(text.replace('{email}', '\u0000')).split('\u0000');
+---
+<Base title={site.title} description="Obchodní podmínky ARK – Síla & Fyzio">
+    <Navbar variant="back" />
+    <main class="page-content">
+        <div class="container">
+            <PageHeader size="md" label={terms.header.label} title={terms.header.title} text={fill(terms.header.text)} />
+            <div class="vop-content">
+                {terms.sections.map((section) => (
+                    <LegalSection title={section.title}>
+                        {section.paragraphs?.map((text) => {
+                            const [before, after] = withEmail(text);
+                            return after === undefined
+                                ? <p>{before}</p>
+                                : <p>{before}<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2d44434b426d4c5f46004b54574442034e57">[email&#160;protected]</a>{after}</p>;
+                        })}
+                        {section.items && (
+                            <ul>
+                                {section.items.map((text) => <li>{fill(text)}</li>)}
+                            </ul>
+                        )}
+                    </LegalSection>
+                ))}
+            </div>
+        </div>
+    </main>
+    <Footer variant="legal" />
+</Base>
+
+<style>
+    .page-content { padding: 120px 0 80px; }
+    .vop-content { max-width: 800px; margin: 0 auto; }
+</style>

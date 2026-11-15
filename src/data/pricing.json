@@ -1,0 +1,52 @@
+{
+  "consultations": {
+    "icon": "message-square",
+    "label": "Samostatné cvičení",
+    "title": "Konzultace",
+    "description": "Pro ty, kteří chtějí cvičit samostatně s odborným vedením a plánem na míru.",
+    "items": [
+      {
+        "title": "Úvodní konzultace",
+        "meta": "60 minut",
+        "price": 1600,
+        "details": "Slouží k pochopení vaší situace, cílů a možností. Projdeme pohyb, zatížení i to, co už máte za sebou, a navrhneme další postup."
+      },
+      {
+        "title": "Navazující konzultace",
+        "meta": "60 minut",
+        "price": 1400,
+        "details": "Vhodná pro ty, kteří chtějí cvičit samostatně. Dostanete konkrétní plán a doporučení, jak pokračovat doma nebo v jiné posilovně. Konzultace lze využívat jednorázově, například po několika týdnech."
+      }
+    ]
+  },
+  "trainings": {
+    "icon": "user",
+    "badge": "Nejčastější volba",
+    "label": "Pravidelná spolupráce",
+    "title": "Individuální tréninky",
+    "description": "Pravidelný dohled, jistota v provedení cviků a dlouhodobá spolupráce.",
+    "unit": "/ trénink",
+    "items": [
+      { "title": "1× týdně", "meta": "měsíční paušál", "price": 1300 },
+      { "title": "2× týdně", "meta": "měsíční paušál", "price": 1200 },
+      { "title": "3× týdně", "meta": "měsíční paušál", "price": 1100 }
+    ],
+    "footer": "Cena paušálu se odvíjí od frekvence (průměr {weeksPerMonth} týdne/měsíc). Nevyužité lekce lze nahradit."
+  },
+  "group": {
+    "icon": "users",
+    "title": "Skupinové tréninky",
+    "description": "Malá skupina (max. {groupMax} osob), klidné prostředí a dostatek prostoru pro individuální přístup.",
+    "price": 400,
+    "unit": "/ osoba"
+  },
+  "basics": [
+    "Pravidelné tréninky jsou hrazeny formou měsíčního paušálu.",
+    "Cena paušálu se odvíjí od frekvence (průměr {weeksPerMonth} týdne/měsíc).",
+    "Nevyužité lekce lze nahradit do {makeupMonths} měsíců (max. {makeupMax} náhrad).",
+    "Konzultace se hradí předem.",
+    "Zrušení méně než {cancelHours}h předem je účtováno v plné výši.",
+    "Služby nejsou zdravotní péčí.",
+    "Podrobné podmínky v [obchodních podmínkách](vop.html)."
+  ]
+}

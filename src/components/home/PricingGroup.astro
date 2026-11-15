@@ -1,0 +1,107 @@
+---
+// Wide price strip (group trainings): icon, title, description and one price.
+import Icon from '../Icon.astro';
+import type { IconName } from '../icons';
+import { price as formatPrice } from '../../lib/content';
+
+interface Props {
+  icon: IconName;
+  title: string;
+  description: string;
+  price: number;
+  unit: string;
+  class?: string;
+}
+
+const { icon, title, description, price, unit, class: className } = Astro.props;
+---
+<div class:list={['pricing-group', className]}>
+    <div class="pricing-group-content">
+        <div class="pricing-group-title">
+            <div class="pricing-group-icon">
+                <Icon name={icon} />
+            </div>
+            <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+            </div>
+        </div>
+        <div class="pricing-group-price">
+            <span class="price">{formatPrice(price)}</span>
+            <span class="per">{unit}</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    .pricing-group {
+        background: var(--soft);
+        border-radius: 16px;
+        padding: 32px;
+        margin-bottom: 24px;
+    }
+    .pricing-group-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+    }
+    .pricing-group-title {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    .pricing-group-icon {
+        width: 44px;
+        height: 44px;
+        background: var(--white);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .pricing-group-icon svg {
+        width: 22px;
+        height: 22px;
+        color: var(--primary);
+    }
+    .pricing-group h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+    .pricing-group p {
+        color: var(--gray-600);
+        font-size: 15px;
+        margin: 0;
+    }
+    .pricing-group-price {
+        text-align: right;
+        white-space: nowrap;
+    }
+    .pricing-group-price .price {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--primary);
+        display: block;
+    }
+    .pricing-group-price .per {
+        font-size: 14px;
+        color: var(--gray-600);
+    }
+
+    @media (max-width: 900px) {
+        .pricing-group-content { flex-direction: column; text-align: center; }
+        .pricing-group-title { flex-direction: column; }
+        .pricing-group-icon { margin: 0 auto; }
+        .pricing-group-price { text-align: center; }
+    }
+    @media (max-width: 768px) {
+        .pricing-group { padding: 24px; }
+        .pricing-group-title { flex-direction: column; text-align: center; }
+        .pricing-group-icon { margin: 0 auto 12px; }
+        .pricing-group-content { flex-direction: column; text-align: center; gap: 16px; }
+        .pricing-group-price { text-align: center; }
+    }
+</style>

@@ -1,0 +1,59 @@
+---
+import Button from '../Button.astro';
+import { home } from '../../lib/content';
+const { cookies } = home;
+---
+<div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-inner">
+        <p>{cookies.text}</p>
+        <div class="cookie-actions">
+            <Button variant="secondary" size="sm" data-cookie-close>{cookies.decline}</Button>
+            <Button variant="primary" size="sm" data-cookie-close>{cookies.accept}</Button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function closeCookie() {
+        document.getElementById('cookieBanner').classList.remove('active');
+        localStorage.setItem('cookies', 'set');
+    }
+    document.querySelectorAll('[data-cookie-close]').forEach((b) => b.addEventListener('click', closeCookie));
+    if (!localStorage.getItem('cookies')) {
+        setTimeout(() => {
+            document.getElementById('cookieBanner').classList.add('active');
+        }, 1000);
+    }
+</script>
+
+<style>
+    .cookie-banner {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: var(--white);
+        padding: 16px 24px;
+        box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+        z-index: 1000;
+        display: none;
+        transform: translateY(100%);
+        transition: transform 0.4s ease;
+    }
+    .cookie-banner.active {
+        display: block;
+        transform: translateY(0);
+    }
+    .cookie-inner {
+        max-width: 1140px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+    }
+    .cookie-inner p { color: var(--gray-600); font-size: 14px; margin: 0; }
+    .cookie-actions { display: flex; gap: 8px; }
+
+    @media (max-width: 768px) {
+        .cookie-inner { flex-direction: column; text-align: center; }
+    }
+</style>

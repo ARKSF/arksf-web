@@ -1,0 +1,40 @@
+---
+// Full-size window with an embedded page (the Fyzion booking system). Any element with
+// data-open-booking opens it; the close button or a click on the dimmed background closes it.
+import Icon from '../Icon.astro';
+
+interface Props {
+  src: string;
+  id?: string;
+}
+const { src, id = 'reservationModal' } = Astro.props;
+---
+<div class="modal-overlay" id={id}>
+    <div class="modal-content">
+        <button class="modal-close" data-close-booking><Icon name="x" /></button>
+        <iframe src={src}></iframe>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('reservationModal');
+    function openModal() { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
+    document.querySelectorAll('[data-open-booking]').forEach((el) => el.addEventListener('click', openModal));
+    document.querySelectorAll('[data-close-booking]').forEach((el) => el.addEventListener('click', closeModal));
+    modal.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+</script>
+
+<style>
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 24px; }
+    .modal-overlay.active { display: flex; }
+    .modal-content { width: 100%; max-width: 1200px; height: 85vh; background: var(--white); border-radius: 16px; overflow: hidden; position: relative; }
+    .modal-close { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; background: var(--white); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 10; transition: all .3s ease; }
+    .modal-close:hover { background: var(--soft); transform: scale(1.1); }
+    .modal-close svg { width: 20px; height: 20px; color: var(--dark); }
+    .modal-content iframe { width: 100%; height: 100%; border: none; }
+
+    @media (max-width: 768px) {
+        .modal-content { height: 90vh; border-radius: 12px; }
+    }
+</style>

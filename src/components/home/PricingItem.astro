@@ -1,0 +1,133 @@
+---
+// One price row inside a <PricingCard>. With `details` it becomes an accordion: tap to show the text.
+import Icon from '../Icon.astro';
+import { price as formatPrice } from '../../lib/content';
+
+interface Props {
+  title: string;
+  meta: string;
+  price: number;
+  unit?: string;
+  details?: string;
+}
+
+const { title, meta, price, unit, details } = Astro.props;
+---
+{details ? (
+    <div class="pricing-item has-desc">
+        <div class="pricing-item-header">
+            <div class="pricing-item-info">
+                <h4>{title}</h4>
+                <span>{meta}</span>
+            </div>
+            <div class="pricing-item-toggle">
+                <div class="pricing-item-price">{unit ? <>{`${formatPrice(price)} `}<span>{unit}</span></> : formatPrice(price)}</div>
+                <Icon name="chevron-down" class="pricing-item-arrow" />
+            </div>
+        </div>
+        <p class="pricing-item-desc">{details}</p>
+    </div>
+) : (
+    <div class="pricing-item">
+        <div class="pricing-item-info">
+            <h4>{title}</h4>
+            <span>{meta}</span>
+        </div>
+        <div class="pricing-item-price">{unit ? <>{`${formatPrice(price)} `}<span>{unit}</span></> : formatPrice(price)}</div>
+    </div>
+)}
+
+<script>
+    document.querySelectorAll('.pricing-item.has-desc').forEach((item) => {
+        item.addEventListener('click', () => item.classList.toggle('active'));
+    });
+</script>
+
+<style>
+    .pricing-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--gray-200);
+    }
+    .pricing-item:last-child {
+        border-bottom: none;
+    }
+    .pricing-item h4 {
+        font-size: 15px;
+        margin-bottom: 2px;
+    }
+    .pricing-item span {
+        font-size: 13px;
+        color: var(--gray-600);
+    }
+    .pricing-item-price {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary);
+        white-space: nowrap;
+    }
+    .pricing-item-price span {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--gray-600);
+    }
+    .pricing-item.has-desc {
+        flex-direction: column;
+        align-items: stretch;
+        cursor: pointer;
+    }
+    .pricing-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .pricing-item-toggle {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .pricing-item-arrow {
+        width: 20px;
+        height: 20px;
+        color: var(--primary);
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+    }
+    .pricing-item.has-desc.active .pricing-item-arrow {
+        transform: rotate(180deg);
+    }
+    .pricing-item-desc {
+        font-size: 13px;
+        color: var(--gray-600);
+        line-height: 1.6;
+        margin: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, margin-top 0.3s ease;
+    }
+    .pricing-item.has-desc.active .pricing-item-desc {
+        max-height: 200px;
+        margin-top: 12px;
+    }
+
+    /* inside a featured (dark) card */
+    :global(.pricing-card.featured) .pricing-item h4 {
+        color: var(--white);
+    }
+    :global(.pricing-card.featured) .pricing-item span {
+        color: rgba(255,255,255,0.6);
+    }
+    :global(.pricing-card.featured) .pricing-item-price {
+        color: var(--accent);
+    }
+    :global(.pricing-card.featured) .pricing-item-price span {
+        color: rgba(255,255,255,0.5);
+    }
+    :global(.pricing-card.featured) .pricing-item {
+        border-color: rgba(255,255,255,0.1);
+    }
+</style>

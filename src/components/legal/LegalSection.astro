@@ -1,0 +1,21 @@
+---
+// One numbered section of the terms: heading, then paragraphs and/or a dash list (both from the slot).
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<div class="vop-section">
+    <h2>{title}</h2>
+    <slot />
+</div>
+
+<style>
+    .vop-section { margin-bottom: 40px; }
+    .vop-section h2 { font-size: 20px; margin-bottom: 16px; color: var(--dark); }
+    .vop-section :global(p),
+    .vop-section :global(li) { color: var(--gray-600); font-size: 15px; line-height: 1.8; margin-bottom: 12px; }
+    .vop-section :global(ul) { list-style: none; margin-left: 0; }
+    .vop-section :global(li) { padding-left: 24px; position: relative; }
+    .vop-section :global(li)::before { content: '—'; position: absolute; left: 0; color: var(--primary); }
+</style>

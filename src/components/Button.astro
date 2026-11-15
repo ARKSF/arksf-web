@@ -1,0 +1,119 @@
+---
+// Button or button-styled link. Renders <a> when `href` is set, otherwise <button>.
+//
+// variant: primary | secondary | outline   (home page buttons, 2 px border, light sweep on hover)
+//          soft | accent                    (booking page buttons, borderless)
+// size:    sm (40 px) | md (48 px) | lg (56 px) | card (booking page: padded, height from content)
+// block:   fills the container width
+// Icons go in the slot after the label (<Icon name="arrow-right" />).
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline' | 'soft' | 'accent';
+  size?: 'sm' | 'md' | 'lg' | 'card';
+  block?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { href, variant, size = 'md', block = false, type = 'button', class: className, ...rest } = Astro.props;
+const classes = [
+  'btn',
+  variant && `btn-${variant}`,
+  size !== 'md' && `btn-${size}`,
+  block && 'btn-block',
+  className,
+];
+---
+{href
+  ? <a href={href} class:list={classes} {...rest}><slot /></a>
+  : <button type={type} class:list={classes} {...rest}><slot /></button>}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 48px;
+    padding: 0 24px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  .btn:hover::before { left: 100%; }
+  .btn :global(svg) { width: 18px; height: 18px; transition: transform 0.3s ease; }
+  .btn-primary {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+  }
+  .btn-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35);
+  }
+  .btn-primary:hover :global(svg) { transform: translateX(4px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--dark);
+    border-color: var(--gray-200);
+  }
+  .btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-outline:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+  .btn-sm { height: 40px; padding: 0 16px; font-size: 14px; }
+  .btn-lg { height: 56px; padding: 0 32px; font-size: 16px; }
+  .btn-block { width: 100%; }
+
+  /* Booking page buttons: borderless, padded, no light sweep, plain ease */
+  .btn-card {
+    height: auto;
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    gap: 8px;
+    transition: all .3s ease;
+    position: static;
+    overflow: visible;
+  }
+  .btn-card::before { content: none; }
+  .btn-card :global(svg) { transition: none; }
+  .btn-soft { background: var(--soft); color: var(--primary); }
+  .btn-soft:hover { background: var(--primary); color: var(--white); }
+  .btn-accent { background: var(--accent); color: var(--white); }
+  .btn-accent:hover { background: #ff5252; box-shadow: 0 4px 16px rgba(255,107,107,0.4); }
+
+  @media (max-width: 768px) {
+    .btn-card { width: 100%; }
+  }
+</style>
