@@ -53,14 +53,14 @@ Všechno se mění v `src/data/`, ne v komponentách:
 | Stránka Rezervace | `booking.json` |
 | Obchodní podmínky | `terms.json` |
 | Menu a odkazy v patičce | `nav.json` |
-
-V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}` nebo `{weeksPerMonth}`, a odkazy ve tvaru `[text odkazu](vop.html)`. Když v datech něco chybí nebo má špatný tvar (cena jako text, neznámá ikona, neznámá značka), `npm run build` skončí chybou s popisem, kde je problém, a nic se nezveřejní.
-
-**Nový člen týmu:** fotku (na výšku, cca 900 × 1090 px) ulož do `src/assets/team/`, v `team.json` zkopíruj jeden blok, změň `id` (malými písmeny bez diakritiky), texty a `photo`. Volitelně `photoPosition` (např. `"center 15%"`) posune výřez fotky.
 | Fotky na webu (hlavní, služby, prostor, kontakt) | `photos.json` + soubory v `src/assets/photos/` (prázdné = zástupný rámeček) |
 | Recenze na hlavní stránce | `reviews.json` (`items`: jméno, text, hvězdy 1–5, zdroj, datum; `googleUrl` = odkaz „Všechny recenze na Googlu“). Bez recenzí se sekce neukáže. |
 | Texty podstránek Spolupráce, O nás, Kontakt | `pages.json` |
 | Instagram (aktuality) | `site.json` → `instagramFeed`: adresa JSON feedu (např. Behold.so). Příspěvky se stáhnou při sestavení webu; bez feedu sekce ukáže jen odkaz na profil. |
+
+V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}` nebo `{weeksPerMonth}`, a odkazy ve tvaru `[text odkazu](vop.html)`. Když v datech něco chybí nebo má špatný tvar (cena jako text, neznámá ikona, neznámá značka), `npm run build` skončí chybou s popisem, kde je problém, a nic se nezveřejní.
+
+**Nový člen týmu:** fotku (na výšku, cca 900 × 1090 px) ulož do `src/assets/team/`, v `team.json` zkopíruj jeden blok, změň `id` (malými písmeny bez diakritiky), texty a `photo`. Volitelně `photoPosition` (např. `"center 15%"`) posune výřez fotky.
 
 ### Úprava vzhledu
 
