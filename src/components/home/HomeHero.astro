@@ -1,26 +1,22 @@
 ---
-// Home page hero in six variants. The live site renders only the variant set in src/data/home.json
-// ("hero.variant"). With PUBLIC_DESIGN_TOOLS=1 all six are rendered and a switcher (bottom left)
-// flips between them for comparison.
-//   1 Oblouk      dark; action photo in an arch (the rounded A of the logo), giant ARK outline behind
-//   2 Cesta       light; three arch photos rising like steps: konzultace → trénink → síla
-//   3 Ilustrace   light; the custom illustration XXL, floating photo cards and a client quote
-//   4 Editorial   white; oversized headline, tall photo with fact chips
-//   5 Kino        full-bleed spotlight photo, headline on the lower third, coral service ribbon
-//   6 Logo        dark; the ARK letters as a window onto a training photo, headline below
-// Photos come from src/data/photos.json → heroVariants.
+// Home page hero in three variants, all showing people and the team rather than one face.
+// The live site renders only the variant in src/data/home.json ("hero.variant").
+// With PUBLIC_DESIGN_TOOLS=1 all three are rendered with a switcher (bottom left) for comparison.
+//   1 Bento     headline left, four photos in a bento grid right (group, coaching, physio, team)
+//   2 Tým       the team photo full width, headline over it, three service cards on the lower edge
+//   3 Panorama  centred headline, a wide group-training panorama with service links below
+// Photos: src/data/photos.json → heroVariants.
 import type { ImageMetadata } from 'astro';
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import Badge from '../Badge.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
-import HeroIllustration from './HeroIllustration.astro';
-import { home, site, photos, reviews, team, rules } from '../../lib/content';
+import { home, site, photos, reviews, team } from '../../lib/content';
 
 const { hero } = home;
 const tools = import.meta.env.PUBLIC_DESIGN_TOOLS === '1';
 const chosen = hero.variant ?? 1;
-const variants = tools ? [1, 2, 3, 4, 5, 6] : [chosen];
+const variants = tools ? [1, 2, 3] : [chosen];
 
 const all = import.meta.glob<{ default: ImageMetadata }>('../../assets/photos/*.{jpg,jpeg,png,webp}', { eager: true });
 const pic = (f: string) => {
@@ -32,47 +28,23 @@ const hv = photos.heroVariants;
 const teamPics = import.meta.glob<{ default: ImageMetadata }>('../../assets/team/*.{jpg,jpeg,png,webp}', { eager: true });
 const faces = team.map((p) => teamPics[`../../assets/team/${p.photo}`]?.default).filter(Boolean) as ImageMetadata[];
 const rating = reviews.rating?.toLocaleString('cs-CZ', { minimumFractionDigits: 1 });
-const facts = [
-  { value: `${rating} ★`, label: hero.facts.rating },
-  { value: String(team.length), label: hero.facts.team },
-  { value: `max. ${rules.groupMax}`, label: hero.facts.group },
-];
-// Variant 6 paints the photo inside an SVG, which needs a plain URL
-const logoPhoto = (variants.includes(6)) ? await getImage({ src: pic(hv.logo), width: 1800, format: 'webp' }) : undefined;
-const LOGO_PATHS = [
-  'M0 522.369L129.521 111.679C129.521 111.679 158.612 0.000325739 371.248 0C605.356 -0.000536947 582.499 111.679 582.499 111.679L545.097 522.369H291.596L353.932 208.227C353.932 208.227 356.569 191.643 338.741 191.643C320.912 191.643 317.223 208.227 317.223 208.227L251.424 522.369H0Z',
-  'M841.754 523H579.316L698.749 16.1973H1087.69C1087.69 16.1973 1255.05 19.7315 1255.05 148.376C1255.05 277.02 1170.98 322.258 1170.98 322.258L1186.69 523H1087.69H884.184L958.829 206.337C958.829 206.337 963.354 188.442 940.882 188.442C918.409 188.442 915.613 206.337 915.613 206.337L841.754 523Z',
-  'M1442.54 523L1475.93 362.583C1475.93 362.583 1478.44 348.733 1496.24 348.246C1518.51 348.246 1514.46 362.418 1514.46 362.418L1483.15 523L1743.27 523L1724.22 267.469L1842.46 16.1973H1583.3L1548.88 177.324C1548.88 177.324 1544.77 192.417 1526.58 192.417C1508.39 192.417 1510.41 177.324 1510.41 177.324L1540.78 16.1973H1322.88L1223.04 523L1442.54 523Z',
-];
-const dark = (v: number) => v === 1 || v === 5 || v === 6;
+const bentoAlt = ['Skupinová lekce v ARK', 'Trénink s fyzioterapeutem', 'Fyzioterapie 1:1', 'Tým ARK'];
+const dark = (v: number) => v === 2;
 ---
 {variants.map((v) => (
 <section class:list={['hero', `hero--v${v}`, dark(v) && 'hero--dark']} data-hero={v} hidden={tools && v !== chosen ? true : undefined}>
-
-    {v === 1 && (
-        <svg class="h1-watermark" viewBox="0 0 1843 523" aria-hidden="true">{LOGO_PATHS.map((d) => <path d={d} />)}</svg>
-    )}
-    {v === 5 && <Image src={pic(hv.cinema)} alt="" class="h5-bg" widths={[960, 1440, 1920, 2400]} sizes="100vw" loading="eager" />}
-
-    {v === 6 && logoPhoto && (
-        <div class="container h6-logo">
-            <svg viewBox="0 0 1843 523" role="img" aria-label="ARK">
-                <defs><clipPath id={`arkClip${v}`}>{LOGO_PATHS.map((d) => <path d={d} />)}</clipPath></defs>
-                <image href={logoPhoto.src} x="0" y="-560" width="1843" height="1640" preserveAspectRatio="xMidYMid slice" clip-path={`url(#arkClip${v})`} />
-            </svg>
-        </div>
-    )}
+    {v === 2 && <Image src={pic(hv.team)} alt="Tým ARK – Síla & Fyzio" class="h2-bg" widths={[960, 1440, 1920, 2400]} sizes="100vw" loading="eager" />}
 
     <div class="container hero-inner">
         <div class="hero-content">
-            {v !== 6 && <Badge tone={dark(v) ? 'dark' : 'light'} dot class="hero-badge">{site.district}</Badge>}
+            <Badge tone={dark(v) ? 'dark' : 'light'} dot class="hero-badge">{site.district}</Badge>
             <h1>{hero.titleBefore}{' '}<span class="highlight">{hero.titleHighlight}</span>{' '}{hero.titleAfter}</h1>
             <p class="hero-text">{hero.text}</p>
             <div class="hero-actions">
                 <Button href={hero.cta.href} variant={dark(v) ? 'accent' : 'primary'} size="lg">{hero.cta.label} <Icon name="arrow-right" strokeWidth="2.5" /></Button>
                 <a href={hero.secondary.href} class="hero-secondary">{hero.secondary.text}{' '}<strong>{hero.secondary.label} →</strong></a>
             </div>
-            {(v === 1 || v === 2 || v === 3) && (
+            {v !== 2 && (
                 <div class="hero-trust">
                     <span class="hero-faces" aria-hidden="true">{faces.map((f) => <Image src={f} alt="" widths={[96]} sizes="40px" />)}</span>
                     {rating && <a href={reviews.googleUrl} target="_blank" rel="noopener" class="hero-rating"><Icon name="star" /> <strong>{rating}</strong> · {reviews.count} recenzí na Googlu</a>}
@@ -81,49 +53,36 @@ const dark = (v: number) => v === 1 || v === 5 || v === 6;
         </div>
 
         {v === 1 && (
-            <div class="h1-media">
-                <div class="h1-arch"><Image src={pic(hv.arch)} alt="Trénink v ARK" widths={[480, 720, 960]} sizes="(max-width: 900px) 80vw, 440px" loading="eager" /></div>
-                <span class="h1-dot" aria-hidden="true"></span>
-            </div>
-        )}
-
-        {v === 3 && (
-            <div class="h3-media">
-                <HeroIllustration class="h3-illustration" />
-                <div class="h3-card h3-card--a"><Image src={pic(hv.floating[0])} alt="" widths={[320, 480]} sizes="220px" loading="eager" /></div>
-                <div class="h3-card h3-card--b"><Image src={pic(hv.floating[1])} alt="" widths={[320, 480]} sizes="200px" loading="eager" /></div>
-                <figure class="h3-quote">
-                    <span class="h3-stars" aria-label="5 z 5 hvězd">{Array.from({ length: 5 }, () => <Icon name="star" />)}</span>
-                    <blockquote>„{hero.quote.text}“</blockquote>
-                    <figcaption>{hero.quote.author} · Google</figcaption>
-                </figure>
-            </div>
-        )}
-
-        {v === 2 && (
-            <div class="h2-steps">
-                {hv.steps.map((file, i) => (
-                    <figure class={`h2-step h2-step--${i + 1}`}>
-                        <div class="h2-arch"><Image src={pic(file)} alt="" widths={[240, 360, 480]} sizes="(max-width: 900px) 30vw, 170px" loading="eager" /></div>
-                        <figcaption><span>{hero.steps[i].n}</span> {hero.steps[i].label}</figcaption>
-                    </figure>
+            <div class="h1-bento">
+                {hv.bento.map((f, i) => (
+                    <div class={`h1-tile h1-tile--${i + 1}`}><Image src={pic(f)} alt={bentoAlt[i]} widths={[360, 540, 720, 960]} sizes={i === 0 ? '(max-width: 900px) 100vw, 560px' : '(max-width: 900px) 50vw, 280px'} loading="eager" /></div>
                 ))}
-                <HeroIllustration class="h2-mark" />
-            </div>
-        )}
-
-        {v === 4 && (
-            <div class="h4-media">
-                <Image src={pic(hv.editorial)} alt="Trénink s velkou činkou v ARK" widths={[480, 720, 960]} sizes="(max-width: 900px) 100vw, 460px" loading="eager" />
-                <ul class="h4-facts">{facts.map((f) => <li><strong>{f.value}</strong><span>{f.label}</span></li>)}</ul>
+                {rating && (
+                    <a href={reviews.googleUrl} target="_blank" rel="noopener" class="h1-chip">
+                        <strong>{rating}</strong>
+                        <span><span class="h1-stars" aria-hidden="true">{Array.from({ length: 5 }, () => <Icon name="star" />)}</span>{reviews.count} recenzí na Googlu</span>
+                    </a>
+                )}
             </div>
         )}
     </div>
 
+    {v === 3 && (
+        <div class="container h3-panorama">
+            <div class="h3-photo"><Image src={pic(hv.panorama)} alt="Skupinová lekce v ARK" widths={[960, 1440, 2200]} sizes="(max-width: 1140px) 100vw, 1092px" loading="eager" /></div>
+        </div>
+    )}
 
-    {v === 5 && (
-        <div class="h5-ribbon" aria-hidden="true">
-            <div class="h5-ribbon-track">{[0, 1].map(() => hero.ribbon.map((t) => <span>{t} <i></i></span>))}</div>
+    {(v === 2 || v === 3) && (
+        <div class="container hero-services-wrap">
+            <ul class="hero-services">
+                {hero.services.map((s) => (
+                    <li><a href={s.href} class="hero-service">
+                        <span><strong>{s.label}</strong><small>{s.text}</small></span>
+                        <span class="hero-service-arrow" aria-hidden="true"><Icon name="arrow-right" strokeWidth="2.5" /></span>
+                    </a></li>
+                ))}
+            </ul>
         </div>
     )}
 </section>
@@ -132,7 +91,7 @@ const dark = (v: number) => v === 1 || v === 5 || v === 6;
 {tools && (
     <div class="hero-switcher" role="group" aria-label="Varianta hero">
         <span>Hero</span>
-        {[1, 2, 3, 4, 5, 6].map((v) => <button type="button" data-hero-pick={v} aria-pressed={v === chosen ? 'true' : 'false'}>{v}</button>)}
+        {[1, 2, 3].map((v) => <button type="button" data-hero-pick={v} aria-pressed={v === chosen ? 'true' : 'false'}>{v}</button>)}
     </div>
 )}
 
@@ -161,11 +120,12 @@ const dark = (v: number) => v === 1 || v === 5 || v === 6;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: calc(var(--header-height) + var(--space-64)) 0 var(--space-80);
+        padding: calc(var(--header-height) + var(--space-48)) 0 var(--space-64);
         background: var(--color-surface-alt);
     }
     .hero[hidden] { display: none; }
-    .hero-inner { position: relative; z-index: var(--z-raised); width: 100%; display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--space-64); align-items: center; }
+    .hero > .container { width: 100%; }
+    .hero-inner { position: relative; z-index: var(--z-raised); display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-64); align-items: center; }
     .hero :global(.hero-badge) { margin-bottom: var(--space-24); }
     .hero h1 { font-size: var(--text-h1); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-24); }
     .hero h1 .highlight {
@@ -196,158 +156,104 @@ const dark = (v: number) => v === 1 || v === 5 || v === 6;
     .hero-rating:hover { color: var(--color-brand); }
 
     .hero--dark { background: var(--color-surface-inverse); color: var(--color-text-inverse); }
-    .hero--dark .hero-text, .hero--dark .hero-secondary, .hero--dark .hero-rating { color: var(--color-text-inverse-muted); }
-    .hero--dark .hero-secondary strong, .hero--dark .hero-rating strong { color: var(--color-text-inverse); }
-    .hero--dark .hero-faces :global(img) { border-color: var(--color-surface-inverse); }
+    .hero--dark .hero-text, .hero--dark .hero-secondary { color: var(--color-text-inverse-muted); }
+    .hero--dark .hero-secondary strong { color: var(--color-text-inverse); }
 
-    @keyframes heroFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-
-    /* ── 1 Oblouk ── */
-    .h1-watermark {
-        position: absolute;
-        right: -12%;
-        top: 50%;
-        width: 120%;
-        transform: translateY(-50%);
-        fill: none;
-        stroke: var(--color-border-inverse);
-        stroke-width: 3;
-        pointer-events: none;
+    /* Service shortcuts (variants 2 and 3) */
+    .hero-services-wrap { position: relative; z-index: var(--z-raised); }
+    .hero-services { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-16); }
+    .hero-service {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-16);
+        height: 100%;
+        padding: var(--space-20) var(--space-24);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        color: var(--color-text);
+        transition: all var(--duration-base) var(--ease-standard);
     }
-    .hero--v1::after {
-        content: '';
-        position: absolute;
-        right: -10%;
-        top: 10%;
-        width: 60%;
-        height: 80%;
-        background: radial-gradient(circle, var(--color-brand-glow) 0%, transparent 65%);
-        pointer-events: none;
-    }
-    .h1-media { position: relative; justify-self: center; width: 100%; max-width: 440px; z-index: var(--z-raised); }
-    .h1-arch { aspect-ratio: 3 / 4; border-radius: var(--radius-arch); overflow: hidden; box-shadow: var(--shadow-xl); }
-    .h1-arch :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
-    .h1-dot {
-        position: absolute;
-        top: -18px;
-        right: 22%;
-        width: 56px;
-        height: 56px;
+    .hero-service:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--color-brand); }
+    .hero-service:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+    .hero-service strong { display: block; font-family: var(--font-heading); font-size: var(--text-base); margin-bottom: var(--space-4); }
+    .hero-service small { display: block; font-size: var(--text-sm); color: var(--color-text-muted); }
+    .hero-service-arrow {
+        flex-shrink: 0;
+        width: 40px; height: 40px;
+        display: flex; align-items: center; justify-content: center;
         border-radius: var(--radius-round);
-        background: var(--color-accent);
-        box-shadow: var(--shadow-accent);
-        animation: heroFloat var(--duration-float) ease-in-out infinite;
+        background: var(--color-brand-subtle);
+        color: var(--color-brand);
+        transition: all var(--duration-base) var(--ease-standard);
     }
+    .hero-service-arrow :global(svg) { width: 18px; height: 18px; }
+    .hero-service:hover .hero-service-arrow { background: var(--color-brand); color: var(--color-text-inverse); }
 
-    /* ── 2 Cesta ── */
-    .h2-steps { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-16); align-items: end; }
-    .h2-step { margin: 0; }
-    .h2-arch { border-radius: var(--radius-arch); overflow: hidden; box-shadow: var(--shadow-lg); }
-    .h2-step--1 .h2-arch { aspect-ratio: 3 / 4; }
-    .h2-step--2 .h2-arch { aspect-ratio: 3 / 5; }
-    .h2-step--3 .h2-arch { aspect-ratio: 3 / 6; }
-    .h2-arch :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .h2-step figcaption { margin-top: var(--space-12); font-family: var(--font-heading); font-weight: var(--fw-semibold); font-size: var(--text-sm); line-height: var(--leading-snug); }
-    .h2-step figcaption span { display: block; color: var(--color-accent); }
-    .h2-steps :global(.h2-mark) { position: absolute; left: calc(var(--space-24) * -1); top: calc(var(--space-24) * -1); width: 120px; height: auto; filter: var(--shadow-illustration); animation: heroFloat var(--duration-float) ease-in-out infinite; }
-    .h2-steps :global(.h2-mark .ark-illustration-card) { display: none; }
-
-    /* ── 3 Ilustrace ── */
-    .hero--v3::before {
-        content: '';
-        position: absolute;
-        top: -20%;
-        right: -10%;
-        width: 55%;
-        height: 140%;
-        background: linear-gradient(135deg, var(--color-brand-subtle) 0%, var(--color-brand-tint) 100%);
-        transform: skewX(-12deg);
+    /* ── 1 Bento ── */
+    .h1-bento {
+        position: relative;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: var(--space-12);
+        height: min(620px, 72vh);
     }
-    .h3-media { position: relative; min-height: 520px; }
-    .h3-media :global(.h3-illustration) { position: absolute; inset: 0; margin: auto; width: 115%; max-width: 640px; height: auto; left: -8%; }
-    .h3-media :global(.h3-illustration .ark-illustration-card) { display: none; }
-    .h3-card { position: absolute; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-xl); border: 4px solid var(--color-surface); }
-    .h3-card :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .h3-card--a { width: 200px; aspect-ratio: 3 / 4; top: 0; right: 4%; transform: rotate(4deg); }
-    .h3-card--b { width: 180px; aspect-ratio: 3 / 4; bottom: 6%; left: 2%; transform: rotate(-5deg); }
-    .h3-quote {
+    .h1-tile { border-radius: var(--radius-lg); overflow: hidden; background: var(--color-brand-subtle); }
+    .h1-tile :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .h1-tile--1 { grid-row: 1 / span 2; }
+    .h1-tile--1 :global(img) { object-position: 40% center; }
+    .h1-tile--2 :global(img) { object-position: center 30%; }
+    .h1-bento { grid-template-columns: 1.15fr 0.85fr 0.85fr; }
+    .h1-tile--1 { grid-column: 1; grid-row: 1 / span 2; }
+    .h1-tile--2 { grid-column: 2; grid-row: 1; }
+    .h1-tile--3 { grid-column: 3; grid-row: 1; }
+    .h1-tile--4 { grid-column: 2 / span 2; grid-row: 2; }
+    .h1-chip {
         position: absolute;
-        right: 0;
-        bottom: 0;
-        max-width: 280px;
-        margin: 0;
-        padding: var(--space-16) var(--space-20);
+        left: calc(var(--space-24) * -1);
+        bottom: var(--space-32);
+        display: flex;
+        align-items: center;
+        gap: var(--space-12);
+        padding: var(--space-12) var(--space-20);
         background: var(--color-surface);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-lg);
-    }
-    .h3-stars { display: flex; gap: var(--space-4); color: var(--color-accent); margin-bottom: var(--space-8); }
-    .h3-stars :global(svg) { width: 14px; height: 14px; fill: currentColor; }
-    .h3-quote blockquote { font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text); margin-bottom: var(--space-8); }
-    .h3-quote figcaption { font-size: var(--text-xs); color: var(--color-text-muted); }
-
-    /* ── 4 Editorial ── */
-    .hero--v4 { background: var(--color-surface); }
-    .hero--v4 .hero-inner { grid-template-columns: 1.35fr 1fr; align-items: center; }
-    .hero--v4 h1 { font-size: var(--text-display-sm); line-height: var(--leading-none); }
-    .hero--v4 .hero-text { border-top: 1px solid var(--color-border); padding-top: var(--space-24); }
-    .h4-media { position: relative; }
-    .h4-media > :global(img) { width: 100%; max-height: 72vh; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 72%; border-radius: var(--radius-xl); display: block; }
-    .h4-facts { list-style: none; position: absolute; left: calc(var(--space-48) * -1); bottom: var(--space-32); display: grid; gap: var(--space-8); }
-    .h4-facts li {
-        display: flex;
-        align-items: baseline;
-        gap: var(--space-8);
-        padding: var(--space-12) var(--space-16);
-        background: var(--color-surface-glass);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-md);
-        font-size: var(--text-sm);
+        font-size: var(--text-xs);
         color: var(--color-text-muted);
     }
-    .h4-facts strong { font-family: var(--font-heading); font-size: var(--text-xl); color: var(--color-text); }
+    .h1-chip > strong { font-family: var(--font-heading); font-size: var(--text-3xl); line-height: var(--leading-none); color: var(--color-text); }
+    .h1-chip > span { display: flex; flex-direction: column; gap: var(--space-4); }
+    .h1-stars { display: flex; gap: var(--space-4); color: var(--color-accent); }
+    .h1-stars :global(svg) { width: 14px; height: 14px; fill: currentColor; }
 
-    /* ── 5 Kino ── */
-    .hero--v5 { justify-content: flex-end; padding-bottom: var(--space-120); }
-    .hero--v5 :global(.h5-bg) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
-    .hero--v5::after {
+    /* ── 2 Tým ── */
+    .hero--v2 { justify-content: flex-end; padding-bottom: var(--space-48); }
+    .hero--v2 :global(.h2-bg) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+    .hero--v2::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(270deg, var(--color-scrim-90) 0%, var(--color-scrim-90) 30%, var(--color-scrim-45) 55%, var(--color-scrim-0) 75%), linear-gradient(0deg, var(--color-scrim-45) 0%, var(--color-scrim-0) 40%);
+        background:
+            linear-gradient(90deg, var(--color-scrim-90) 0%, var(--color-scrim-90) 25%, var(--color-scrim-45) 50%, var(--color-scrim-0) 70%),
+            linear-gradient(0deg, var(--color-scrim-90) 0%, var(--color-scrim-0) 40%);
     }
-    .hero--v5 .hero-inner { grid-template-columns: 1fr; }
-    .hero--v5 .hero-content { max-width: 880px; }
-    .hero--v5 h1 { font-size: var(--text-display-sm); line-height: var(--leading-none); }
-    .hero--v5 .hero-content { max-width: 520px; margin-left: auto; }
-    .h5-ribbon {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: var(--z-raised);
-        overflow: hidden;
-        background: var(--color-accent);
-        color: var(--color-text-on-accent);
-        padding: var(--space-12) 0;
-        font-family: var(--font-heading);
-        font-weight: var(--fw-semibold);
-    }
-    .h5-ribbon-track { display: flex; width: max-content; animation: heroRibbon var(--duration-marquee) linear infinite; }
-    .h5-ribbon span { display: inline-flex; align-items: center; gap: var(--space-24); padding-right: var(--space-24); white-space: nowrap; }
-    .h5-ribbon i { width: 8px; height: 8px; border-radius: var(--radius-round); background: var(--color-surface-inverse); }
-    @keyframes heroRibbon { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .hero--v2 .hero-inner { grid-template-columns: 1fr; }
+    .hero--v2 .hero-content { max-width: 560px; margin-bottom: var(--space-48); }
 
-    /* ── 6 Logo ── */
-    .hero--v6 { justify-content: flex-start; }
-    .h6-logo { position: relative; z-index: var(--z-raised); width: 100%; margin-bottom: var(--space-48); }
-    .h6-logo svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 30px 60px rgba(124, 58, 237, 0.35)); /* lint-allow: one-off glow behind the logo window */ }
-    .hero--v6 .hero-inner { grid-template-columns: 1fr; }
-    .hero--v6 .hero-content { display: grid; grid-template-columns: 1.2fr 1fr; column-gap: var(--space-64); align-items: start; max-width: none; }
-    .hero--v6 h1 { grid-row: 1 / span 3; margin-bottom: 0; }
-    .hero--v6 .hero-text, .hero--v6 .hero-actions { grid-column: 2; }
+    /* ── 3 Panorama ── */
+    .hero--v3 { justify-content: flex-start; }
+    .hero--v3 .hero-inner { grid-template-columns: 1fr; }
+    .hero--v3 .hero-content { max-width: 780px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .hero--v3 .hero-text { margin-left: auto; margin-right: auto; }
+    .hero--v3 .hero-actions, .hero--v3 .hero-trust { justify-content: center; }
+    .hero--v3 .hero-trust { margin-top: var(--space-24); }
+    .h3-panorama { margin-top: var(--space-40); }
+    .h3-photo { border-radius: var(--radius-xl); overflow: hidden; aspect-ratio: 21 / 7; box-shadow: var(--shadow-lg); }
+    .h3-photo :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; display: block; }
+    .hero--v3 .hero-services-wrap { margin-top: calc(var(--space-48) * -1); padding: 0 var(--space-48); }
 
     /* ── Switcher (design tools only) ── */
     .hero-switcher {
@@ -380,25 +286,24 @@ const dark = (v: number) => v === 1 || v === 5 || v === 6;
     .hero-switcher button[aria-pressed="true"] { background: var(--color-accent); color: var(--color-text-on-accent); }
 
     /* ── Responsive ── */
+    @media (max-width: 1024px) {
+        .hero-services { grid-template-columns: 1fr; }
+        .hero--v3 .hero-services-wrap { padding: 0 var(--space-24); }
+    }
     @media (max-width: 900px) {
-        .hero { min-height: auto; padding-top: calc(var(--header-height) + var(--space-40)); padding-bottom: var(--space-64); }
-        .hero-inner, .hero--v4 .hero-inner { grid-template-columns: 1fr; gap: var(--space-40); }
-        .h1-media { max-width: 300px; }
-        .h1-watermark { width: 220%; right: -60%; }
-        .hero--v6 .hero-content { display: block; }
-        .h2-steps { gap: var(--space-12); }
-        .h2-step figcaption { font-size: var(--text-xs); }
-        .h2-steps :global(.h2-mark) { display: none; }
-        .hero--v3::before { display: none; }
-        .h3-media { min-height: 380px; }
-        .h3-card--a { width: 140px; }
-        .h3-card--b { width: 130px; }
-        .h3-quote { max-width: 220px; }
-        .h4-facts { position: static; margin-top: var(--space-16); grid-template-columns: 1fr; }
-        .hero--v5 { min-height: 90vh; padding-bottom: var(--space-96); }
-        .hero--v5 .hero-content { margin-left: 0; }
-        .hero--v5::after { background: linear-gradient(0deg, var(--color-scrim-90) 0%, var(--color-scrim-90) 35%, var(--color-scrim-45) 65%, var(--color-scrim-0) 90%); }
-        .hero--v6 h1 { margin-bottom: var(--space-24); }
-        .h6-logo { margin-bottom: var(--space-32); }
+        .hero { min-height: auto; padding-top: calc(var(--header-height) + var(--space-40)); padding-bottom: var(--space-48); }
+        .hero-inner { grid-template-columns: 1fr; gap: var(--space-40); }
+        .h1-bento { height: 420px; grid-template-columns: 1.2fr 1fr; grid-template-rows: 1fr 1fr; }
+        .h1-tile--1 { grid-column: 1; grid-row: 1 / span 2; }
+        .h1-tile--2 { grid-column: 2; grid-row: 1; }
+        .h1-tile--3 { display: none; }
+        .h1-tile--4 { grid-column: 2; grid-row: 2; }
+        .h1-chip { left: var(--space-12); bottom: var(--space-12); }
+        .hero--v2 { min-height: 92vh; }
+        .hero--v2 :global(.h2-bg) { object-position: 60% center; }
+        .hero--v2::after { background: linear-gradient(0deg, var(--color-scrim-90) 0%, var(--color-scrim-90) 55%, var(--color-scrim-45) 80%, var(--color-scrim-45) 100%); }
+        .hero--v2 .hero-content { margin-bottom: var(--space-32); }
+        .h3-photo { aspect-ratio: 4 / 3; }
+        .hero--v3 .hero-services-wrap { margin-top: var(--space-16); padding: 0; }
     }
 </style>

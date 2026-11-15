@@ -17,18 +17,13 @@
     "kontakt": "kontakt-tym.jpg"
   },
   "heroVariants": {
-    "arch": "akce-vypad.jpg",
-    "steps": [
-      "fyzio-lehatko.jpg",
+    "bento": [
+      "skupinova-lekce.jpg",
       "akce-trx.jpg",
-      "akce-osa.jpg"
+      "fyzio-lehatko.jpg",
+      "kontakt-tym.jpg"
     ],
-    "floating": [
-      "akce-kolo.jpg",
-      "akce-mrtvy-tah.jpg"
-    ],
-    "editorial": "akce-osa.jpg",
-    "cinema": "akce-vypad.jpg",
-    "logo": "skupinova-lekce.jpg"
+    "team": "kontakt-tym.jpg",
+    "panorama": "skupinova-lekce.jpg"
   }
 }
