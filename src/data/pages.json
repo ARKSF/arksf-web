@@ -1,0 +1,58 @@
+{
+  "spoluprace": {
+    "label": "// Spolupráce",
+    "title": "Spolupráce a ceník",
+    "text": "Jak spolupráce probíhá, co vás čeká a kolik to stojí. Všechno na jednom místě.",
+    "description": "Jak probíhá spolupráce v ARK: úvodní konzultace, individuální tréninky a skupinové lekce. Ceny a pravidla na jednom místě.",
+    "services": {
+      "konzultace": {
+        "label": "Samostatné cvičení",
+        "forWhom": [
+          "Chcete pochopit, co se s tělem děje a co s tím dělat.",
+          "Cvičíte doma nebo v jiné posilovně a potřebujete plán na míru.",
+          "Stačí vám kontrola jednou za pár týdnů."
+        ],
+        "photoLabel": "Foto: fyzio 1:1"
+      },
+      "treninky": {
+        "label": "Pravidelná spolupráce",
+        "forWhom": [
+          "Vracíte se po zranění nebo operaci a chcete mít jistotu.",
+          "Chcete cvičit pravidelně a bezpečně s vedením.",
+          "Potřebujete motivaci a kontrolu techniky."
+        ],
+        "photoLabel": "Foto: individuální trénink"
+      },
+      "skupinove": {
+        "label": "Malá skupina",
+        "forWhom": [
+          "Máte za sebou úvodní konzultaci a chcete cvičit s ostatními.",
+          "Baví vás společná energie, ale bez davu.",
+          "Hledáte dostupnější pravidelný pohyb."
+        ],
+        "photoLabel": "Foto: skupinová lekce"
+      }
+    },
+    "forWhomLabel": "Pro koho",
+    "bookAction": "Rezervovat termín"
+  },
+  "onas": {
+    "description": "Kdo jsme, jak přemýšlíme a kdo se o vás postará. Fyzioterapeuti a trenéři ARK – Síla & Fyzio v Praze 9.",
+    "spaceLabel": "// Prostor",
+    "spaceTitle": "Kde budeme cvičit",
+    "spaceText": "Vlastní prostor v Hloubětíně, kde je klid a dost místa na pohyb.",
+    "spacePhotoLabels": [
+      "Foto: gym",
+      "Foto: gym",
+      "Foto: gym",
+      "Foto: gym",
+      "Foto: gym"
+    ]
+  },
+  "kontakt": {
+    "label": "// Kontakt",
+    "title": "Začněme spolupráci",
+    "description": "Kontakt na ARK – Síla & Fyzio: adresa v Praze 9, doprava, parkování, e-mail a formulář.",
+    "photoLabel": "Foto: vchod nebo prostor"
+  }
+}

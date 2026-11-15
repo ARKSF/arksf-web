@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Process from '../components/home/Process.astro';
+import ServiceSection from '../components/spoluprace/ServiceSection.astro';
+import PricingItem from '../components/home/PricingItem.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { pages, pricing, photos, fill } from '../lib/content';
+
+const page = pages.spoluprace;
+const s = page.services;
+const { consultations, trainings, group } = pricing;
+---
+<Base title="Spolupráce" description={page.description} path="/spoluprace.html">
+    <Navbar />
+    <main>
+        <div class="page-top">
+            <div class="container">
+                <PageHeader label={page.label} title={page.title} text={page.text} />
+            </div>
+        </div>
+        <Process part="steps" />
+
+        <ServiceSection id="konzultace" label={s.konzultace.label} title={consultations.title} description={consultations.description}
+            forWhomLabel={page.forWhomLabel} forWhom={s.konzultace.forWhom} photo={photos.konzultace} photoLabel={s.konzultace.photoLabel} bookLabel={page.bookAction}>
+            {consultations.items.map((item) => <PricingItem {...item} />)}
+        </ServiceSection>
+
+        <ServiceSection id="treninky" flip label={s.treninky.label} title={trainings.title} description={trainings.description} badge={trainings.badge}
+            forWhomLabel={page.forWhomLabel} forWhom={s.treninky.forWhom} photo={photos.treninky} photoLabel={s.treninky.photoLabel}
+            footer={fill(trainings.footer)} bookLabel={page.bookAction}>
+            {trainings.items.map((item) => <PricingItem {...item} unit={trainings.unit} />)}
+        </ServiceSection>
+
+        <ServiceSection id="skupinove" label={s.skupinove.label} title={group.title} description={fill(group.description)}
+            forWhomLabel={page.forWhomLabel} forWhom={s.skupinove.forWhom} photo={photos.skupinove} photoLabel={s.skupinove.photoLabel} bookLabel={page.bookAction}>
+            <PricingItem title="Skupinová lekce" meta={`max. ${fill('{groupMax}')} osob`} price={group.price} unit={group.unit} />
+        </ServiceSection>
+
+        <div class="basics-wrap"><Process part="basics" /></div>
+        <CtaBand />
+    </main>
+    <Footer />
+</Base>
+
+<style>
+    .page-top { padding: calc(var(--header-height) + var(--space-64)) 0 var(--space-16); background: var(--color-surface-alt); }
+    .basics-wrap { padding-top: var(--space-section); background: var(--color-surface-alt); }
+</style>

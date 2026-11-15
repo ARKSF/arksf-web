@@ -4,13 +4,20 @@ import Icon from '../Icon.astro';
 import ContactForm from './ContactForm.astro';
 import { home, site } from '../../lib/content';
 const { contact } = home;
+
+interface Props {
+  /** On the contact page the title is the page's h1 and the section clears the fixed header. */
+  asPageTitle?: boolean;
+}
+const { asPageTitle = false } = Astro.props;
+const Heading = asPageTitle ? 'h1' : 'h2';
 ---
-<section class="section" id="kontakt">
+<section class:list={['section', asPageTitle && 'contact--page']} id="kontakt">
     <div class="container">
         <div class="contact-grid">
             <div class="contact-info reveal-left">
                 <span class="section-label">{contact.label}</span>
-                <h2>{contact.title}</h2>
+                <Heading>{contact.title}</Heading>
                 <p>{site.replyPromise}</p>
 
                 <ul class="contact-list">
@@ -57,7 +64,8 @@ const { contact } = home;
         gap: var(--space-48);
         align-items: start;
     }
-    .contact-info h2 { font-size: var(--text-h2); margin-bottom: var(--space-12); }
+    .contact--page { padding-top: calc(var(--header-height) + var(--space-section)); }
+    .contact-info h1, .contact-info h2 { font-size: var(--text-h2); margin-bottom: var(--space-12); }
     .contact-info > p { color: var(--color-text-muted); margin-bottom: var(--space-32); }
     .contact-list { list-style: none; }
     .contact-list li {

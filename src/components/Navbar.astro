@@ -1,59 +1,40 @@
 ---
-// Fixed top bar.
-// variant="full": home page: section links, Rezervace button, scroll progress, phone menu.
-// variant="back": subpages: logo and a "Zpět" link to the home page.
+// Fixed top bar on every page: logo (home), page links with the current page marked,
+// Rezervace button, scroll progress, phone menu.
 import Logo from './Logo.astro';
 import Button from './Button.astro';
-import Icon from './Icon.astro';
 import nav from '../data/nav.json';
 
-interface Props {
-  variant?: 'full' | 'back';
-}
-
-const { variant = 'full' } = Astro.props;
-const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === id)!);
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => path.endsWith(`/${href}`) || path.endsWith(`/${href.replace('.html', '')}`);
 ---
-{variant === 'full' ? (
-    <nav class="navbar navbar--full">
-        <div class="progress-bar" id="progressBar"></div>
-        <div class="container navbar-inner">
-            <a href="#" class="logo-wrap">
-                <Logo class="logo-svg" />
-            </a>
-            <ul class="nav-menu">
-                {links.map((l) => <li><a href={`#${l.id}`} class="nav-link">{l.label}</a></li>)}
-                <li><Button href={nav.booking.href} variant="secondary" size="sm">{nav.booking.label}</Button></li>
-            </ul>
-            <button class="nav-toggle" data-menu-toggle aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
-
-    <div class="mobile-nav" id="mobileNav">
-        <div class="mobile-nav-header">
+<nav class="navbar">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="container navbar-inner">
+        <a href="index.html" class="logo-wrap" aria-label="ARK – úvod">
             <Logo class="logo-svg" />
-            <button class="mobile-nav-close" data-menu-toggle>×</button>
-        </div>
-        <ul class="mobile-nav-menu">
-            {links.map((l) => <li><a href={`#${l.id}`} data-menu-toggle>{l.label}</a></li>)}
+        </a>
+        <ul class="nav-menu">
+            {nav.pages.map((p) => <li><a href={p.href} class="nav-link" aria-current={isCurrent(p.href) ? 'page' : undefined}>{p.label}</a></li>)}
+            <li><Button href={nav.booking.href} variant="secondary" size="sm">{nav.booking.label}</Button></li>
         </ul>
-        <Button href={nav.booking.href} variant="secondary" block data-menu-toggle>{nav.booking.label}</Button>
+        <button class="nav-toggle" data-menu-toggle aria-label="Menu" aria-controls="mobileNav">
+            <span></span><span></span><span></span>
+        </button>
     </div>
-) : (
-    <nav class="navbar navbar--back">
-        <div class="container navbar-inner">
-            <a href={nav.back.href}>
-                <Logo class="logo-svg" />
-            </a>
-            <a href={nav.back.href} class="back-link">
-                <Icon name="arrow-left" />
-                {nav.back.label}
-            </a>
-        </div>
-    </nav>
-)}
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-header">
+        <a href="index.html" aria-label="ARK – úvod"><Logo class="logo-svg" /></a>
+        <button class="mobile-nav-close" data-menu-toggle aria-label="Zavřít menu">×</button>
+    </div>
+    <ul class="mobile-nav-menu">
+        <li><a href="index.html" aria-current={path === '/' || path.endsWith('/index.html') ? 'page' : undefined}>Úvod</a></li>
+        {nav.pages.map((p) => <li><a href={p.href} aria-current={isCurrent(p.href) ? 'page' : undefined}>{p.label}</a></li>)}
+    </ul>
+    <Button href={nav.booking.href} variant="primary" block>{nav.booking.label}</Button>
+</div>
 
 <script>
     // Phone menu
@@ -63,25 +44,16 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
     }
     document.querySelectorAll('[data-menu-toggle]').forEach((el) => el.addEventListener('click', toggleMobileMenu));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobileNav.classList.contains('active')) toggleMobileMenu(); });
 
-    // Progress bar and shadow (home page bar only)
-    const navbar = document.querySelector('.navbar--full');
+    // Progress bar and shadow
+    const navbar = document.querySelector('.navbar');
     const progressBar = document.getElementById('progressBar');
-    if (navbar && progressBar) {
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = (scrollTop / docHeight) * 100;
-            progressBar.style.width = progress + '%';
-        });
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.style.boxShadow = 'var(--shadow-sm)';
-            } else {
-                navbar.style.boxShadow = 'none';
-            }
-        });
-    }
+    window.addEventListener('scroll', () => {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        progressBar.style.width = (docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0) + '%';
+        navbar.style.boxShadow = window.scrollY > 50 ? 'var(--shadow-sm)' : 'none';
+    }, { passive: true });
 </script>
 
 <style>
@@ -94,15 +66,11 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         -webkit-backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--color-border-subtle);
     }
-    .navbar--back {
-        z-index: var(--z-header);
-        background: var(--color-header);
-    }
     .navbar-inner {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 72px;
+        height: var(--header-height);
     }
     .progress-bar {
         position: absolute;
@@ -111,16 +79,11 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         height: 3px;
         background: linear-gradient(90deg, var(--color-brand), var(--color-accent));
         width: 0%;
-        transition: width var(--duration-fast) ease-out;
+        transition: width var(--duration-fast) var(--ease-standard);
     }
-    .logo-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-4);
-        transition: transform var(--duration-base) var(--ease-standard);
-    }
+    .logo-wrap { display: flex; transition: transform var(--duration-base) var(--ease-standard); }
     .logo-wrap:hover { transform: scale(1.02); }
-    .logo-svg { height: 28px; width: auto; }
+    .logo-svg { height: 28px; width: auto; display: block; }
     .nav-menu {
         display: flex;
         align-items: center;
@@ -144,8 +107,8 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         background: var(--color-brand);
         transition: width var(--duration-base) var(--ease-standard);
     }
-    .nav-link:hover { color: var(--color-brand); }
-    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover, .nav-link[aria-current="page"] { color: var(--color-brand); }
+    .nav-link:hover::after, .nav-link[aria-current="page"]::after { width: 100%; }
     .nav-toggle {
         display: none;
         flex-direction: column;
@@ -155,11 +118,7 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         cursor: pointer;
         padding: var(--space-8);
     }
-    .nav-toggle span { width: 24px; height: 2px; background: var(--color-surface-inverse); transition: all var(--duration-base) var(--ease-standard); }
-
-    .back-link { display: inline-flex; align-items: center; gap: var(--space-8); color: var(--color-brand); font-weight: var(--fw-medium); font-size: var(--text-base); transition: gap var(--duration-base) var(--ease-standard); }
-    .back-link:hover { gap: var(--space-12); }
-    .back-link :global(svg) { width: 18px; height: 18px; }
+    .nav-toggle span { width: 24px; height: 2px; background: var(--color-surface-inverse); }
 
     /* Phone menu */
     .mobile-nav {
@@ -170,15 +129,8 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         z-index: var(--z-overlay);
         padding: var(--space-24);
         flex-direction: column;
-        opacity: 0;
-        transform: translateX(100%);
-        transition: all var(--duration-slow) var(--ease-standard);
     }
-    .mobile-nav.active {
-        display: flex;
-        opacity: 1;
-        transform: translateX(0);
-    }
+    .mobile-nav.active { display: flex; }
     .mobile-nav-header {
         display: flex;
         justify-content: space-between;
@@ -191,6 +143,7 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         font-size: var(--text-3xl);
         cursor: pointer;
         line-height: var(--leading-none);
+        color: var(--color-text);
     }
     .mobile-nav-menu { list-style: none; flex: 1; }
     .mobile-nav-menu li { margin-bottom: var(--space-24); }
@@ -199,6 +152,7 @@ const links = nav.headerSections.map((id) => nav.sections.find((s) => s.id === i
         font-size: var(--text-2xl);
         font-weight: var(--fw-semibold);
     }
+    .mobile-nav-menu a[aria-current="page"] { color: var(--color-brand); }
 
     @media (max-width: 768px) {
         .nav-menu { display: none; }

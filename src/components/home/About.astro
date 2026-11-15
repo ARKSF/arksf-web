@@ -1,16 +1,30 @@
 ---
 import Badge from '../Badge.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
 import { home } from '../../lib/content';
+
+interface Props {
+  /** On the About page the title is the page's h1. */
+  asPageTitle?: boolean;
+  /** Show the "Více o nás" link (home page). */
+  more?: boolean;
+}
+const { asPageTitle = false, more = false } = Astro.props;
+const Heading = asPageTitle ? 'h1' : 'h2';
 const { about } = home;
 ---
-<section class="about section" id="o-nas">
+<section class:list={['about section', asPageTitle && 'about--page']} id="o-nas">
     <div class="container">
         <div class="about-grid">
             <div class="reveal-left">
                 <span class="section-label">{about.label}</span>
-                <h2 class="section-title">{about.title}</h2>
+                <Heading class="section-title">{about.title}</Heading>
                 <p class="about-lead">{about.lead}</p>
-                <Badge tone="dark" dot>{about.badge}</Badge>
+                <div class="about-actions">
+                    <Badge tone="dark" dot>{about.badge}</Badge>
+                    {more && <a href={about.more.href} class="about-more">{about.more.label} <Icon name="arrow-right" strokeWidth="2.5" /></a>}
+                </div>
             </div>
 
             <div class="values-grid reveal-right">
@@ -27,6 +41,11 @@ const { about } = home;
 
 <style>
     .about { background: var(--color-surface-inverse); color: var(--color-text-inverse); }
+    .about--page { padding-top: calc(var(--header-height) + var(--space-section)); }
+    .about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-16) var(--space-24); }
+    .about-more { display: inline-flex; align-items: center; gap: var(--space-8); font-family: var(--font-heading); font-weight: var(--fw-semibold); color: var(--color-text-inverse); transition: gap var(--duration-base) var(--ease-standard); }
+    .about-more:hover { gap: var(--space-12); color: var(--color-accent); }
+    .about-more :global(svg) { width: 18px; height: 18px; }
     .about-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;

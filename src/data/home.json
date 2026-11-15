@@ -4,17 +4,66 @@
     "titleHighlight": "sílu",
     "titleAfter": "zpět.",
     "text": "Věříme, že tělo má neuvěřitelnou schopnost regenerace a adaptace. Namísto omezení se zaměřujeme na to, jak vám pomoci dělat to, co vás baví.",
-    "cta": { "label": "Začít spolupráci", "href": "#kontakt" }
+    "cta": {
+      "label": "Začít spolupráci",
+      "href": "spoluprace.html"
+    },
+    "secondary": {
+      "text": "Už jste náš klient?",
+      "label": "Rezervace",
+      "href": "rezervace.html"
+    }
   },
   "services": {
     "label": "// Naše služby",
     "title": "Jak vám můžeme pomoci",
     "subtitle": "Každý přichází s jiným příběhem. Naším cílem je najít cestu, která dává smysl právě vám.",
     "items": [
-      { "icon": "activity", "title": "Návrat po zranění", "text": "Pomáháme s návratem do pohybu po operacích nebo úrazech. Navazujeme tam, kde běžná péče často končí." },
-      { "icon": "heart", "title": "Řešení bolesti", "text": "Pro lidi s dlouhodobou bolestí zad, kloubů nebo svalů. Nezakazujeme pohyb – učíme tělo ho znovu zvládat." },
-      { "icon": "clock", "title": "Pravidelné tréninky", "text": "Pro všechny, kteří chtějí cvičit dlouhodobě, bezpečně a s jasným vedením fyzioterapeuta." }
+      {
+        "icon": "activity",
+        "title": "Návrat po zranění",
+        "text": "Pomáháme s návratem do pohybu po operacích nebo úrazech. Navazujeme tam, kde běžná péče často končí."
+      },
+      {
+        "icon": "heart",
+        "title": "Řešení bolesti",
+        "text": "Pro lidi s dlouhodobou bolestí zad, kloubů nebo svalů. Nezakazujeme pohyb – učíme tělo ho znovu zvládat."
+      },
+      {
+        "icon": "clock",
+        "title": "Pravidelné tréninky",
+        "text": "Pro všechny, kteří chtějí cvičit dlouhodobě, bezpečně a s jasným vedením fyzioterapeuta."
+      }
     ]
+  },
+  "paths": {
+    "label": "// Spolupráce",
+    "title": "Tři cesty, jak s námi pracovat",
+    "subtitle": "Každá začíná úvodní konzultací. Pak si vyberete, co vám dává smysl.",
+    "items": [
+      {
+        "id": "konzultace",
+        "title": "Konzultace a fyzio 1:1",
+        "text": "Pochopíme vaši situaci a dostanete plán, se kterým můžete cvičit samostatně.",
+        "from": "consultations",
+        "photoLabel": "Foto: fyzio 1:1"
+      },
+      {
+        "id": "treninky",
+        "title": "Individuální tréninky",
+        "text": "Pravidelné vedení fyzioterapeuta, jistota v každém cviku.",
+        "from": "trainings",
+        "photoLabel": "Foto: individuální trénink"
+      },
+      {
+        "id": "skupinove",
+        "title": "Skupinové lekce",
+        "text": "Malá skupina, klidné prostředí a individuální přístup.",
+        "from": "group",
+        "photoLabel": "Foto: skupinová lekce"
+      }
+    ],
+    "action": "Jak to probíhá a ceny"
   },
   "about": {
     "label": "// O nás",
@@ -22,16 +71,46 @@
     "lead": "Mezi „klasickým fyziem\" a posilovnou existuje prostor, který u nás dlouho chyběl. ARK je místo, kde pohyb není zakazován, ale znovu hledán.",
     "badge": "Bez strachu z pohybu",
     "values": [
-      { "title": "Evidence-based", "text": "Řídíme se dokázanými fakty" },
-      { "title": "Individuální přístup", "text": "Každý člověk je jiný" },
-      { "title": "Dlouhodobost", "text": "Žádné rychlé opravy" },
-      { "title": "Bezpečný prostor", "text": "Bez strachu a extrémů" }
-    ]
+      {
+        "title": "Evidence-based",
+        "text": "Řídíme se dokázanými fakty"
+      },
+      {
+        "title": "Individuální přístup",
+        "text": "Každý člověk je jiný"
+      },
+      {
+        "title": "Dlouhodobost",
+        "text": "Žádné rychlé opravy"
+      },
+      {
+        "title": "Bezpečný prostor",
+        "text": "Bez strachu a extrémů"
+      }
+    ],
+    "more": {
+      "label": "Více o nás",
+      "href": "o-nas.html"
+    }
+  },
+  "reviews": {
+    "label": "// Recenze",
+    "title": "Co říkají klienti",
+    "googleAction": "Všechny recenze na Googlu"
   },
   "team": {
     "label": "// Náš tým",
     "title": "Kdo se o vás postará",
-    "subtitle": "Fyzioterapeuti a osobní trenéři, kteří kombinují vědecký přístup s lidským přístupem. Klikněte na kohokoliv a přečtěte si jeho příběh."
+    "subtitle": "Fyzioterapeuti a osobní trenéři, kteří kombinují vědecký přístup s lidským přístupem. Klikněte na kohokoliv a přečtěte si jeho příběh.",
+    "previewSubtitle": "Fyzioterapeuti a osobní trenéři, kteří kombinují vědecký přístup s lidským přístupem.",
+    "previewAction": "Poznejte celý tým"
+  },
+  "instagram": {
+    "label": "// Aktuality",
+    "title": "Co je u nás nového",
+    "subtitle": "Novinky, tréninky a život v ARK sledujte na Instagramu.",
+    "handle": "@ark_sila_fyzio",
+    "action": "Sledovat na Instagramu"
   },
   "approach": {
     "label": "// Náš přístup",
@@ -41,9 +120,18 @@
       "Naše myšlení vychází z fyzioterapeutických principů, ale náš přístup je aktivní. Věříme, že samotná pasivní práce nestačí k dlouhodobé změně."
     ],
     "points": [
-      { "title": "Bez tlaku a extrémů", "text": "Pro všechny, kdo chtějí rozvíjet sílu bez tlaku. Respektujeme vaše tempo a limity." },
-      { "title": "Srozumitelná komunikace", "text": "Individuální vedení a jasné vysvětlení každého kroku. Žádné odborné fráze bez kontextu." },
-      { "title": "Realistická očekávání", "text": "Žádné zázraky, žádná univerzální řešení. Hledáme cestu, která dává smysl právě vám." }
+      {
+        "title": "Bez tlaku a extrémů",
+        "text": "Pro všechny, kdo chtějí rozvíjet sílu bez tlaku. Respektujeme vaše tempo a limity."
+      },
+      {
+        "title": "Srozumitelná komunikace",
+        "text": "Individuální vedení a jasné vysvětlení každého kroku. Žádné odborné fráze bez kontextu."
+      },
+      {
+        "title": "Realistická očekávání",
+        "text": "Žádné zázraky, žádná univerzální řešení. Hledáme cestu, která dává smysl právě vám."
+      }
     ]
   },
   "quote": {
@@ -54,38 +142,104 @@
     "label": "// Ceník",
     "title": "Jak začít spolupráci",
     "subtitle": "Každá spolupráce začíná úvodní konzultací. Poté si vyberete cestu, která vám dává největší smysl.",
-    "note": { "text": "Jste již náš klient?", "linkLabel": "Přejít na rezervaci →", "href": "rezervace.html" }
+    "note": {
+      "text": "Jste již náš klient?",
+      "linkLabel": "Přejít na rezervaci →",
+      "href": "rezervace.html"
+    }
   },
   "process": {
     "label": "// Průběh spolupráce",
     "title": "Jak to funguje",
     "steps": [
-      { "title": "Úvodní konzultace", "text": "Poznáme se, pochopíme vaši situaci a cíle. Navrhneme další postup." },
-      { "title": "Volba cesty", "text": "Společně se rozhodneme – samostatné cvičení s konzultacemi, nebo pravidelné tréninky." },
-      { "title": "Spolupráce", "text": "Pracujeme na vašich cílech. Tempo a model přizpůsobíme vašim možnostem." }
+      {
+        "title": "Úvodní konzultace",
+        "text": "Poznáme se, pochopíme vaši situaci a cíle. Navrhneme další postup."
+      },
+      {
+        "title": "Volba cesty",
+        "text": "Společně se rozhodneme – samostatné cvičení s konzultacemi, nebo pravidelné tréninky."
+      },
+      {
+        "title": "Spolupráce",
+        "text": "Pracujeme na vašich cílech. Tempo a model přizpůsobíme vašim možnostem."
+      }
     ],
     "infoLabel": "Základní informace"
   },
   "marquee": [
-    { "icon": "activity", "label": "Rehabilitace" },
-    { "icon": "heart", "label": "Řešení bolesti" },
-    { "icon": "clock", "label": "Osobní tréninky" },
-    { "icon": "bar-chart", "label": "Silový trénink" },
-    { "icon": "activity", "label": "Návrat po zranění" },
-    { "icon": "crosshair", "label": "Evidence-based přístup" },
-    { "icon": "user-pair", "label": "Individuální péče" },
-    { "icon": "shield", "label": "Bez strachu z pohybu" }
+    {
+      "icon": "activity",
+      "label": "Rehabilitace"
+    },
+    {
+      "icon": "heart",
+      "label": "Řešení bolesti"
+    },
+    {
+      "icon": "clock",
+      "label": "Osobní tréninky"
+    },
+    {
+      "icon": "bar-chart",
+      "label": "Silový trénink"
+    },
+    {
+      "icon": "activity",
+      "label": "Návrat po zranění"
+    },
+    {
+      "icon": "crosshair",
+      "label": "Evidence-based přístup"
+    },
+    {
+      "icon": "user-pair",
+      "label": "Individuální péče"
+    },
+    {
+      "icon": "shield",
+      "label": "Bez strachu z pohybu"
+    }
   ],
+  "cta": {
+    "label": "// Začněme",
+    "title": "Udělejte první krok",
+    "text": "Každá spolupráce začíná úvodní konzultací. Rezervujte si termín online, nebo nám napište.",
+    "primary": {
+      "label": "Rezervovat konzultaci",
+      "href": "rezervace.html"
+    },
+    "secondary": {
+      "label": "Napsat zprávu",
+      "href": "kontakt.html"
+    }
+  },
   "contact": {
     "label": "// Kontakt",
     "title": "Začněme spolupráci",
-    "bookingBanner": { "text": "Chcete rovnou rezervovat termín?", "action": "Vyberte termín online", "href": "rezervace.html" },
+    "bookingBanner": {
+      "text": "Chcete rovnou rezervovat termín?",
+      "action": "Vyberte termín online",
+      "href": "rezervace.html"
+    },
     "formTitle": "Napište nám",
     "form": {
-      "name": { "label": "Jméno *", "placeholder": "Vaše jméno" },
-      "email": { "label": "Email *", "placeholder": "vas@email.cz" },
-      "phone": { "label": "Telefon", "placeholder": "+420 xxx xxx xxx" },
-      "message": { "label": "Zpráva *", "placeholder": "Popište vaši situaci..." },
+      "name": {
+        "label": "Jméno *",
+        "placeholder": "Vaše jméno"
+      },
+      "email": {
+        "label": "Email *",
+        "placeholder": "vas@email.cz"
+      },
+      "phone": {
+        "label": "Telefon",
+        "placeholder": "+420 xxx xxx xxx"
+      },
+      "message": {
+        "label": "Zpráva *",
+        "placeholder": "Popište vaši situaci..."
+      },
       "submit": "Odeslat zprávu",
       "sending": "Odesílám...",
       "successTitle": "Zpráva odeslána!",

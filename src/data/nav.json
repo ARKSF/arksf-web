@@ -1,19 +1,21 @@
 {
-  "sections": [
-    { "id": "sluzby", "label": "Služby" },
-    { "id": "o-nas", "label": "O nás" },
-    { "id": "tym", "label": "Náš tým" },
-    { "id": "pristup", "label": "Náš přístup" },
-    { "id": "cenik", "label": "Ceník" },
-    { "id": "spoluprace", "label": "Spolupráce" },
-    { "id": "kontakt", "label": "Kontakt" }
+  "pages": [
+    { "href": "spoluprace.html", "label": "Spolupráce" },
+    { "href": "o-nas.html", "label": "O nás" },
+    { "href": "kontakt.html", "label": "Kontakt" }
   ],
-  "headerSections": ["sluzby", "o-nas", "tym", "pristup", "cenik", "spoluprace"],
-  "footerSections": ["sluzby", "o-nas", "tym", "pristup", "cenik", "spoluprace", "kontakt"],
+  "footerLinks": [
+    { "href": "index.html", "label": "Úvod" },
+    { "href": "spoluprace.html#konzultace", "label": "Konzultace a fyzio 1:1" },
+    { "href": "spoluprace.html#treninky", "label": "Individuální tréninky" },
+    { "href": "spoluprace.html#skupinove", "label": "Skupinové lekce" },
+    { "href": "o-nas.html", "label": "O nás" },
+    { "href": "o-nas.html#tym", "label": "Náš tým" },
+    { "href": "kontakt.html", "label": "Kontakt" }
+  ],
   "clientLinks": [
     { "href": "rezervace.html", "label": "Rezervace" },
     { "href": "vop.html", "label": "Obchodní podmínky" }
   ],
-  "booking": { "href": "rezervace.html", "label": "Rezervace" },
-  "back": { "href": "index.html", "label": "Zpět" }
+  "booking": { "href": "rezervace.html", "label": "Rezervace" }
 }

@@ -4,7 +4,15 @@
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import SectionHeader from '../SectionHeader.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
 import { home, team } from '../../lib/content';
+
+interface Props {
+  /** Home page: cards link to the team on the About page instead of opening the detail. */
+  preview?: boolean;
+}
+const { preview = false } = Astro.props;
 
 const photos = import.meta.glob<{ default: ImageMetadata }>('../../assets/team/*.{jpg,jpeg,png,webp}', { eager: true });
 const photoOf = (file: string) => {
@@ -21,23 +29,26 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
 ---
 <section class="team section" id="tym">
     <div class="container">
-        <SectionHeader label={home.team.label} title={home.team.title} subtitle={home.team.subtitle} />
+        <SectionHeader label={home.team.label} title={home.team.title} subtitle={preview ? home.team.previewSubtitle : home.team.subtitle} />
 
         <div class="team-grid">
             {people.map((p, i) => (
                 <div class={`team-card reveal delay-${i + 1}`} data-member={p.id}>
                     <Image src={p.img} alt={p.fullName} style={position(p)} widths={CARD.widths} sizes={CARD.sizes} loading="lazy" />
                     <div class="team-card-overlay">
-                        <h3 class="team-card-name"><button type="button" class="team-card-open" aria-haspopup="dialog" aria-controls={`team-detail-${p.id}`}>{p.name}</button></h3>
+                        <h3 class="team-card-name">{preview
+                            ? <a href={`o-nas.html#tym`} class="team-card-open">{p.name}</a>
+                            : <button type="button" class="team-card-open" aria-haspopup="dialog" aria-controls={`team-detail-${p.id}`}>{p.name}</button>}</h3>
                         <p class="team-card-role">{p.role}</p>
                     </div>
                 </div>
             ))}
         </div>
+        {preview && <div class="team-more"><Button href="o-nas.html#tym" variant="secondary">{home.team.previewAction} <Icon name="arrow-right" strokeWidth="2.5" /></Button></div>}
     </div>
 </section>
 
-<div class="team-modal-backdrop" id="teamModalBackdrop">
+{!preview && <div class="team-modal-backdrop" id="teamModalBackdrop">
     {people.map((p) => (
         <div class="team-modal" data-member={p.id} id={`team-detail-${p.id}`} role="dialog" aria-modal="true" aria-labelledby={`team-name-${p.id}`}>
             <button type="button" class="team-modal-close" aria-label="Zavřít">×</button>
@@ -54,10 +65,11 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
             </div>
         </div>
     ))}
-</div>
+</div>}
 
 <script>
     const backdrop = document.getElementById('teamModalBackdrop');
+    if (backdrop) {
     let trigger = null;
     const activeModal = () => backdrop.querySelector('.team-modal.active');
     function openTeamModal(id, from) {
@@ -103,10 +115,12 @@ const DETAIL = { widths: [420, 640, 840], sizes: '(max-width: 768px) 100vw, 420p
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') closeTeamModal();
     });
+    }
 </script>
 
 <style>
     .team { background: var(--color-surface); }
+    .team-more { display: flex; justify-content: center; margin-top: var(--space-40); }
     .team-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);

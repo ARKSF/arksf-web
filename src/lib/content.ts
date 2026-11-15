@@ -9,6 +9,9 @@ import teamJson from '../data/team.json';
 import homeJson from '../data/home.json';
 import bookingJson from '../data/booking.json';
 import termsJson from '../data/terms.json';
+import reviewsJson from '../data/reviews.json';
+import photosJson from '../data/photos.json';
+import pagesJson from '../data/pages.json';
 
 const iconName = z.string().refine((n) => n in icons, (n) => ({ message: `unknown icon "${n}" (see src/components/icons.ts)` }));
 
@@ -58,6 +61,20 @@ export const team = check('team.json', teamSchema, teamJson);
 export const home = homeJson;
 export const booking = bookingJson;
 export const terms = termsJson;
+export const pages = pagesJson;
+export const photos = photosJson;
+
+const reviewsSchema = z.object({
+  googleUrl: z.string(),
+  items: z.array(z.object({
+    name: z.string(),
+    text: z.string(),
+    rating: z.number().int().min(1).max(5),
+    date: z.string().optional(),
+    source: z.string().optional(),
+  })),
+});
+export const reviews = check('reviews.json', reviewsSchema, reviewsJson);
 
 /** Replaces {placeholders} with values from rules.json. Unknown names stop the build. */
 export function fill(text: string): string {

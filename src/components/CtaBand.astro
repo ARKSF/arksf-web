@@ -1,0 +1,71 @@
+---
+// Closing call to action on dark: title, short text, booking button and a secondary link.
+// Text comes from src/data/home.json → "cta"; the address line from site.json.
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import { home, site } from '../lib/content';
+
+interface Props {
+  /** Hide the "Napsat zprávu" button (e.g. on the contact page itself). */
+  hideMessage?: boolean;
+}
+const { hideMessage = false } = Astro.props;
+const { cta } = home;
+---
+<section class="cta-band">
+    <div class="container">
+        <div class="cta-inner reveal">
+            <div class="cta-text">
+                <span class="section-label">{cta.label}</span>
+                <h2>{cta.title}</h2>
+                <p>{cta.text}</p>
+                <p class="cta-address"><Icon name="map-pin" /> <a href={site.address.mapsUrl} target="_blank" rel="noopener">{site.address.full}</a></p>
+            </div>
+            <div class="cta-actions">
+                <Button href={cta.primary.href} variant="accent" size="lg" blockOnMobile>{cta.primary.label} <Icon name="arrow-right" strokeWidth="2.5" /></Button>
+                {!hideMessage && <Button href={cta.secondary.href} variant="secondary" size="lg" blockOnMobile class="cta-secondary">{cta.secondary.label}</Button>}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .cta-band { padding: var(--space-section) 0; background: var(--color-surface-alt); }
+    .cta-inner {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-40);
+        background: var(--color-surface-inverse);
+        border-radius: var(--radius-xl);
+        padding: var(--space-64) var(--space-48);
+    }
+    .cta-inner::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 480px;
+        height: 480px;
+        background: radial-gradient(circle, var(--color-brand-glow) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .cta-text, .cta-actions { position: relative; z-index: var(--z-raised); }
+    .cta-text .section-label { color: var(--color-accent); }
+    .cta-text h2 { color: var(--color-text-inverse); font-size: var(--text-h2); margin-bottom: var(--space-12); }
+    .cta-text p { color: var(--color-text-inverse-muted); max-width: 520px; }
+    .cta-address { display: flex; align-items: center; gap: var(--space-8); margin-top: var(--space-16); font-size: var(--text-sm); }
+    .cta-address :global(svg) { width: 16px; height: 16px; color: var(--color-accent); flex-shrink: 0; }
+    .cta-address a:hover { color: var(--color-text-inverse); }
+    .cta-actions { display: flex; flex-direction: column; gap: var(--space-12); flex-shrink: 0; }
+    .cta-actions :global(.btn) { width: 100%; }
+    .cta-actions :global(.cta-secondary) { border-color: var(--color-border-inverse-strong); color: var(--color-text-inverse); }
+    .cta-actions :global(.cta-secondary:hover) { background: var(--color-fill-inverse); border-color: var(--color-text-inverse); }
+
+    @media (max-width: 900px) {
+        .cta-inner { flex-direction: column; align-items: flex-start; padding: var(--space-48) var(--space-24); }
+        .cta-actions { width: 100%; }
+    }
+</style>

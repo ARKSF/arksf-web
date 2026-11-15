@@ -1,6 +1,6 @@
 # ARK – Síla & Fyzio (arksf.cz)
 
-Web postavený v [Astru](https://docs.astro.build): obsah je v datových souborech, vzhled v tokenech a komponentách. Výsledkem jsou obyčejné statické stránky (`/`, `/rezervace.html`, `/vop.html`), které hostuje GitHub Pages.
+Web postavený v [Astru](https://docs.astro.build): obsah je v datových souborech, vzhled v tokenech a komponentách. Výsledkem jsou obyčejné statické stránky (`/`, `/spoluprace.html`, `/o-nas.html`, `/kontakt.html`, `/rezervace.html`, `/vop.html`), které hostuje GitHub Pages.
 
 ## Spuštění na počítači
 
@@ -57,6 +57,10 @@ Všechno se mění v `src/data/`, ne v komponentách:
 V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}` nebo `{weeksPerMonth}`, a odkazy ve tvaru `[text odkazu](vop.html)`. Když v datech něco chybí nebo má špatný tvar (cena jako text, neznámá ikona, neznámá značka), `npm run build` skončí chybou s popisem, kde je problém, a nic se nezveřejní.
 
 **Nový člen týmu:** fotku (na výšku, cca 900 × 1090 px) ulož do `src/assets/team/`, v `team.json` zkopíruj jeden blok, změň `id` (malými písmeny bez diakritiky), texty a `photo`. Volitelně `photoPosition` (např. `"center 15%"`) posune výřez fotky.
+| Fotky na webu (hlavní, služby, prostor, kontakt) | `photos.json` + soubory v `src/assets/photos/` (prázdné = zástupný rámeček) |
+| Recenze na hlavní stránce | `reviews.json` (`items`: jméno, text, hvězdy 1–5, zdroj, datum; `googleUrl` = odkaz „Všechny recenze na Googlu“). Bez recenzí se sekce neukáže. |
+| Texty podstránek Spolupráce, O nás, Kontakt | `pages.json` |
+| Instagram (aktuality) | `site.json` → `instagramFeed`: adresa JSON feedu (např. Behold.so). Příspěvky se stáhnou při sestavení webu; bez feedu sekce ukáže jen odkaz na profil. |
 
 ### Úprava vzhledu
 
@@ -82,6 +86,10 @@ V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}`
 1. Vytvoř `src/pages/nazev.astro` podle `vop.astro`: obal `<Base title="..." description="..." path="/nazev.html">`, pod tím `<Navbar variant="back" />`, obsah a `<Footer variant="page" />`. Stránka bude na adrese `/nazev.html`.
 2. Adresu přidej do seznamu v `src/pages/sitemap.xml.ts`.
 3. Odkaz na ni přidej do `src/data/nav.json` (např. `clientLinks`).
+
+## Náhled se zástupnými prvky
+
+`PUBLIC_PREVIEW=1 npm run build` (nebo `PUBLIC_PREVIEW=1 npm run dev`) ukáže ukázkové recenze a dlaždice Instagramu, aby šlo posoudit rozložení. Běžný build (a živý web) je nikdy neukáže.
 
 ## Dobré vědět
 

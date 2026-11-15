@@ -4,30 +4,30 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/home/Hero.astro';
 import Services from '../components/home/Services.astro';
+import ServicePaths from '../components/home/ServicePaths.astro';
 import About from '../components/home/About.astro';
+import Reviews from '../components/home/Reviews.astro';
 import Team from '../components/home/Team.astro';
-import Approach from '../components/home/Approach.astro';
-import Quote from '../components/home/Quote.astro';
-import Pricing from '../components/home/Pricing.astro';
-import Process from '../components/home/Process.astro';
+import InstagramFeed from '../components/home/InstagramFeed.astro';
 import Marquee from '../components/home/Marquee.astro';
-import Contact from '../components/home/Contact.astro';
+import CtaBand from '../components/CtaBand.astro';
 ---
 <Base
     description="Fyzioterapeuti, kteří vám vrátí vaši sílu zpět. Evidence-based fyzioterapie a osobní tréninky v Praze."
     path="/"
     layout="home"
 >
-    <Navbar variant="full" />
-    <Hero />
-    <Services />
-    <About />
-    <Team />
-    <Approach />
-    <Quote />
-    <Pricing />
-    <Process />
-    <Marquee />
-    <Contact />
+    <Navbar />
+    <main>
+        <Hero />
+        <Services />
+        <ServicePaths />
+        <About more />
+        <Reviews />
+        <Team preview />
+        <InstagramFeed />
+        <Marquee />
+        <CtaBand />
+    </main>
     <Footer />
 </Base>

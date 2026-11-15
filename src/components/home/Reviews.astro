@@ -1,0 +1,89 @@
+---
+// Client reviews from src/data/reviews.json. Hidden when there are none,
+// except in preview builds (PUBLIC_PREVIEW=1), which show labelled sample cards for the layout.
+import SectionHeader from '../SectionHeader.astro';
+import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { home, reviews } from '../../lib/content';
+
+const showSamples = import.meta.env.PUBLIC_PREVIEW === '1' && reviews.items.length === 0;
+const items = showSamples
+  ? [1, 2, 3].map((n) => ({ name: `Ukázka ${n}`, text: 'Tady bude skutečná recenze klienta. Zástupný text jen pro náhled rozložení, na živém webu se neukáže.', rating: 5, date: undefined, source: 'Google' }))
+  : reviews.items;
+const { label, title, googleAction } = home.reviews;
+---
+{items.length > 0 && (
+<section class="reviews section" id="recenze">
+    <div class="container">
+        <SectionHeader label={label} title={title} />
+        <ul class="reviews-track" aria-label={title}>
+            {items.map((r) => (
+                <li class:list={['review-card', showSamples && 'review-card--sample']}>
+                    <div class="review-stars" aria-label={`${r.rating} z 5 hvězd`}>
+                        {Array.from({ length: 5 }, (_, i) => <span class:list={['review-star', i < r.rating && 'is-on']}><Icon name="star" /></span>)}
+                    </div>
+                    <blockquote>{r.text}</blockquote>
+                    <footer>
+                        <span class="review-name">{r.name}</span>
+                        {(r.source || r.date) && <span class="review-meta">{[r.source, r.date].filter(Boolean).join(' · ')}</span>}
+                    </footer>
+                </li>
+            ))}
+        </ul>
+        {reviews.googleUrl && (
+            <div class="reviews-more">
+                <Button href={reviews.googleUrl} variant="secondary" target="_blank" rel="noopener">{googleAction} <Icon name="external-link" strokeWidth="2.5" /></Button>
+            </div>
+        )}
+    </div>
+</section>
+)}
+
+<style>
+    .reviews { background: var(--color-surface); }
+    .reviews-track {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-grid-gap);
+    }
+    .review-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-16);
+        background: var(--color-surface-alt);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-card);
+    }
+    .review-card--sample { border-style: dashed; border-color: var(--color-brand-border); }
+    .review-stars { display: flex; gap: var(--space-4); }
+    .review-star { color: var(--color-border); display: flex; }
+    .review-star.is-on { color: var(--color-accent); }
+    .review-star :global(svg) { width: 18px; height: 18px; fill: currentColor; }
+    .review-card blockquote {
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
+        color: var(--color-text);
+        flex: 1;
+    }
+    .review-card footer { display: flex; flex-direction: column; gap: var(--space-4); }
+    .review-name { font-family: var(--font-heading); font-weight: var(--fw-semibold); }
+    .review-meta { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .reviews-more { display: flex; justify-content: center; margin-top: var(--space-40); }
+
+    /* Phones and tablets: swipeable row */
+    @media (max-width: 900px) {
+        .reviews-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: var(--space-8);
+            margin: 0 calc(var(--space-16) * -1);
+            padding-left: var(--space-16);
+            padding-right: var(--space-16);
+            scroll-padding: 0 var(--space-16);
+        }
+        .review-card { flex: 0 0 82%; scroll-snap-align: start; }
+    }
+</style>

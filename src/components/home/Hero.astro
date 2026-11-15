@@ -2,7 +2,8 @@
 import Badge from '../Badge.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
-import { home, site } from '../../lib/content';
+import Photo from '../Photo.astro';
+import { home, site, photos } from '../../lib/content';
 const { hero } = home;
 ---
 <section class="hero">
@@ -18,7 +19,11 @@ const { hero } = home;
                     {hero.cta.label}
                     <Icon name="arrow-right" strokeWidth="2.5" />
                 </Button>
+                <p class="hero-secondary reveal delay-4">{hero.secondary.text} <a href={hero.secondary.href}>{hero.secondary.label} →</a></p>
             </div>
+            {photos.hero ? (
+            <div class="hero-graphic reveal-right delay-2"><Photo file={photos.hero} alt="ARK – Síla & Fyzio" ratio="4 / 5" eager class="hero-photo" sizes="(max-width: 900px) 100vw, 480px" /></div>
+            ) : (
             <div class="hero-graphic reveal-right delay-2">
                 <svg class="hero-illustration" width="380" height="342" viewBox="0 0 195 175" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="25" y="7" width="162" height="160" rx="12" fill="#FAFAFA" stroke="#E5E7EB" stroke-width="0.86"/>
@@ -33,11 +38,16 @@ const { hero } = home;
                         </defs>
                     </svg>
             </div>
+            )}
         </div>
     </div>
 </section>
 
 <style>
+    .hero-secondary { margin-top: var(--space-24); font-size: var(--text-sm); color: var(--color-text-muted); }
+    .hero-secondary a { color: var(--color-brand); font-weight: var(--fw-semibold); }
+    .hero-secondary a:hover { text-decoration: underline; }
+    .hero-graphic :global(.hero-photo) { width: 100%; max-width: 440px; border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); }
     .hero-badge { margin-bottom: var(--space-24); }
     .hero {
         min-height: 100vh;

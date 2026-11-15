@@ -12,7 +12,10 @@
   },
   "district": "Praha 9 – Hloubětín",
   "hours": [
-    { "days": "Po–Pá", "time": "dle domluvy" }
+    {
+      "days": "Po–Pá",
+      "time": "dle domluvy"
+    }
   ],
   "replyPromise": "Máte otázky? Napište nám a ozveme se vám do 24 hodin.",
   "instagram": "https://www.instagram.com/ark_sila_fyzio",
@@ -26,5 +29,6 @@
     "reservations": "https://arksf.fyzion.cz/reservations",
     "login": "https://arksf.fyzion.cz/login"
   },
-  "formspree": "https://formspree.io/f/xykdjrzk"
+  "formspree": "https://formspree.io/f/xykdjrzk",
+  "instagramFeed": ""
 }

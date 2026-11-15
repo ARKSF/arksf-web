@@ -2,7 +2,7 @@
   "consultations": {
     "icon": "message-square",
     "label": "Samostatné cvičení",
-    "title": "Konzultace",
+    "title": "Konzultace a fyzio 1:1",
     "description": "Pro ty, kteří chtějí cvičit samostatně s odborným vedením a plánem na míru.",
     "items": [
       {
@@ -27,9 +27,21 @@
     "description": "Pravidelný dohled, jistota v provedení cviků a dlouhodobá spolupráce.",
     "unit": "/ trénink",
     "items": [
-      { "title": "1× týdně", "meta": "měsíční paušál", "price": 1300 },
-      { "title": "2× týdně", "meta": "měsíční paušál", "price": 1200 },
-      { "title": "3× týdně", "meta": "měsíční paušál", "price": 1100 }
+      {
+        "title": "1× týdně",
+        "meta": "měsíční paušál",
+        "price": 1300
+      },
+      {
+        "title": "2× týdně",
+        "meta": "měsíční paušál",
+        "price": 1200
+      },
+      {
+        "title": "3× týdně",
+        "meta": "měsíční paušál",
+        "price": 1100
+      }
     ],
     "footer": "Cena paušálu se odvíjí od frekvence (průměr {weeksPerMonth} týdne/měsíc). Nevyužité lekce lze nahradit."
   },

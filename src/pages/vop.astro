@@ -11,7 +11,7 @@ import { terms, site, fill } from '../lib/content';
 const withEmail = (text: string) => fill(text.replace('{email}', '\u0000')).split('\u0000');
 ---
 <Base title="Obchodní podmínky" description="Obchodní podmínky ARK – Síla & Fyzio" path="/vop.html">
-    <Navbar variant="back" />
+    <Navbar />
     <main class="page-content">
         <div class="container">
             <PageHeader size="md" label={terms.header.label} title={terms.header.title} text={fill(terms.header.text)} />

@@ -1,7 +1,7 @@
 // sitemap.xml for search engines. Add a new page's address here.
 import type { APIRoute } from 'astro';
 
-const PAGES = ['/', '/rezervace.html', '/vop.html'];
+const PAGES = ['/', '/spoluprace.html', '/o-nas.html', '/kontakt.html', '/rezervace.html', '/vop.html'];
 
 export const GET: APIRoute = ({ site }) => {
   const urls = PAGES.map((path) => `  <url><loc>${new URL(path, site).href}</loc></url>`).join('\n');

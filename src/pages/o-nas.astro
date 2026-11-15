@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import About from '../components/home/About.astro';
+import Approach from '../components/home/Approach.astro';
+import Quote from '../components/home/Quote.astro';
+import Team from '../components/home/Team.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Gallery from '../components/Gallery.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { pages, photos } from '../lib/content';
+
+const page = pages.onas;
+---
+<Base title="O nás" description={page.description} path="/o-nas.html">
+    <Navbar />
+    <main>
+        <About asPageTitle />
+        <Approach />
+        <Quote />
+        <Team />
+        <section class="section space" id="prostor">
+            <div class="container">
+                <SectionHeader label={page.spaceLabel} title={page.spaceTitle} subtitle={page.spaceText} />
+                <Gallery files={photos.prostor} labels={page.spacePhotoLabels} alt="Prostor ARK" />
+            </div>
+        </section>
+        <CtaBand />
+    </main>
+    <Footer />
+</Base>
+
+<style>
+    .space { background: var(--color-surface-alt); }
+</style>

@@ -1,0 +1,30 @@
+---
+// Photo grid: the first photo large, the rest beside and below it. Files from src/data/photos.json.
+import Photo from './Photo.astro';
+
+interface Props {
+  files: string[];
+  labels: string[];
+  alt: string;
+}
+const { files, labels, alt } = Astro.props;
+---
+<div class="gallery">
+    {files.map((file, i) => (
+        <Photo file={file || undefined} alt={`${alt} ${i + 1}`} label={labels[i]} ratio={i === 0 ? '4 / 3' : '1 / 1'} class={`gallery-item gallery-item--${i === 0 ? 'main' : 'side'} reveal delay-${i + 1}`}
+            sizes={i === 0 ? '(max-width: 900px) 100vw, 640px' : '(max-width: 900px) 50vw, 320px'} />
+    ))}
+</div>
+
+<style>
+    .gallery {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: var(--space-16);
+    }
+    .gallery :global(.gallery-item--main) { grid-row: span 2; grid-column: span 1; height: 100%; aspect-ratio: auto !important; }
+    @media (max-width: 900px) {
+        .gallery { grid-template-columns: 1fr 1fr; }
+        .gallery :global(.gallery-item--main) { grid-column: span 2; grid-row: auto; aspect-ratio: 4 / 3 !important; }
+    }
+</style>
