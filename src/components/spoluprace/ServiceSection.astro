@@ -1,6 +1,6 @@
 ---
-// One way of working on the Spolupráce page: photo, who it is for, a booking button and a link to
-// the price list at the end of the page. Photo and text sides alternate (`flip`).
+// One way of working on the Spolupráce page: photo, who it is for, and a booking button
+// (prices are in the price list at the end of the page). Photo and text sides alternate (`flip`).
 import Photo from '../Photo.astro';
 import Button from '../Button.astro';
 import Icon from '../Icon.astro';
@@ -15,10 +15,9 @@ interface Props {
   photo?: string;
   photoLabel: string;
   bookLabel: string;
-  priceLabel: string;
   flip?: boolean;
 }
-const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel, bookLabel, priceLabel, flip = false } = Astro.props;
+const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel, bookLabel, flip = false } = Astro.props;
 ---
 <section class:list={['service', flip && 'service--flip']} id={id}>
     <div class="container service-grid">
@@ -35,10 +34,7 @@ const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel,
                 {forWhom.map((line) => <li><Icon name="check" strokeWidth="2.5" /> {line}</li>)}
             </ul>
 
-            <div class="service-actions">
-                <Button href="rezervace.html" variant="primary" blockOnMobile>{bookLabel} <Icon name="arrow-right" strokeWidth="2.5" /></Button>
-                <a href="#cenik" class="service-price-link">{priceLabel}</a>
-            </div>
+            <Button href="rezervace.html" variant="primary" blockOnMobile>{bookLabel} <Icon name="arrow-right" strokeWidth="2.5" /></Button>
         </div>
     </div>
 </section>
@@ -67,9 +63,6 @@ const { id, label, title, description, forWhomLabel, forWhom, photo, photoLabel,
     .service-for { list-style: none; display: grid; gap: var(--space-8); margin-bottom: var(--space-40); }
     .service-for li { display: flex; gap: var(--space-12); align-items: flex-start; }
     .service-for :global(svg) { width: 20px; height: 20px; color: var(--color-brand); flex-shrink: 0; margin-top: var(--space-4); }
-    .service-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-16) var(--space-24); }
-    .service-price-link { font-weight: var(--fw-semibold); color: var(--color-brand); text-decoration: underline; text-underline-offset: 3px; }
-    .service-price-link:hover { color: var(--color-brand-hover); }
 
     @media (max-width: 900px) {
         .service-grid { grid-template-columns: 1fr; gap: var(--space-32); }

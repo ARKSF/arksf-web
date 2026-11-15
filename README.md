@@ -60,7 +60,7 @@ Všechno se mění v `src/data/`, ne v komponentách:
 
 V textech lze použít zástupné značky z `rules.json`, např. `{cancelHours}` nebo `{weeksPerMonth}`, a odkazy ve tvaru `[text odkazu](vop.html)`. Když v datech něco chybí nebo má špatný tvar (cena jako text, neznámá ikona, neznámá značka), `npm run build` skončí chybou s popisem, kde je problém, a nic se nezveřejní.
 
-**Nový člen týmu:** fotku (na výšku, cca 900 × 1090 px) ulož do `src/assets/team/`, v `team.json` zkopíruj jeden blok, změň `id` (malými písmeny bez diakritiky), texty a `photo`. Volitelně `photoPosition` (např. `"center 15%"`) posune výřez fotky.
+**Nový člen týmu:** fotku (na výšku 3 : 4, cca 1200 × 1600 px) ulož do `src/assets/team/`, v `team.json` zkopíruj jeden blok, změň `id` (malými písmeny bez diakritiky), texty a `photo`. Volitelně `photoPosition` (např. `"center 15%"`) posune výřez fotky.
 
 ### Úprava vzhledu
 
