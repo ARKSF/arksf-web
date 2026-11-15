@@ -156,16 +156,12 @@ const prefix = home ? '#' : 'index.html#';
     .footer-logo-text { font-family: var(--font-heading); font-size: var(--fs-16); font-weight: var(--fw-semibold); color: var(--white-a80); letter-spacing: var(--tracking-slight); }
     .footer--legal .footer-brand > p { margin-top: var(--space-16); }
 
-    @media (max-width: 1024px) {
-        .footer--home .footer-grid { grid-template-columns: 1.5fr 1fr; }
-    }
     @media (max-width: 900px) {
         .footer--page .footer-grid,
         .footer--legal .footer-grid { grid-template-columns: 1fr; gap: var(--space-40); }
     }
     @media (max-width: 768px) {
         .footer--home .footer-grid { grid-template-columns: 1fr; gap: var(--space-32); }
-        .footer-nav-columns { grid-template-columns: 1fr 1fr; }
         .footer--home .footer-bottom p {
             border-right: none;
             padding: var(--space-4) 0;

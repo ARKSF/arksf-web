@@ -105,30 +105,8 @@ const { contact } = home;
         color: var(--primary);
         border-bottom-color: var(--primary);
     }
-    .hours-grid {
-        display: grid;
-        grid-template-columns: auto auto;
-        gap: var(--space-4) var(--space-16);
-        margin-top: var(--space-4);
-    }
-    .hours-day {
-        font-family: var(--font-heading);
-        font-weight: var(--fw-semibold);
-        font-size: var(--fs-13);
-        color: var(--dark);
-    }
-    .hours-time {
-        font-size: var(--fs-13);
-        color: var(--gray-600);
-    }
 
-    @media (max-width: 1024px) {
-        .contact-grid { grid-template-columns: 1fr 1.1fr; }
-    }
     @media (max-width: 900px) {
-        .contact-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px) {
         .contact-grid { grid-template-columns: 1fr; }
     }
 </style>

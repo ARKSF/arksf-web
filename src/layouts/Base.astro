@@ -58,15 +58,6 @@ const image = new URL('/favicon.png', Astro.site).href;
             });
         });
 
-        // Parallax Effect
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const shapes = document.querySelectorAll('.parallax-shape');
-            shapes.forEach((shape, i) => {
-                const speed = (i + 1) * 0.05;
-                shape.style.transform = `translateY(${scrollY * speed}px)`;
-            });
-        });
 
         // Scroll Reveal Animation
         const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');

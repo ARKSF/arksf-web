@@ -62,15 +62,6 @@ a { text-decoration: none; color: inherit; }
 :where(.delay-4) { transition-delay: var(--duration-400); }
 :where(.delay-5) { transition-delay: var(--duration-500); }
 
-@keyframes floatStripes {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 /* Layout */
 .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-24); }
 .section { padding: var(--space-100) 0; }
