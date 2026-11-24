@@ -1,10 +1,13 @@
-# Builds the site and publishes it to GitHub Pages on every push to main.
+# Builds the site and publishes it to GitHub Pages on every push to main and once a day (Instagram).
 # One-time setup in the repository: Settings > Pages > Build and deployment > Source = "GitHub Actions".
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  # Daily rebuild so the latest Instagram posts (fetched at build time) appear on the site.
+  schedule:
+    - cron: '0 4 * * *'
   workflow_dispatch:
 
 permissions:

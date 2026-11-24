@@ -15,7 +15,7 @@ npm run preview    # prohlédnout si sestavený web z dist/
 
 ## Zveřejnění
 
-Každý push do větve `main` web sám sestaví a zveřejní (GitHub Actions, `.github/workflows/deploy.yml`). Průběh je v záložce **Actions** na GitHubu. Když sestavení selže (třeba kvůli chybě v datech), zůstává online předchozí verze.
+Každý push do větve `main` web sám sestaví a zveřejní (GitHub Actions, `.github/workflows/deploy.yml`). Navíc se web sestaví každý den ráno, aby se načetly nové příspěvky z Instagramu. Průběh je v záložce **Actions** na GitHubu. Když sestavení selže (třeba kvůli chybě v datech), zůstává online předchozí verze.
 
 Jednorázové nastavení: v repozitáři **Settings → Pages → Build and deployment → Source** musí být **GitHub Actions**.
 
