@@ -170,10 +170,12 @@
 
   /* Motion */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);   /* entrances: fast start, long soft landing */
   --duration-fast: 0.15s;
   --duration-base: 0.3s;
   --duration-slow: 0.5s;
   --duration-reveal: 0.8s;
+  --duration-entrance: 1.25s;      /* hero entrance moves */
   --duration-stagger: 0.1s;       /* step between revealed items */
   --duration-pulse: 2s;
   --duration-float: 5s;

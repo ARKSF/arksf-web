@@ -35,7 +35,7 @@ function checkDecl(prop, value) {
   const v = value.trim();
   const out = [];
   for (const m of v.matchAll(/var\(--([\w-]+)/g)) {
-    if (!DEFINED.has(m[1])) out.push(`unknown token --${m[1]}`);
+    if (!DEFINED.has(m[1]) && !LOCAL.has(m[1])) out.push(`unknown token --${m[1]}`);
     else if (PRIMITIVES.has(m[1])) out.push(`primitive --${m[1]} (use a semantic token)`);
   }
   if (/#[0-9a-fA-F]{3,8}\b/.test(v)) out.push('raw hex colour');
@@ -52,6 +52,8 @@ function checkDecl(prop, value) {
 }
 
 const problems = [];
+// Custom properties a component defines for itself (e.g. --focus, --hero-cut) count as known in that file.
+let LOCAL = new Set();
 function checkCss(file, css, lineOffset = 0) {
   const lines = css.split(/\r?\n/);
   lines.forEach((line, i) => {
@@ -80,6 +82,7 @@ const files = [];
 
 for (const file of files) {
   const text = readFileSync(file, 'utf8');
+  LOCAL = new Set([...text.matchAll(/(?:^|[\s;{"'`])--([\w-]+)\s*:/g)].map((m) => m[1]));
   if (file.endsWith('.css')) { checkCss(file, text); continue; }
   for (const m of text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)) {
     const offset = text.slice(0, m.index).split(/\r?\n/).length - 1;
