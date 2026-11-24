@@ -44,8 +44,40 @@
     },
     "r4": {
       "slashes": [
-        "akce-trx-cely.jpg",
-        "skupinova-lekce.jpg"
+        [
+          {
+            "file": "akce-trx-cely.jpg",
+            "focus": 64,
+            "alt": "Trénink se seniorem a TRX"
+          },
+          {
+            "file": "individualni-trenink.jpg",
+            "focus": 55,
+            "alt": "Individuální trénink s velkou činkou"
+          },
+          {
+            "file": "fyzio-lehatko.jpg",
+            "focus": 42,
+            "alt": "Fyzioterapie 1:1 na lehátku"
+          }
+        ],
+        [
+          {
+            "file": "skupinova-lekce.jpg",
+            "focus": 77,
+            "alt": "Cvičení s kettlebellem na skupinové lekci"
+          },
+          {
+            "file": "akce-mrtvy-tah.jpg",
+            "focus": 50,
+            "alt": "Mrtvý tah s činkou"
+          },
+          {
+            "file": "akce-kolo.jpg",
+            "focus": 52,
+            "alt": "Trénink na airbiku"
+          }
+        ]
       ]
     }
   }
