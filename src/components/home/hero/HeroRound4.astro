@@ -1,9 +1,9 @@
 ---
 // Round 4 (16, the live hero): two slanted // windows built on the "//" mark from the section labels.
-// The right half is a dark panel cut on the same slant, so text and photos read as two sides.
-// On load: the panel wipes in, one slash drops from the top, the other rises from the bottom
-// (expo ease-out, photo settling from a slight zoom), the text follows. Each slash then crossfades
-// through a few photos. With prefers-reduced-motion there is no animation and no rotation.
+// Text on the left; on the right two full-height photo slashes, the second bleeding off the edge.
+// On load each slash is revealed by a mask: the first opens from the top down, the second from the
+// bottom up, while the photo settles from a slight zoom; then the text rises in. Each slash then
+// crossfades through a few photos. With prefers-reduced-motion there is no animation and no rotation.
 // The slant matches the // glyph of Space Grotesk (about 20° from vertical).
 // Photos and their focus points (the person's x position, %) are in photos.json → heroVariants.r4.
 import type { ImageMetadata } from 'astro';
@@ -30,11 +30,12 @@ const { hero } = home;
 const dark = (_v: number) => false;
 // The slashes are tall and narrow, so a photo is drawn much wider than its slot (object-fit: cover).
 // `sizes` states that drawn width, so the browser picks a file sharp enough for retina screens.
-const SLASH_SIZES = ['(max-width: 900px) 60vw, 480px', '(max-width: 900px) 120vw, 960px'];
+// A slash is about 90 % of the screen height tall; the drawn photo width is that height × the photo's
+// aspect ratio, which is what `sizes` tells the browser.
+const drawn = (img: ImageMetadata) => `(max-width: 900px) ${Math.round(380 * img.width / img.height)}px, calc(90vh * ${(img.width / img.height).toFixed(3)})`;
 ---
 {variants.map((v) => (
 <section class:list={['hero', `hero--v${v}`, dark(v) && 'hero--dark']} data-hero={offset + v} hidden={tools && offset + v !== chosen ? true : undefined}>
-    {v === 1 && <span class="h16-panel" aria-hidden="true"></span>}
 
     <div class="container hero-inner">
         <div class="hero-content">
@@ -47,21 +48,21 @@ const SLASH_SIZES = ['(max-width: 900px) 60vw, 480px', '(max-width: 900px) 120vw
             </div>
         </div>
 
-        {v === 1 && (
-            <div class="h16-slashes" data-slash-rotate>
-                {hv.slashes.map((set, i) => (
-                    <div class={`h16-slash h16-slash--${i + 1}`}>
-                        <div class="h16-frame">
-                            {set.map((ph, k) => (
-                                <Image src={pic(ph.file)} alt={ph.alt} class:list={['h16-photo', k === 0 && 'is-on']} style={`--focus: ${ph.focus}%;`}
-                                    widths={[640, 960, 1280, 1600, 2000]} sizes={SLASH_SIZES[i]} quality={88} loading={k === 0 ? 'eager' : 'lazy'} />
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        )}
     </div>
+    {v === 1 && (
+        <div class="h16-slashes" data-slash-rotate>
+            {hv.slashes.map((set, i) => (
+                <div class={`h16-slash h16-slash--${i + 1}`}>
+                    <div class="h16-frame">
+                        {set.map((ph, k) => (
+                            <Image src={pic(ph.file)} alt={ph.alt} class:list={['h16-photo', k === 0 && 'is-on']} style={`--focus: ${ph.focus}%;`}
+                                widths={[640, 960, 1280, 1600, 2000, 2400]} sizes={drawn(pic(ph.file))} quality={88} loading={k === 0 ? 'eager' : 'lazy'} />
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    )}
 </section>
 ))}
 
@@ -124,21 +125,22 @@ const SLASH_SIZES = ['(max-width: 900px) 60vw, 480px', '(max-width: 900px) 120vw
     .hero--dark .hero-secondary strong { color: var(--color-text-inverse); }
 
     /* ── 16 Lomítka ── */
-    .h16-panel {
+    .hero--v1 { --cut: 120px; --gap: var(--space-16); }
+    .hero--v1 .hero-content { max-width: 520px; }
+    .hero--v1 .hero-inner { grid-template-columns: 1fr; }
+    .h16-slashes {
         position: absolute;
-        top: 0;
+        top: var(--header-height);
         bottom: 0;
+        left: 52%;
         right: 0;
-        left: calc(50% - var(--space-40));
-        background: var(--color-surface-inverse);
-        clip-path: polygon(var(--hero-cut) 0, 100% 0, 100% 100%, 0 100%);
+        display: flex;
     }
-    .hero--v1 { --hero-cut: 140px; }
-    .h16-slashes { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: min(600px, 72vh); }
-    .h16-slash { position: relative; }
-    .h16-slash--1 { margin-right: -13%; }
-    .h16-slash--2 { margin-left: -13%; transform: translateY(var(--space-48)); }
-    .h16-frame { position: absolute; inset: 0; overflow: hidden; clip-path: polygon(28% 0, 100% 0, 72% 100%, 0 100%); }
+    .h16-slash { position: relative; flex: 1 1 0; }
+    .h16-slash--2 { margin-left: calc(var(--gap) - var(--cut)); }
+    .h16-frame { position: absolute; inset: 0; overflow: hidden; }
+    .h16-slash--1 .h16-frame { clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%); }
+    .h16-slash--2 .h16-frame { clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%); }
     .h16-frame :global(.h16-photo) {
         /* The person's x position in the photo (--focus) lands on the middle of the slash, at any size:
            translateX(%) is relative to the image's own width. */
@@ -150,39 +152,46 @@ const SLASH_SIZES = ['(max-width: 900px) 60vw, 480px', '(max-width: 900px) 120vw
         min-width: 100%;
         max-width: none;
         object-fit: cover;
-        transform: translateX(calc(var(--focus) * -1)); /* lint-allow: --focus is set per photo */
+        transform: translateX(calc(var(--focus) * -1));
         display: block;
         opacity: 0;
         transition: opacity var(--duration-reveal) var(--ease-standard);
     }
     .h16-frame :global(.h16-photo.is-on) { opacity: 1; }
 
-    /* Entrance */
-    @keyframes h16Panel { from { clip-path: polygon(calc(100% + var(--hero-cut)) 0, 100% 0, 100% 100%, 100% 100%); } to { clip-path: polygon(var(--hero-cut) 0, 100% 0, 100% 100%, 0 100%); } }
-    @keyframes h16Drop { from { transform: translateY(-115%); } to { transform: translateY(0); } }
-    @keyframes h16Rise { from { transform: translateY(115%); } to { transform: translateY(0); } }
-    @keyframes h16Settle { from { scale: 1.18; } to { scale: 1; } }
-    @keyframes h16Text { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    /* Entrance: masks open along the slashes, photos settle, text follows */
+    @keyframes h16OpenDown {
+        from { clip-path: polygon(var(--cut) 0, 100% 0, 100% 0, var(--cut) 0); }
+        to { clip-path: polygon(var(--cut) 0, 100% 0, calc(100% - var(--cut)) 100%, 0 100%); }
+    }
+    @keyframes h16OpenUp {
+        from { clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%); }
+        to { clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%); }
+    }
+    @keyframes h16Settle { from { scale: 1.15; } to { scale: 1; } }
+    @keyframes h16Text { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: no-preference) {
-        .h16-panel { animation: h16Panel var(--duration-reveal) var(--ease-out-expo) both; }
-        .h16-slash--1 .h16-frame { animation: h16Drop var(--duration-entrance) var(--ease-out-expo) calc(var(--duration-stagger) * 2) both; }
-        .h16-slash--2 .h16-frame { animation: h16Rise var(--duration-entrance) var(--ease-out-expo) calc(var(--duration-stagger) * 3) both; }
-        .h16-frame :global(.h16-photo) { animation: h16Settle calc(var(--duration-entrance) * 1.4) var(--ease-out-expo) calc(var(--duration-stagger) * 2) both; }
+        .h16-slash--1 .h16-frame { animation: h16OpenDown var(--duration-entrance) var(--ease-out-expo) calc(var(--duration-stagger) * 1) both; }
+        .h16-slash--2 .h16-frame { animation: h16OpenUp var(--duration-entrance) var(--ease-out-expo) calc(var(--duration-stagger) * 3) both; }
+        .h16-frame :global(.h16-photo) { animation: h16Settle calc(var(--duration-entrance) * 1.6) var(--ease-out-expo) calc(var(--duration-stagger) * 1) both; }
         .hero--v1 .hero-content > * { animation: h16Text var(--duration-reveal) var(--ease-out-expo) both; }
-        .hero--v1 .hero-content > :nth-child(1) { animation-delay: calc(var(--duration-stagger) * 4); }
-        .hero--v1 .hero-content > :nth-child(2) { animation-delay: calc(var(--duration-stagger) * 5); }
-        .hero--v1 .hero-content > :nth-child(3) { animation-delay: calc(var(--duration-stagger) * 6); }
-        .hero--v1 .hero-content > :nth-child(4) { animation-delay: calc(var(--duration-stagger) * 7); }
+        .hero--v1 .hero-content > :nth-child(1) { animation-delay: calc(var(--duration-stagger) * 5); }
+        .hero--v1 .hero-content > :nth-child(2) { animation-delay: calc(var(--duration-stagger) * 6); }
+        .hero--v1 .hero-content > :nth-child(3) { animation-delay: calc(var(--duration-stagger) * 7); }
+        .hero--v1 .hero-content > :nth-child(4) { animation-delay: calc(var(--duration-stagger) * 8); }
     }
 
     /* ── Responsive ── */
+    @media (max-width: 1024px) {
+        .hero--v1 .hero-content { max-width: 440px; }
+        .h16-slashes { left: 50%; }
+        .hero--v1 { --cut: 90px; }
+    }
     @media (max-width: 900px) {
-        .hero { min-height: auto; padding-top: calc(var(--header-height) + var(--space-40)); padding-bottom: var(--space-48); }
-        .hero-inner { grid-template-columns: 1fr; gap: var(--space-48); }
-        .h16-slashes { height: 360px; }
-        .hero--v1 { --hero-cut: 64px; }
-        .h16-panel { left: 0; top: auto; height: 440px; clip-path: polygon(0 var(--hero-cut), 100% 0, 100% 100%, 0 100%); }
-        @keyframes h16PanelUp { from { transform: translateY(100%); } to { transform: none; } }
-        .h16-panel { animation-name: h16PanelUp; }
+        .hero { min-height: auto; padding-top: calc(var(--header-height) + var(--space-40)); padding-bottom: 0; }
+        .hero--v1 { --cut: 56px; }
+        .hero--v1 .hero-content { max-width: none; }
+        .hero--v1 .hero-inner { gap: var(--space-40); }
+        .h16-slashes { position: relative; top: auto; left: auto; right: auto; bottom: auto; height: 380px; margin-top: var(--space-40); }
     }
 </style>
